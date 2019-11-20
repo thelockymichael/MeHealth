@@ -18,6 +18,13 @@ public class LiikuntaActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liikunta);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent i = getIntent();
+        final User user = (User)i.getSerializableExtra("user");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         Menu menu = bottomNavigationView.getMenu();
@@ -30,15 +37,18 @@ public class LiikuntaActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
                         Intent koti = new Intent(LiikuntaActivity.this, MainActivity.class);
+                        koti.putExtra("user", user);
                         startActivity(koti.addFlags(koti.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
                         Intent paino = new Intent(LiikuntaActivity.this, PainoActivity.class);
+                        paino.putExtra("user", user);
                         startActivity(paino.addFlags(paino.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
                         Intent vesi = new Intent(LiikuntaActivity.this, VesiActivity.class);
+                        vesi.putExtra("user", user);
                         startActivity(vesi.addFlags(vesi.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
@@ -47,6 +57,7 @@ public class LiikuntaActivity extends AppCompatActivity {
 
                     case R.id.ic_insert_emoticon:
                         Intent mieliala = new Intent(LiikuntaActivity.this, MielialaActivity.class);
+                        mieliala.putExtra("user", user);
                         startActivity(mieliala.addFlags(mieliala.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }

@@ -19,6 +19,13 @@ public class PainoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paino);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent i = getIntent();
+        final User user = (User)i.getSerializableExtra("user");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         Menu menu = bottomNavigationView.getMenu();
@@ -31,6 +38,7 @@ public class PainoActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
                         Intent koti = new Intent(PainoActivity.this, MainActivity.class);
+                        koti.putExtra("user", user);
                         startActivity(koti.addFlags(koti.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
@@ -38,16 +46,19 @@ public class PainoActivity extends AppCompatActivity {
 
                     case R.id.ic_local_drink:
                         Intent vesi = new Intent(PainoActivity.this, VesiActivity.class);
+                        vesi.putExtra("user", user);
                         startActivity(vesi.addFlags(vesi.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
                         Intent liikunta = new Intent(PainoActivity.this, LiikuntaActivity.class);
+                        liikunta.putExtra("user", user);
                         startActivity(liikunta.addFlags(liikunta.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
                         Intent mieliala = new Intent(PainoActivity.this, MielialaActivity.class);
+                        mieliala.putExtra("user", user);
                         startActivity(mieliala.addFlags(mieliala.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
@@ -59,5 +70,9 @@ public class PainoActivity extends AppCompatActivity {
         TextView aliPaineText = (TextView) findViewById(R.id.textViewAliPaine);
         TextView yliPaineText = (TextView) findViewById(R.id.textViewYliPaine);
 
+
+        painoText.setText("paino\n" + user.getWeightNow());
+        aliPaineText.setText("aliP\n" + user.getAliPaineNow());
+        yliPaineText.setText("yliP\n" + user.getYliPaineNow());
     }
 }

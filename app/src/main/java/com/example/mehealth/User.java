@@ -1,8 +1,10 @@
 package com.example.mehealth;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
+@SuppressWarnings("serial")
+public class User implements Serializable {
     private ArrayList<Integer> weightHistory;
     private ArrayList<Integer> alipaineHistoria;
     private ArrayList<Integer> ylipaineHistoria;
@@ -33,5 +35,26 @@ public class User {
 
     public void setIka(int ika) {
         this.ika = ika;
+    }
+
+    public int getWeightNow() {
+        if (weightHistory.size() == 0) {
+            return 0;
+        }
+        return weightHistory.get(weightHistory.size() - 1);
+    }
+
+    public int getAliPaineNow() {
+        if (alipaineHistoria.size() == 0) {
+            return 0;
+        }
+        return alipaineHistoria.get(alipaineHistoria.size() - 1);
+    }
+
+    public int getYliPaineNow() {
+        if (ylipaineHistoria.size() == 0) {
+            return 0;
+        }
+        return ylipaineHistoria.get(ylipaineHistoria.size() - 1);
     }
 }

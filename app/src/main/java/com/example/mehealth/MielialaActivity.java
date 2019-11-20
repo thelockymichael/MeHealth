@@ -18,6 +18,13 @@ public class MielialaActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mieliala);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent i = getIntent();
+        final User user = (User)i.getSerializableExtra("user");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         Menu menu = bottomNavigationView.getMenu();
@@ -30,20 +37,24 @@ public class MielialaActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
                         Intent koti = new Intent(MielialaActivity.this, MainActivity.class);
+                        koti.putExtra("user", user);
                         startActivity(koti.addFlags(koti.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
                         Intent paino = new Intent(MielialaActivity.this, PainoActivity.class);
+                        paino.putExtra("user", user);
                         startActivity(paino.addFlags(paino.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
                         Intent vesi = new Intent(MielialaActivity.this, VesiActivity.class);
+                        vesi.putExtra("user", user);
                         startActivity(vesi.addFlags(vesi.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
                         Intent liikunta = new Intent(MielialaActivity.this, LiikuntaActivity.class);
+                        liikunta.putExtra("user", user);
                         startActivity(liikunta.addFlags(liikunta.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
