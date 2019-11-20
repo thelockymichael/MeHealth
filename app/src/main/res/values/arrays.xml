@@ -1,0 +1,15 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="sukupuoli_entries">
+        <item>Mies</item>
+        <item>Nainen</item>
+        <item>Muu</item>
+
+    </string-array>
+
+    <string-array name="sukupuoli_values">
+        <item>mies</item>
+        <item>nainen</item>
+        <item>muu</item>
+    </string-array>
+</resources>

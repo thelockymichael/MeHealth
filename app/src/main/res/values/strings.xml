@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">MeHealth</string>
+    <string name="title_activity_asetukset">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="arvot_header">Arvot</string>
+
+    <!-- Messages Preferences -->
+    <string name="nimi_title">Nimi</string>
+    <string name="sukupuoli_title">Sukupuoli</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>
