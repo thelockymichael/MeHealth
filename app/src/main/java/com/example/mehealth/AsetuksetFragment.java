@@ -1,6 +1,7 @@
 package com.example.mehealth;
 
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,6 @@ public class AsetuksetFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_asetukset, container, false);
-        btnTest = (Button) view.findViewById(R.id.btnTest);
-
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "TESTING BUTTON CLICK 3", Toast.LENGTH_SHORT).show();
-            }
-        });
         return view;
     }
 }

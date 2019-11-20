@@ -16,10 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PainoActivity"></activity>
-        <activity android:name=".VesiActivity"></activity>
-        <activity android:name=".LiikuntaActivity"></activity>
-        <activity android:name=".MielialaActivity"></activity>
+        <activity android:name=".PainoActivity" />
+        <activity android:name=".VesiActivity" />
+        <activity android:name=".LiikuntaActivity" />
+        <activity android:name=".MielialaActivity" />
     </application>
 
 </manifest>

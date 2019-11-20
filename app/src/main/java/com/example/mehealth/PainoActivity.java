@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,5 +54,10 @@ public class PainoActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        TextView painoText = (TextView) findViewById(R.id.textViewPaino);
+        TextView aliPaineText = (TextView) findViewById(R.id.textViewAliPaine);
+        TextView yliPaineText = (TextView) findViewById(R.id.textViewYliPaine);
+
     }
 }

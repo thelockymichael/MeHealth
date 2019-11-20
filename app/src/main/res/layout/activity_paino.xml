@@ -18,13 +18,64 @@
         </RelativeLayout>
 
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relLayoutMiddle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/relLayoutTopBar"
             android:layout_above="@id/relLayoutBotBar">
-        </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textViewPaino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rounded_textview"
+                android:gravity="center"
+                android:text="P"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewAliPaine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rounded_textview"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/textViewYliPaine"
+                app:layout_constraintStart_toEndOf="@+id/textViewPaino"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewYliPaine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="48dp"
+                android:background="@drawable/rounded_textview"
+                android:gravity="center"
+                android:text="Y"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/buttonLisaaArvo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lisää arvo"
+                tools:layout_editor_absoluteX="161dp"
+                tools:layout_editor_absoluteY="462dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <RelativeLayout
