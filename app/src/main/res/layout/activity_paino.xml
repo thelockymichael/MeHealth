@@ -10,19 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relLayout">
-        <RelativeLayout
-            android:id="@+id/relLayoutTopBar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true">
-        </RelativeLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relLayoutMiddle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/relLayoutTopBar"
             android:layout_above="@id/relLayoutBotBar">
 
             <TextView
@@ -71,9 +64,11 @@
                 android:id="@+id/buttonLisaaArvo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
                 android:text="Lisää arvo"
-                tools:layout_editor_absoluteX="161dp"
-                tools:layout_editor_absoluteY="462dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

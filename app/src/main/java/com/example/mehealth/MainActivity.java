@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*  Fragment TabLayout yläpalkkiin
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         //Set up the ViewPager with the sections adapter
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_attach_money);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_attach_money);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_settings);
+         */
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         //Asettaa nykyisen välilehden ikonin valituksi
@@ -78,12 +81,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     //Metodi ylävalikon viewpagerin alustamiseen, ylin addFragment on alkusivu
-    private void setupViewPager(ViewPager viewPager) {
+    /*private void setupViewPager(ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new Tab1Fragment());
         adapter.addFragment(new Tab2Fragment());
         adapter.addFragment(new AsetuksetFragment());
         viewPager.setAdapter(adapter);
-    }
+    }*/
 }

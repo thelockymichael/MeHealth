@@ -10,20 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relLayout">
-        <RelativeLayout
-            android:id="@+id/relLayoutTopBar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true">
-        </RelativeLayout>
 
-
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relLayoutMiddle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/relLayoutTopBar"
-            android:layout_above="@id/relLayoutBotBar"/>
+            android:layout_above="@id/relLayoutBotBar">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Liikunta"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <RelativeLayout
