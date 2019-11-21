@@ -18,6 +18,18 @@
             android:layout_height="match_parent"
             android:layout_above="@id/relLayoutBotBar">
 
+            <EditText
+                android:id="@+id/editTextPaino"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:ems="10"
+                android:hint="Paino"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAliPaine"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/textViewPaino"
                 android:layout_width="wrap_content"
@@ -62,10 +74,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
-                android:text="Lisää arvo"
+                android:onClick="lisaaArvo"
+                android:text="Lisää"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextAliPaine"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:hint="Alipaine"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/buttonLisaaArvo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextYliPaine"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:ems="10"
+                android:hint="Ylipaine"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAliPaine"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
