@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".PainoActivity" />
-        <activity android:name=".VesiActivity" />
+        <activity android:name=".VesiActivity"/>
         <activity android:name=".LiikuntaActivity" />
         <activity android:name=".MielialaActivity" />
     </application>

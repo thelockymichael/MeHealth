@@ -18,17 +18,7 @@
             android:layout_height="match_parent"
             android:layout_above="@id/relLayoutBotBar">
 
-            <EditText
-                android:id="@+id/editTextPaino"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:ems="10"
-                android:hint="Paino"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAliPaine"
-                app:layout_constraintStart_toStartOf="parent" />
+
 
             <TextView
                 android:id="@+id/textViewPaino"
@@ -44,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewAliPaine"
+                android:id="@+id/textViewAlaPaine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -52,12 +42,12 @@
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/textViewYliPaine"
+                app:layout_constraintEnd_toStartOf="@+id/textViewYlaPaine"
                 app:layout_constraintStart_toEndOf="@+id/textViewPaino"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewYliPaine"
+                android:id="@+id/textViewYlaPaine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -74,19 +64,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
-                android:onClick="lisaaArvo"
                 android:text="Lisää"
+                android:onClick="buttonLisaaArvoPaino"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/editTextAliPaine"
+                android:id="@+id/editTextPaino"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:ems="10"
+                android:hint="Paino"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAlaPaine"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextAlaPaine"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:ems="10"
-                android:hint="Alipaine"
+                android:hint="Alapaine"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toTopOf="@+id/buttonLisaaArvo"
@@ -95,15 +97,15 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/editTextYliPaine"
+                android:id="@+id/editTextYlaPaine"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:ems="10"
-                android:hint="Ylipaine"
+                android:hint="Ylapaine"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAliPaine"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAlaPaine"
                 app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

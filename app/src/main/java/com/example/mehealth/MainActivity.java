@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    User user = new User();
+    User user;
 
 
     @Override
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
+        user = new User();
 
         //Asettaa nykyisen välilehden ikonin valituksi
         Menu menu = bottomNavigationView.getMenu();
@@ -81,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AsetuksetActivity.class);
         startActivity(intent);
     }
-
 
     //Metodi ylävalikon viewpagerin alustamiseen, ylin addFragment on alkusivu
     /*private void setupViewPager(ViewPager viewPager) {

@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class VesiActivity extends AppCompatActivity {
     private static final String TAG = "VesiActivity";
+    User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class VesiActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent i = getIntent();
-        final User user = (User)i.getSerializableExtra("user");
+        user = (User)i.getSerializableExtra("user");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         Menu menu = bottomNavigationView.getMenu();

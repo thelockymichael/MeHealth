@@ -6,27 +6,27 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class User implements Serializable {
     private ArrayList<Integer> weightHistory;
-    private ArrayList<Integer> alipaineHistoria;
-    private ArrayList<Integer> ylipaineHistoria;
+    private ArrayList<Integer> alapaineHistoria;
+    private ArrayList<Integer> ylapaineHistoria;
     private int pituus;
     private int ika;
 
     public User() {
         this.weightHistory = new ArrayList<>();
-        this.alipaineHistoria = new ArrayList<>();
-        this.ylipaineHistoria = new ArrayList<>();
+        this.alapaineHistoria = new ArrayList<>();
+        this.ylapaineHistoria = new ArrayList<>();
     }
 
     public void addWeightRecord(int weight) {
         this.weightHistory.add(weight);
     }
 
-    public void addAlipaineRecord(int alipaine) {
-        this.alipaineHistoria.add(alipaine);
+    public void addAlapaineRecord(int alapaine) {
+        this.alapaineHistoria.add(alapaine);
     }
 
-    public void addYliPaineRecord(int ylipaine) {
-        this.ylipaineHistoria.add(ylipaine);
+    public void addYlaPaineRecord(int ylapaine) {
+        this.ylapaineHistoria.add(ylapaine);
     }
 
     public void setPituus(int pituus) {
@@ -44,17 +44,17 @@ public class User implements Serializable {
         return weightHistory.get(weightHistory.size() - 1);
     }
 
-    public int getAliPaineNow() {
-        if (alipaineHistoria.size() == 0) {
+    public int getAlaPaineNow() {
+        if (alapaineHistoria.size() == 0) {
             return 0;
         }
-        return alipaineHistoria.get(alipaineHistoria.size() - 1);
+        return alapaineHistoria.get(alapaineHistoria.size() - 1);
     }
 
-    public int getYliPaineNow() {
-        if (ylipaineHistoria.size() == 0) {
+    public int getYlaPaineNow() {
+        if (ylapaineHistoria.size() == 0) {
             return 0;
         }
-        return ylipaineHistoria.get(ylipaineHistoria.size() - 1);
+        return ylapaineHistoria.get(ylapaineHistoria.size() - 1);
     }
 }

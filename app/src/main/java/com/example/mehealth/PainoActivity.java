@@ -2,9 +2,12 @@ package com.example.mehealth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class PainoActivity extends AppCompatActivity {
     private static final String TAG = "PainoActivity";
+    User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,7 +30,8 @@ public class PainoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent i = getIntent();
-        final User user = (User)i.getSerializableExtra("user");
+        user = (User)i.getSerializableExtra("user");
+        Log.d(TAG, "onStart: started");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         Menu menu = bottomNavigationView.getMenu();
@@ -66,18 +71,39 @@ public class PainoActivity extends AppCompatActivity {
                 return false;
             }
         });
+        paivitaTextit(user);
 
-        TextView painoText = (TextView) findViewById(R.id.textViewPaino);
-        TextView aliPaineText = (TextView) findViewById(R.id.textViewAliPaine);
-        TextView yliPaineText = (TextView) findViewById(R.id.textViewYliPaine);
-
-
-        painoText.setText("paino\n" + user.getWeightNow());
-        aliPaineText.setText("aliP\n" + user.getAliPaineNow());
-        yliPaineText.setText("yliP\n" + user.getYliPaineNow());
+        Button buttonLisaaArvo = findViewById(R.id.buttonLisaaArvo);
+        buttonLisaaArvo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonLisaaArvoPaino(v);
+                paivitaTextit(user);
+            }
+        });
     }
 
+    private void paivitaTextit(User user) {
+        TextView painoText = findViewById(R.id.textViewPaino);
+        TextView alaPaineText = findViewById(R.id.textViewAlaPaine);
+        TextView ylaPaineText = findViewById(R.id.textViewYlaPaine);
 
+        painoText.setText("paino\n" + user.getWeightNow());
+        alaPaineText.setText("alaP\n" + user.getAlaPaineNow());
+        ylaPaineText.setText("ylaP\n" + user.getYlaPaineNow());
+    }
 
+    public void buttonLisaaArvoPaino(View view) {
+        EditText painoEditText = findViewById(R.id.editTextPaino);
+        EditText alaPaineEditText = findViewById(R.id.editTextAlaPaine);
+        EditText ylaPaineEditText = findViewById(R.id.editTextYlaPaine);
 
+        String painoText = painoEditText.getText().toString();
+        String alaPaineText = alaPaineEditText.getText().toString();
+        String ylaPaineText = ylaPaineEditText.getText().toString();
+
+        user.addWeightRecord(Integer.parseInt(painoText));
+        user.addAlapaineRecord(Integer.parseInt(alaPaineText));
+        user.addYlaPaineRecord(Integer.parseInt(ylaPaineText));
+    }
 }
