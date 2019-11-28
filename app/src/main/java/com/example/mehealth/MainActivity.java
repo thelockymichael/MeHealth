@@ -2,6 +2,7 @@ package com.example.mehealth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
@@ -19,18 +20,21 @@ import com.google.gson.Gson;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     User user;
     User emptyUser;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
-
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = findViewById(R.id.toolbarTop);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("MeHealth");
+
         emptyUser = new User();
         Gson gson = new Gson();
         sharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
@@ -40,6 +44,24 @@ public class MainActivity extends AppCompatActivity {
         editor = sharedPref.edit();
         editor.putString("user", userJson);
         editor.commit();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        String msg=" ";
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent asetukset = new Intent(this, AsetuksetActivity.class);
+                startActivity(asetukset);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -111,15 +133,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AsetuksetActivity.class);
         startActivity(intent);
     }
-
-    //Metodi ylävalikon viewpagerin alustamiseen, ylin addFragment on alkusivu
-    /*private void setupViewPager(ViewPager viewPager) {
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Tab1Fragment());
-        adapter.addFragment(new Tab2Fragment());
-        adapter.addFragment(new AsetuksetFragment());
-        viewPager.setAdapter(adapter);
-    }*/
 
 }
 

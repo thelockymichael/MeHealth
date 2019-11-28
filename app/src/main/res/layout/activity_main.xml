@@ -10,10 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relLayout">
+        <RelativeLayout
+            android:id="@+id/relLayoutTop"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true">
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/toolbarTop"
+                android:background="@color/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                />
+        </RelativeLayout>
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relLayoutMiddle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/relLayoutTop"
             android:layout_above="@id/relLayoutBotBar">
 
             <TextView
@@ -44,7 +60,7 @@
         <RelativeLayout
             android:id="@+id/relLayoutBotBar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true">
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="match_parent"

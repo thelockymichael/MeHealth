@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -24,11 +25,32 @@ public class PainoActivity extends AppCompatActivity {
     User user;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paino);
+        toolbar = findViewById(R.id.toolbarTop);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("MeHealth");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        String msg=" ";
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent asetukset = new Intent(this, AsetuksetActivity.class);
+                startActivity(asetukset);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -14,7 +14,9 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 
     <EditTextPreference
         app:key="nimi"
@@ -30,13 +32,14 @@
         app:useSimpleSummaryProvider="true" />
 
     <EditTextPreference
-        app:defaultValue="100"
-        app:dialogTitle="Paino"
+        app:defaultValue="20"
+        app:dialogTitle="Ikä"
         app:key="pref_query_limit"
-        app:title="Paino"/>
+        app:useSimpleSummaryProvider="true"
+        app:title="Ikä"/>
 
     <CheckBoxPreference
-        app:key="checkbox"
+        app:key="tyhmyys"
         app:title="Tyhmä"
         app:summary="Älykkyysosamäärä siis"/>
 
