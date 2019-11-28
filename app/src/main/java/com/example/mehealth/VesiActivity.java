@@ -4,8 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class VesiActivity extends AppCompatActivity {
     private static final String TAG = "VesiActivity";
@@ -64,6 +74,36 @@ public class VesiActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        ImageButton button1dl = findViewById(R.id.button1dl);
+        ImageButton button2dl = findViewById(R.id.button2dl);
+        ImageButton button5dl = findViewById(R.id.button5dl);
+        ImageButton button1l = findViewById(R.id.button1l);
+        button1dl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user.juoVetta(1);
+                paivitaVesi(user);
+            }
+        });
+        button2dl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user.juoVetta(2);
+            }
+        });
+        button5dl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user.juoVetta(5);
+            }
+        });
+        button1l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user.juoVetta(10);
+            }
+        });
     }
 
     @Override
@@ -73,6 +113,26 @@ public class VesiActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
+
+        sharedPref = getSharedPreferences("oldDate", Activity.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c);
+
+        String oldFormattedDate = sharedPref.getString("oldDate", "");
+
+        Log.d(TAG, "old date: " + oldFormattedDate);
+        Log.d(TAG, "date now: " + formattedDate);
+
+        if (!formattedDate.equals(oldFormattedDate)) {
+            Log.d(TAG, "date: reset vesi yo");
+            user.vettaJuotuReset();
+        }
+        oldFormattedDate = formattedDate;
+        editor.putString("oldDate", oldFormattedDate);
+        editor.commit();
+
     }
 
     @Override
@@ -84,6 +144,11 @@ public class VesiActivity extends AppCompatActivity {
         editor.putString("user", json);
         editor.commit();
         finish();
+    }
+
+    public void paivitaVesi(User user) {
+        TextView juotuMaara = findViewById(R.id.juotuMaara);
+        juotuMaara.setText(user.getJuotuVesi() + "dl");
     }
 
 }

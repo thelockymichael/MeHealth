@@ -1,20 +1,20 @@
 package com.example.mehealth;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
-public class User implements Serializable {
+public class User  {
     private ArrayList<Integer> weightHistory;
     private ArrayList<Integer> alapaineHistoria;
     private ArrayList<Integer> ylapaineHistoria;
     private int pituus;
     private int ika;
+    private int vettaJuotuTanaan;
 
     public User() {
         this.weightHistory = new ArrayList<>();
         this.alapaineHistoria = new ArrayList<>();
         this.ylapaineHistoria = new ArrayList<>();
+        this.vettaJuotuTanaan = 0;
     }
 
     public void addWeightRecord(int weight) {
@@ -57,4 +57,17 @@ public class User implements Serializable {
         }
         return ylapaineHistoria.get(ylapaineHistoria.size() - 1);
     }
+
+    public void vettaJuotuReset() {
+        this.vettaJuotuTanaan = 0;
+    }
+
+    public void juoVetta(int dl) {
+        this.vettaJuotuTanaan += dl;
+    }
+
+    public int getJuotuVesi() {
+        return this.vettaJuotuTanaan;
+    }
+
 }

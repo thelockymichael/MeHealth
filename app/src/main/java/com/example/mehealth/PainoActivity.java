@@ -29,7 +29,6 @@ public class PainoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paino);
-        user = new User();
     }
 
     @Override
