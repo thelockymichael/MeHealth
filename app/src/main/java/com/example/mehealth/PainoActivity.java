@@ -71,8 +71,6 @@ public class PainoActivity extends AppCompatActivity {
                 return false;
             }
         });
-        paivitaTextit(user);
-
         Button buttonLisaaArvo = findViewById(R.id.buttonLisaaArvo);
         buttonLisaaArvo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +88,7 @@ public class PainoActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
+        paivitaTextit(user);
     }
 
     @Override

@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         String defUserJson = gson.toJson(emptyUser);
         String userJson = sharedPref.getString("user", defUserJson);
+        editor = sharedPref.edit();
         editor.putString("user", userJson);
         editor.commit();
     }
@@ -102,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         String json = gson.toJson(user);
         editor.putString("user", json);
         editor.commit();
-        finish();
     }
 
     public void btnSettings_onClick(View view) {
