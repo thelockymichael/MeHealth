@@ -93,11 +93,7 @@ public class PainoActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        editor = sharedPref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        editor.putString("user", json);
-        editor.commit();
+        addUserToSharedPref();
         finish();
     }
 
@@ -122,5 +118,13 @@ public class PainoActivity extends AppCompatActivity {
         user.addWeightRecord(Integer.parseInt(painoText));
         user.addAlapaineRecord(Integer.parseInt(alaPaineText));
         user.addYlaPaineRecord(Integer.parseInt(ylaPaineText));
+    }
+
+    protected void addUserToSharedPref() {
+        editor = sharedPref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        editor.putString("user", json);
+        editor.commit();
     }
 }

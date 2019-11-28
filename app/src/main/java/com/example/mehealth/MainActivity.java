@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
+        Log.d(TAG, "onResume: juotu " + user.getJuotuVesi());
 
     }
 

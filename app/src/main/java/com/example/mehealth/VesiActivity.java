@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,16 +18,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class VesiActivity extends AppCompatActivity {
     private static final String TAG = "VesiActivity";
+    //Initialize sharedpreferences for getting the user from sharedpreferences
     User user;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
+    SharedPreferences userSharedPref;
+    SharedPreferences.Editor userSharedPrefEditor;
+
+    //Initialize the sharedpreferences for checking the recent date
+    SharedPreferences dateSharedPref;
+    SharedPreferences.Editor dateSharedPrefEditor;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class VesiActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Initialize the bottom navigation bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(2);
@@ -75,6 +80,7 @@ public class VesiActivity extends AppCompatActivity {
             }
         });
 
+        //Set the onClickListeners for the imagebuttons to add water drank throughout the day
         ImageButton button1dl = findViewById(R.id.button1dl);
         ImageButton button2dl = findViewById(R.id.button2dl);
         ImageButton button5dl = findViewById(R.id.button5dl);
@@ -90,38 +96,46 @@ public class VesiActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 user.juoVetta(2);
+                paivitaVesi(user);
             }
         });
         button5dl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.juoVetta(5);
+                paivitaVesi(user);
             }
         });
         button1l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.juoVetta(10);
+                paivitaVesi(user);
             }
         });
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
+        //User shared preferences
+        userSharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPref.getString("user", "");
+        String json = userSharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
 
-        sharedPref = getSharedPreferences("oldDate", Activity.MODE_PRIVATE);
-        editor = sharedPref.edit();
+        //Date checking with the recent date in shared preferences
+        dateSharedPref = getSharedPreferences("oldDate", Activity.MODE_PRIVATE);
+        dateSharedPrefEditor = dateSharedPref.edit();
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c);
 
-        String oldFormattedDate = sharedPref.getString("oldDate", "");
+        String oldFormattedDate = dateSharedPref.getString("oldDate", "");
 
+        //Logcat to check the date in memory vs the current date
         Log.d(TAG, "old date: " + oldFormattedDate);
         Log.d(TAG, "date now: " + formattedDate);
 
@@ -130,25 +144,31 @@ public class VesiActivity extends AppCompatActivity {
             user.vettaJuotuReset();
         }
         oldFormattedDate = formattedDate;
-        editor.putString("oldDate", oldFormattedDate);
-        editor.commit();
-
+        dateSharedPrefEditor.putString("oldDate", oldFormattedDate);
+        dateSharedPrefEditor.commit();
+        paivitaVesi(user);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        editor = sharedPref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        editor.putString("user", json);
-        editor.commit();
+        addUserToSharedPref();
         finish();
     }
 
-    public void paivitaVesi(User user) {
+    protected void paivitaVesi(User user) {
         TextView juotuMaara = findViewById(R.id.juotuMaara);
         juotuMaara.setText(user.getJuotuVesi() + "dl");
+        Log.d(TAG, "paivitaVesi: juotu" + user.getJuotuVesi());
+        addUserToSharedPref();
+    }
+
+    protected void addUserToSharedPref() {
+        userSharedPrefEditor = userSharedPref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        userSharedPrefEditor.putString("user", json);
+        userSharedPrefEditor.commit();
     }
 
 }
