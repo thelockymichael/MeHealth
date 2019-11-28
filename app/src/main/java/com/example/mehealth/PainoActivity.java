@@ -1,6 +1,8 @@
 package com.example.mehealth;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,22 +17,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 
 public class PainoActivity extends AppCompatActivity {
     private static final String TAG = "PainoActivity";
     User user;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paino);
+        user = new User();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Intent i = getIntent();
-        user = (User)i.getSerializableExtra("user");
         Log.d(TAG, "onStart: started");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
@@ -44,7 +48,6 @@ public class PainoActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
                         Intent koti = new Intent(PainoActivity.this, MainActivity.class);
-                        koti.putExtra("user", user);
                         startActivity(koti.addFlags(koti.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
@@ -52,19 +55,16 @@ public class PainoActivity extends AppCompatActivity {
 
                     case R.id.ic_local_drink:
                         Intent vesi = new Intent(PainoActivity.this, VesiActivity.class);
-                        vesi.putExtra("user", user);
                         startActivity(vesi.addFlags(vesi.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
                         Intent liikunta = new Intent(PainoActivity.this, LiikuntaActivity.class);
-                        liikunta.putExtra("user", user);
                         startActivity(liikunta.addFlags(liikunta.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
                         Intent mieliala = new Intent(PainoActivity.this, MielialaActivity.class);
-                        mieliala.putExtra("user", user);
                         startActivity(mieliala.addFlags(mieliala.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
@@ -83,6 +83,26 @@ public class PainoActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPref.getString("user", "");
+        user = gson.fromJson(json, User.class);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        editor = sharedPref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        editor.putString("user", json);
+        editor.commit();
+        finish();
+    }
+
     private void paivitaTextit(User user) {
         TextView painoText = findViewById(R.id.textViewPaino);
         TextView alaPaineText = findViewById(R.id.textViewAlaPaine);
@@ -92,7 +112,6 @@ public class PainoActivity extends AppCompatActivity {
         alaPaineText.setText("alaP\n" + user.getAlaPaineNow());
         ylaPaineText.setText("ylaP\n" + user.getYlaPaineNow());
     }
-
     public void buttonLisaaArvoPaino(View view) {
         EditText painoEditText = findViewById(R.id.editTextPaino);
         EditText alaPaineEditText = findViewById(R.id.editTextAlaPaine);

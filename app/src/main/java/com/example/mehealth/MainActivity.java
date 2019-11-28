@@ -4,17 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,19 +21,29 @@ public class MainActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     User user;
+    User emptyUser;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        emptyUser = new User();
+        Gson gson = new Gson();
+        sharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
+
+        String defUserJson = gson.toJson(emptyUser);
+        String userJson = sharedPref.getString("user", defUserJson);
+        editor.putString("user", userJson);
+        editor.commit();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        user = new User();
 
         //Asettaa nykyisen välilehden ikonin valituksi
         Menu menu = bottomNavigationView.getMenu();
@@ -52,32 +61,48 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.ic_attach_money:
                         //Riippuen ikonista uusi intent ohjautuu oikeaan activityyn
                         Intent paino = new Intent(MainActivity.this, PainoActivity.class);
-                        paino.putExtra("user", user);
                         startActivity(paino.addFlags(paino.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
                         Intent vesi = new Intent(MainActivity.this, VesiActivity.class);
-                        vesi.putExtra("user", user);
                         startActivity(vesi.addFlags(vesi.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
                         Intent liikunta = new Intent(MainActivity.this, LiikuntaActivity.class);
-                        liikunta.putExtra("user", user);
                         startActivity(liikunta.addFlags(liikunta.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
                         Intent mieliala = new Intent(MainActivity.this, MielialaActivity.class);
-                        mieliala.putExtra("user", user);
                         startActivity(mieliala.addFlags(mieliala.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
                 return false;
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPref.getString("user", "");
+        user = gson.fromJson(json, User.class);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        editor = sharedPref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        editor.putString("user", json);
+        editor.commit();
+        finish();
     }
 
     public void btnSettings_onClick(View view) {
@@ -93,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new AsetuksetFragment());
         viewPager.setAdapter(adapter);
     }*/
-
 
 }
 
