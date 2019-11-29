@@ -92,7 +92,7 @@
                 android:layout_marginStart="32dp"
                 android:ems="10"
                 android:hint="Paino"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textAlignment="center"
                 app:layout_constraintBaseline_toBaselineOf="@+id/editTextAlaPaine"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -104,7 +104,7 @@
                 android:layout_marginTop="32dp"
                 android:ems="10"
                 android:hint="Alapaine"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -118,7 +118,7 @@
                 android:layout_marginEnd="32dp"
                 android:ems="10"
                 android:hint="Ylapaine"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textAlignment="center"
                 app:layout_constraintBaseline_toBaselineOf="@+id/editTextAlaPaine"
                 app:layout_constraintEnd_toEndOf="parent" />
