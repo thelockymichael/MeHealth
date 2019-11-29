@@ -6,6 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +33,63 @@ public class MielialaActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
+
+        final ImageView imageMieliala = findViewById(R.id.imageMieliala);
+        final TextView textMieliala = findViewById(R.id.textMieliala);
+        textMieliala.setText("5");
+        imageMieliala.setImageResource(R.drawable.smiley10);
+
+        ((SeekBar)findViewById(R.id.seekbarMieliala)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textMieliala.setText(Integer.toString(progress));
+                switch (progress) {
+                    case 0:
+                        imageMieliala.setImageResource(R.drawable.smiley0);
+                        break;
+                    case 1:
+                        imageMieliala.setImageResource(R.drawable.smiley1);
+                        break;
+                    case 2:
+                        imageMieliala.setImageResource(R.drawable.smiley2);
+                        break;
+                    case 3:
+                        imageMieliala.setImageResource(R.drawable.smiley3);
+                        break;
+                    case 4:
+                        imageMieliala.setImageResource(R.drawable.smiley4);
+                        break;
+                    case 5:
+                        imageMieliala.setImageResource(R.drawable.smiley5);
+                        break;
+                    case 6:
+                        imageMieliala.setImageResource(R.drawable.smiley6);
+                        break;
+                    case 7:
+                        imageMieliala.setImageResource(R.drawable.smiley7);
+                        break;
+                    case 8:
+                        imageMieliala.setImageResource(R.drawable.smiley8);
+                        break;
+                    case 9:
+                        imageMieliala.setImageResource(R.drawable.smiley9);
+                        break;
+                    case 10:
+                        imageMieliala.setImageResource(R.drawable.smiley10);
+                        break;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(getApplicationContext(),"terve",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

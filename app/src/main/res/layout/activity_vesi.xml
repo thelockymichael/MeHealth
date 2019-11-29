@@ -32,23 +32,12 @@
             android:layout_above="@id/relLayoutBotBar"
             android:layout_below="@id/relLayoutTop">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Vesi"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <ImageButton
                 android:id="@+id/button1l"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="76dp"
                 android:layout_height="166dp"
-                android:layout_marginTop="93dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:scaleType="fitStart"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +50,7 @@
                 android:layout_width="76dp"
                 android:layout_height="166dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="93dp"
+                android:layout_marginTop="8dp"
                 android:scaleType="fitStart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,12 +61,12 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="76dp"
                 android:layout_height="166dp"
-                android:layout_marginTop="43dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="12dp"
                 android:scaleType="fitStart"
                 app:layout_constraintEnd_toStartOf="@+id/button1l"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/water_bottle" />
 
             <ImageButton
@@ -86,11 +75,11 @@
                 android:layout_width="76dp"
                 android:layout_height="166dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="43dp"
+                android:layout_marginTop="8dp"
                 android:scaleType="fitStart"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toEndOf="@+id/button1dl"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/water_bottle" />
 
             <TextView
@@ -158,7 +147,7 @@
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.564" />
+                app:layout_constraintVertical_bias="0.432" />
 
             <TextView
                 android:id="@+id/juotuMaara"

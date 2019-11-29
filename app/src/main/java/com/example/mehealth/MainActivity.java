@@ -75,21 +75,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("H");
-        String formattedDate = df.format(c);
-        int aika = Integer.parseInt(formattedDate);
-        String tervehdys = "";
-        if (aika >= 21 || aika <= 3) tervehdys = "Öitä";
-        else if (aika <= 10) tervehdys = "Huomenta";
-        else if (aika <= 17) tervehdys = "Päivää";
-        else tervehdys = "Iltaa";
-
-        String nimi = sharedPref.getString("nimi", "perkele");
-
-        TextView textTervehdys = findViewById(R.id.textTervehdys);
-        textTervehdys.setText(tervehdys + "\n" + nimi);
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
 
         //Asettaa nykyisen välilehden ikonin valituksi
@@ -139,6 +124,23 @@ public class MainActivity extends AppCompatActivity {
         String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
         Log.d(TAG, "onResume: juotu " + user.getJuotuVesi());
+
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("H");
+        String formattedDate = df.format(c);
+        int aika = Integer.parseInt(formattedDate);
+        String tervehdys = "";
+        if (aika >= 21 || aika <= 3) tervehdys = "Öitä";
+        else if (aika <= 10) tervehdys = "Huomenta";
+        else if (aika <= 17) tervehdys = "Päivää";
+        else tervehdys = "Iltaa";
+
+        String nimi = sharedPref.getString("nimi", "perkele");
+
+        TextView textTervehdys = findViewById(R.id.textTervehdys);
+        TextView textVettaJuotu = findViewById(R.id.textVettaJuotu);
+        textTervehdys.setText(tervehdys + "\n" + nimi);
+        textVettaJuotu.setText("Tänään juotu " + user.getJuotuVesi() + "dl");
 
     }
 

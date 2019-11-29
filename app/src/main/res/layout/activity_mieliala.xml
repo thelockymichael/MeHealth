@@ -31,16 +31,61 @@
             android:layout_above="@id/relLayoutBotBar"
             android:layout_below="@id/relLayoutTop">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
+            <SeekBar
+                android:id="@+id/seekbarMieliala"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Mieliala"
-                android:textSize="25sp"
+                android:layout_marginBottom="32dp"
+                android:max="10"
+                android:progress="5"
+                app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageMieliala"
+                style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                app:layout_constraintBottom_toTopOf="@+id/textMieliala"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@color/colorAccent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.75" />
+
+            <TextView
+                android:id="@+id/textMieliala"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/seekbarMieliala"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline6" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.75" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
