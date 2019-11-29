@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
         sharedPrefEditor = sharedPref.edit();
-        toolbar = findViewById(R.id.toolbarTop);
-
         emptyUser = new User();
         Gson gson = new Gson();
         String defUserJson = gson.toJson(emptyUser);
@@ -47,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPrefEditor.putString("user", userJson);
         sharedPrefEditor.commit();
 
+        toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
 

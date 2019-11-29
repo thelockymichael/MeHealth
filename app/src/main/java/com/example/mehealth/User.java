@@ -3,11 +3,9 @@ package com.example.mehealth;
 import java.util.ArrayList;
 
 public class User  {
-    private ArrayList<Integer> weightHistory;
+    public ArrayList<Integer> weightHistory;
     private ArrayList<Integer> alapaineHistoria;
     private ArrayList<Integer> ylapaineHistoria;
-    private int pituus;
-    private int ika;
     private int vettaJuotuTanaan;
 
     public User() {
@@ -29,19 +27,15 @@ public class User  {
         this.ylapaineHistoria.add(ylapaine);
     }
 
-    public void setPituus(int pituus) {
-        this.pituus = pituus;
-    }
-
-    public void setIka(int ika) {
-        this.ika = ika;
-    }
-
     public int getWeightNow() {
         if (weightHistory.size() == 0) {
             return 0;
         }
         return weightHistory.get(weightHistory.size() - 1);
+    }
+
+    public ArrayList<Integer> getWeightHistory() {
+        return this.weightHistory;
     }
 
     public int getAlaPaineNow() {

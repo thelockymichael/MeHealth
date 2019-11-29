@@ -19,6 +19,11 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.ArrayList;
 
 public class PainoActivity extends AppCompatActivity {
     private static final String TAG = "PainoActivity";
@@ -96,7 +101,8 @@ public class PainoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonLisaaArvoPaino(v);
-                paivitaTextit(user);
+                updateUI(user);
+
             }
         });
     }
@@ -108,7 +114,7 @@ public class PainoActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
-        paivitaTextit(user);
+        updateUI(user);
     }
 
     @Override
@@ -147,5 +153,24 @@ public class PainoActivity extends AppCompatActivity {
         String json = gson.toJson(user);
         editor.putString("user", json);
         editor.commit();
+    }
+
+    protected void updateGraph(User user) {
+        ArrayList<Integer> weightHistory = user.getWeightHistory();
+        DataPoint[] data = new DataPoint[weightHistory.size()];
+
+        for (int i = 0; i < weightHistory.size(); i++) {
+            data[i] = new DataPoint(i , weightHistory.get(i));
+        }
+
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
+        graph.addSeries(series);
+        graph.setTitle("Paino");
+    }
+
+    protected void updateUI(User user) {
+        paivitaTextit(user);
+        updateGraph(user);
     }
 }

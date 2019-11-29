@@ -38,10 +38,19 @@
         app:useSimpleSummaryProvider="true"
         app:title="Ikä"/>
 
-    <CheckBoxPreference
-        app:key="tyhmyys"
-        app:title="Tyhmä"
-        app:summary="Älykkyysosamäärä siis"/>
+    <EditTextPreference
+        app:defaultValue="180"
+        app:dialogTitle="Pituus"
+        app:key="pituus"
+        app:useSimpleSummaryProvider="true"
+        app:title="Pituus"/>
+
+    <Preference
+        android:title="Reset paino"
+        android:key="buttonResetPainoHistoria"
+        android:summary="Tyhjentää painohistorian"/>
+
+
 
 
 </PreferenceScreen>
