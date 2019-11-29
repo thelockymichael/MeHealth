@@ -91,7 +91,7 @@ public class LiikuntaActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);

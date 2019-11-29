@@ -34,7 +34,7 @@
     <EditTextPreference
         app:defaultValue="20"
         app:dialogTitle="Ikä"
-        app:key="pref_query_limit"
+        app:key="ika"
         app:useSimpleSummaryProvider="true"
         app:title="Ikä"/>
 

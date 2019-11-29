@@ -27,15 +27,12 @@ public class VesiActivity extends AppCompatActivity {
     private static final String TAG = "VesiActivity";
     //Initialize sharedpreferences for getting the user from sharedpreferences
     User user;
-    SharedPreferences userSharedPref;
-    SharedPreferences.Editor userSharedPrefEditor;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor sharedPrefEditor;
 
     //Initialize the sharedpreferences for checking the recent date
-    SharedPreferences dateSharedPref;
-    SharedPreferences.Editor dateSharedPrefEditor;
 
     Toolbar toolbar;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +41,8 @@ public class VesiActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
+        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
+        sharedPrefEditor = sharedPref.edit();
     }
 
     @Override
@@ -144,19 +143,17 @@ public class VesiActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //User shared preferences
-        userSharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = userSharedPref.getString("user", "");
+        String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
 
         //Date checking with the recent date in shared preferences
-        dateSharedPref = getSharedPreferences("oldDate", Activity.MODE_PRIVATE);
-        dateSharedPrefEditor = dateSharedPref.edit();
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c);
 
-        String oldFormattedDate = dateSharedPref.getString("oldDate", "");
+        //Get the previous date from shared preferences
+        String oldFormattedDate = sharedPref.getString("oldDate", "");
 
         //Logcat to check the date in memory vs the current date
         Log.d(TAG, "old date: " + oldFormattedDate);
@@ -167,8 +164,8 @@ public class VesiActivity extends AppCompatActivity {
             user.vettaJuotuReset();
         }
         oldFormattedDate = formattedDate;
-        dateSharedPrefEditor.putString("oldDate", oldFormattedDate);
-        dateSharedPrefEditor.commit();
+        sharedPrefEditor.putString("oldDate", oldFormattedDate);
+        sharedPrefEditor.commit();
         paivitaVesi(user);
     }
 
@@ -187,11 +184,10 @@ public class VesiActivity extends AppCompatActivity {
     }
 
     protected void addUserToSharedPref() {
-        userSharedPrefEditor = userSharedPref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(user);
-        userSharedPrefEditor.putString("user", json);
-        userSharedPrefEditor.commit();
+        sharedPrefEditor.putString("user", json);
+        sharedPrefEditor.commit();
     }
 
 }

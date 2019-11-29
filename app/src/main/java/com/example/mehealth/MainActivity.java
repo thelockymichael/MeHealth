@@ -13,9 +13,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     User user;
     User emptyUser;
     SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
+    SharedPreferences rootPreferences;
+    SharedPreferences.Editor sharedPrefEditor;
     Toolbar toolbar;
 
     @Override
@@ -37,13 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         emptyUser = new User();
         Gson gson = new Gson();
-        sharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
+
+        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
+        sharedPrefEditor = sharedPref.edit();
 
         String defUserJson = gson.toJson(emptyUser);
         String userJson = sharedPref.getString("user", defUserJson);
-        editor = sharedPref.edit();
-        editor.putString("user", userJson);
-        editor.commit();
+        sharedPrefEditor.putString("user", userJson);
+        sharedPrefEditor.commit();
 
     }
 
@@ -67,6 +74,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("H");
+        String formattedDate = df.format(c);
+        int aika = Integer.parseInt(formattedDate);
+        String tervehdys = "";
+        if (aika >= 21 || aika <= 3) tervehdys = "Öitä";
+        else if (aika <= 10) tervehdys = "Huomenta";
+        else if (aika <= 17) tervehdys = "Päivää";
+        else tervehdys = "Iltaa";
+
+        String nimi = sharedPref.getString("nimi", "perkele");
+
+        TextView textTervehdys = findViewById(R.id.textTervehdys);
+        textTervehdys.setText(tervehdys + "\n" + nimi);
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
 
         //Asettaa nykyisen välilehden ikonin valituksi
@@ -111,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPref = getSharedPreferences("user", Activity.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
@@ -122,11 +145,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        editor = sharedPref.edit();
+        sharedPrefEditor = sharedPref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(user);
-        editor.putString("user", json);
-        editor.commit();
+        sharedPrefEditor.putString("user", json);
+        sharedPrefEditor.commit();
     }
 
     public void btnSettings_onClick(View view) {
