@@ -64,4 +64,8 @@ public class User  {
         return this.vettaJuotuTanaan;
     }
 
+    public void resetWeightHistory() {
+        this.weightHistory.clear();
+    }
+
 }

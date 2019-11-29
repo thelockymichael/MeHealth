@@ -32,6 +32,7 @@
         app:useSimpleSummaryProvider="true" />
 
     <EditTextPreference
+        android:inputType="number"
         app:defaultValue="20"
         app:dialogTitle="Ikä"
         app:key="ika"
@@ -39,6 +40,8 @@
         app:title="Ikä"/>
 
     <EditTextPreference
+        android:inputType="numberDecimal"
+        android:digits="0123456789"
         app:defaultValue="180"
         app:dialogTitle="Pituus"
         app:key="pituus"

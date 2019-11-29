@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
-
-
-
     }
 
     @Override
@@ -65,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings:
                 Intent asetukset = new Intent(this, AsetuksetActivity.class);
                 startActivity(asetukset);
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }

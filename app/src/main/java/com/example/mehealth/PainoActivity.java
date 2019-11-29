@@ -165,8 +165,12 @@ public class PainoActivity extends AppCompatActivity {
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
+        series.setTitle("Paino");
+        series.setDrawDataPoints(true);
+        series.setDataPointsRadius(10);
         graph.addSeries(series);
         graph.setTitle("Paino");
+        graph.getViewport().setScalable(true);
     }
 
     protected void updateUI(User user) {
