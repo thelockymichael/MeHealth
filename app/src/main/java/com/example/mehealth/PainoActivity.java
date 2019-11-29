@@ -23,9 +23,9 @@ import com.google.gson.Gson;
 public class PainoActivity extends AppCompatActivity {
     private static final String TAG = "PainoActivity";
     User user;
+    Toolbar toolbar;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class PainoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String msg=" ";
         switch (item.getItemId()) {
             case R.id.settings:
                 Intent asetukset = new Intent(this, AsetuksetActivity.class);

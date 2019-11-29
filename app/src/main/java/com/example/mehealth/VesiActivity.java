@@ -25,14 +25,11 @@ import java.util.Date;
 
 public class VesiActivity extends AppCompatActivity {
     private static final String TAG = "VesiActivity";
-    //Initialize sharedpreferences for getting the user from sharedpreferences
+
     User user;
+    Toolbar toolbar;
     SharedPreferences sharedPref;
     SharedPreferences.Editor sharedPrefEditor;
-
-    //Initialize the sharedpreferences for checking the recent date
-
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +50,6 @@ public class VesiActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String msg=" ";
         switch (item.getItemId()) {
             case R.id.settings:
                 Intent asetukset = new Intent(this, AsetuksetActivity.class);

@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class AsetuksetActivity extends AppCompatActivity {
-
+    private static final String TAG = "AsetuksetActivity";
     Toolbar toolbar;
 
     @Override

@@ -25,32 +25,32 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private ViewPager mViewPager;
     User user;
     User emptyUser;
-    SharedPreferences sharedPref;
-    SharedPreferences rootPreferences;
-    SharedPreferences.Editor sharedPrefEditor;
     Toolbar toolbar;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor sharedPrefEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.toolbarTop);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("MeHealth");
-
-        emptyUser = new User();
-        Gson gson = new Gson();
 
         sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
         sharedPrefEditor = sharedPref.edit();
+        toolbar = findViewById(R.id.toolbarTop);
 
+        emptyUser = new User();
+        Gson gson = new Gson();
         String defUserJson = gson.toJson(emptyUser);
         String userJson = sharedPref.getString("user", defUserJson);
         sharedPrefEditor.putString("user", userJson);
         sharedPrefEditor.commit();
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("MeHealth");
+
+
 
     }
 
@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String msg=" ";
         switch (item.getItemId()) {
             case R.id.settings:
                 Intent asetukset = new Intent(this, AsetuksetActivity.class);

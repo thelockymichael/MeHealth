@@ -22,9 +22,9 @@ import com.google.gson.Gson;
 public class MielialaActivity extends AppCompatActivity {
     private static final String TAG = "MielialaActivity";
     User user;
+    Toolbar toolbar;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,7 +100,6 @@ public class MielialaActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String msg=" ";
         switch (item.getItemId()) {
             case R.id.settings:
                 Intent asetukset = new Intent(this, AsetuksetActivity.class);
