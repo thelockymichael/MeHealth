@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Gets the shared preferences. If there is no user in shared preferences, saves a default value user into shared preferences
         sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
         sharedPrefEditor = sharedPref.edit();
         emptyUser = new User();
@@ -44,17 +45,20 @@ public class MainActivity extends AppCompatActivity {
         sharedPrefEditor.putString("user", userJson);
         sharedPrefEditor.commit();
 
+        //Sets up the top toolbar
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
     }
 
+    //Creates the toolbar menu according to toolbar_menu file in menu folder
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
 
+    //Listener for the settings icon in the top toolbar. Opens the settings activity if clicked
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -72,21 +76,21 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
 
-        //Asettaa nykyisen välilehden ikonin valituksi
+        //Highlight the icon for the current tab
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
 
-        //Tarkistaa jos jotain alavalikon ikonia painetaan
+        //Checks if a navigation icon is pressed
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
-                        //Nykyisen välilehden ikonin klikkaaminen ei tee mitään
+                        //Clicking the current activitys icon does nothing
                         break;
                     case R.id.ic_attach_money:
-                        //Riippuen ikonista uusi intent ohjautuu oikeaan activityyn
+                        //Depending on the icon clicked, starts the corresponding activity
                         Intent weight = new Intent(MainActivity.this, PainoActivity.class);
                         startActivity(weight.addFlags(weight.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
@@ -124,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("H");
         String formattedDate = df.format(date);
 
+        //Based on the hour, the welcome string changes appropriately
         int time = Integer.parseInt(formattedDate);
         String hello;
         if (time >= 21 || time <= 3) hello = "Öitä";
@@ -131,8 +136,10 @@ public class MainActivity extends AppCompatActivity {
         else if (time <= 17) hello = "Päivää";
         else hello = "Iltaa";
 
+        //Takes the name set in settings from shared preferences
         String name = sharedPref.getString("name", "perkele");
 
+        //Sets the textviews
         TextView textHello = findViewById(R.id.textHello);
         TextView textWaterDrankToday = findViewById(R.id.textWaterDrankToday);
         textHello.setText(hello + "\n" + name);
@@ -145,11 +152,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        //Commits the current user into shared preferences and kills the activity
         sharedPrefEditor = sharedPref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(user);
         sharedPrefEditor.putString("user", json);
         sharedPrefEditor.commit();
+        finish();
     }
 
 }
