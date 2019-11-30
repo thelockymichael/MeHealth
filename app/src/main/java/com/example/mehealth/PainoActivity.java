@@ -102,7 +102,6 @@ public class PainoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonLisaaArvoPaino(v);
                 updateUI(user);
-
             }
         });
     }
@@ -165,11 +164,11 @@ public class PainoActivity extends AppCompatActivity {
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
-        series.setTitle("Paino");
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
         graph.addSeries(series);
         graph.setTitle("Paino");
+        graph.getViewport().setMaxX(50);
         graph.getViewport().setScalable(true);
     }
 
