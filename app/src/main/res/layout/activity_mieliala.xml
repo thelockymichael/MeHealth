@@ -35,10 +35,9 @@
                 android:id="@+id/seekbarMieliala"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
                 android:max="10"
                 android:progress="5"
-                app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                app:layout_constraintBottom_toTopOf="@+id/buttonAddMood"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -65,7 +64,6 @@
                 android:id="@+id/textMieliala"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="20sp"
@@ -86,6 +84,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.75" />
+
+            <Button
+                android:id="@+id/buttonAddMood"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="64dp"
+                android:text="Lisää mieliala"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ public class MielialaActivity extends AppCompatActivity {
     Toolbar toolbar;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+    SharedPref perkele;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,12 +37,15 @@ public class MielialaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
 
+        perkele = new SharedPref(getApplicationContext());
+
         final ImageView imageMieliala = findViewById(R.id.imageMieliala);
         final TextView textMieliala = findViewById(R.id.textMieliala);
         textMieliala.setText("5");
         imageMieliala.setImageResource(R.drawable.smiley10);
 
-        ((SeekBar)findViewById(R.id.seekbarMieliala)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        final SeekBar seekBarMood = findViewById(R.id.seekbarMieliala);
+        seekBarMood.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textMieliala.setText(Integer.toString(progress));
@@ -82,12 +88,19 @@ public class MielialaActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Toast.makeText(getApplicationContext(),"terve",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ((Button)findViewById(R.id.buttonAddMood)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int progress = ((SeekBar)findViewById(R.id.seekbarMieliala)).getProgress();
+                user.addMoodRecord(progress);
             }
         });
     }
@@ -151,20 +164,24 @@ public class MielialaActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
+        user = perkele.getUser();
+
+        /*sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPref.getString("user", "");
-        user = gson.fromJson(json, User.class);
+        user = gson.fromJson(json, User.class);*/
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        editor = sharedPref.edit();
+        perkele.saveUser(user);
+
+        /*editor = sharedPref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(user);
         editor.putString("user", json);
-        editor.commit();
+        editor.commit();*/
         finish();
     }
 }

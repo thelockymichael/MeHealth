@@ -129,9 +129,9 @@ public class PainoActivity extends AppCompatActivity {
         TextView alaPaineText = findViewById(R.id.textViewAlaPaine);
         TextView ylaPaineText = findViewById(R.id.textViewYlaPaine);
 
-        painoText.setText("paino\n" + user.getWeightNow());
-        alaPaineText.setText("alaP\n" + user.getAlaPaineNow());
-        ylaPaineText.setText("ylaP\n" + user.getYlaPaineNow());
+        painoText.setText("paino\n" + user.getLatestWeight());
+        alaPaineText.setText("alaP\n" + user.getLatestLowerBloodPressure());
+        ylaPaineText.setText("ylaP\n" + user.getLatestUpperBloodPressure());
     }
     public void buttonLisaaArvoPaino(View view) {
         EditText painoEditText = findViewById(R.id.editTextPaino);
@@ -143,8 +143,8 @@ public class PainoActivity extends AppCompatActivity {
         String ylaPaineText = ylaPaineEditText.getText().toString();
 
         user.addWeightRecord(Integer.parseInt(painoText));
-        user.addAlapaineRecord(Integer.parseInt(alaPaineText));
-        user.addYlaPaineRecord(Integer.parseInt(ylaPaineText));
+        user.addLowerBloodPressureRecord(Integer.parseInt(alaPaineText));
+        user.addUpperBloodPressureRecord(Integer.parseInt(ylaPaineText));
     }
 
     protected void addUserToSharedPref() {
@@ -156,7 +156,7 @@ public class PainoActivity extends AppCompatActivity {
     }
 
     protected void updateGraph(User user) {
-        ArrayList<Integer> weightHistory = user.getWeightHistory();
+        ArrayList<Integer> weightHistory = user.getWeightHistoryList();
         DataPoint[] data = new DataPoint[weightHistory.size()];
 
         for (int i = 0; i < weightHistory.size(); i++) {

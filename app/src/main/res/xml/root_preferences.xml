@@ -19,7 +19,7 @@
 
 
     <EditTextPreference
-        app:key="nimi"
+        app:key="name"
         app:title="@string/nimi_title"
         app:useSimpleSummaryProvider="true" />
 

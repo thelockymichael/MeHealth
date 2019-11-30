@@ -3,7 +3,6 @@ package com.example.mehealth;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -60,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent asetukset = new Intent(this, AsetuksetActivity.class);
-                startActivity(asetukset);
+                Intent settings = new Intent(this, AsetuksetActivity.class);
+                startActivity(settings);
                 finish();
         }
         return super.onOptionsItemSelected(item);
@@ -88,23 +87,23 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.ic_attach_money:
                         //Riippuen ikonista uusi intent ohjautuu oikeaan activityyn
-                        Intent paino = new Intent(MainActivity.this, PainoActivity.class);
-                        startActivity(paino.addFlags(paino.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent weight = new Intent(MainActivity.this, PainoActivity.class);
+                        startActivity(weight.addFlags(weight.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
-                        Intent vesi = new Intent(MainActivity.this, VesiActivity.class);
-                        startActivity(vesi.addFlags(vesi.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent water = new Intent(MainActivity.this, VesiActivity.class);
+                        startActivity(water.addFlags(water.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
-                        Intent liikunta = new Intent(MainActivity.this, LiikuntaActivity.class);
-                        startActivity(liikunta.addFlags(liikunta.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent exercise = new Intent(MainActivity.this, LiikuntaActivity.class);
+                        startActivity(exercise.addFlags(exercise.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
-                        Intent mieliala = new Intent(MainActivity.this, MielialaActivity.class);
-                        startActivity(mieliala.addFlags(mieliala.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent mood = new Intent(MainActivity.this, MielialaActivity.class);
+                        startActivity(mood.addFlags(mood.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
                 return false;
@@ -119,24 +118,27 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPref.getString("user", "");
         user = gson.fromJson(json, User.class);
-        Log.d(TAG, "onResume: juotu " + user.getJuotuVesi());
+        Log.d(TAG, "onResume: juotu " + user.getWaterDrankToday());
 
-        Date c = Calendar.getInstance().getTime();
+        Date date = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("H");
-        String formattedDate = df.format(c);
-        int aika = Integer.parseInt(formattedDate);
-        String tervehdys = "";
-        if (aika >= 21 || aika <= 3) tervehdys = "Öitä";
-        else if (aika <= 10) tervehdys = "Huomenta";
-        else if (aika <= 17) tervehdys = "Päivää";
-        else tervehdys = "Iltaa";
+        String formattedDate = df.format(date);
 
-        String nimi = sharedPref.getString("nimi", "perkele");
+        int time = Integer.parseInt(formattedDate);
+        String hello;
+        if (time >= 21 || time <= 3) hello = "Öitä";
+        else if (time <= 10) hello = "Huomenta";
+        else if (time <= 17) hello = "Päivää";
+        else hello = "Iltaa";
 
-        TextView textTervehdys = findViewById(R.id.textTervehdys);
-        TextView textVettaJuotu = findViewById(R.id.textVettaJuotu);
-        textTervehdys.setText(tervehdys + "\n" + nimi);
-        textVettaJuotu.setText("Tänään juotu " + user.getJuotuVesi() + "dl");
+        String name = sharedPref.getString("name", "perkele");
+
+        TextView textHello = findViewById(R.id.textHello);
+        TextView textWaterDrankToday = findViewById(R.id.textWaterDrankToday);
+        textHello.setText(hello + "\n" + name);
+        textWaterDrankToday.setText("Tänään juotu " + user.getWaterDrankToday() + "dl");
+
+        ((TextView)findViewById(R.id.textMoodNow)).setText("Viimeisin mielialasi oli\n" + user.getLatestMoodRecord());
 
     }
 
@@ -148,11 +150,6 @@ public class MainActivity extends AppCompatActivity {
         String json = gson.toJson(user);
         sharedPrefEditor.putString("user", json);
         sharedPrefEditor.commit();
-    }
-
-    public void btnSettings_onClick(View view) {
-        Intent intent = new Intent(this, AsetuksetActivity.class);
-        startActivity(intent);
     }
 
 }

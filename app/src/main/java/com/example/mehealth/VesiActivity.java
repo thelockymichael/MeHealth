@@ -40,6 +40,7 @@ public class VesiActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("MeHealth");
         sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
         sharedPrefEditor = sharedPref.edit();
+
     }
 
     @Override
@@ -106,28 +107,28 @@ public class VesiActivity extends AppCompatActivity {
         button1dl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.juoVetta(1);
+                user.drinkWater(1);
                 paivitaVesi(user);
             }
         });
         button2dl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.juoVetta(2);
+                user.drinkWater(2);
                 paivitaVesi(user);
             }
         });
         button5dl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.juoVetta(5);
+                user.drinkWater(5);
                 paivitaVesi(user);
             }
         });
         button1l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.juoVetta(10);
+                user.drinkWater(10);
                 paivitaVesi(user);
             }
         });
@@ -157,7 +158,7 @@ public class VesiActivity extends AppCompatActivity {
 
         if (!formattedDate.equals(oldFormattedDate)) {
             Log.d(TAG, "date: reset vesi yo");
-            user.vettaJuotuReset();
+            user.waterDrankTodayReset();
         }
         oldFormattedDate = formattedDate;
         sharedPrefEditor.putString("oldDate", oldFormattedDate);
@@ -174,8 +175,8 @@ public class VesiActivity extends AppCompatActivity {
 
     protected void paivitaVesi(User user) {
         TextView juotuMaara = findViewById(R.id.juotuMaara);
-        juotuMaara.setText(user.getJuotuVesi() + "dl");
-        Log.d(TAG, "paivitaVesi: juotu" + user.getJuotuVesi());
+        juotuMaara.setText(user.getWaterDrankToday() + "dl");
+        Log.d(TAG, "paivitaVesi: juotu" + user.getWaterDrankToday());
         addUserToSharedPref();
     }
 
