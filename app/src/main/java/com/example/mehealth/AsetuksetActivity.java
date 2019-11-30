@@ -56,7 +56,7 @@ public class AsetuksetActivity extends AppCompatActivity {
 
         @Override
         public boolean onPreferenceTreeClick(Preference preference) {
-            if (preference.getKey().equals("buttonResetPainoHistoria")) {
+            if (preference.getKey().equals("buttonResetWeight")) {
                 SharedPreferences sharedPref = getActivity().getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
                 Gson gson = new Gson();
                 String json = sharedPref.getString("user", "");
@@ -67,7 +67,19 @@ public class AsetuksetActivity extends AppCompatActivity {
                 json = gson.toJson(user);
                 sharedPrefEditor.putString("user", json);
                 sharedPrefEditor.commit();
-                Toast.makeText(getContext().getApplicationContext(),"terve",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext().getApplicationContext(),"Paino nollattu",Toast.LENGTH_SHORT).show();
+            } else if (preference.getKey().equals("buttonResetEverything")) {
+                SharedPreferences sharedPref = getActivity().getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
+                Gson gson = new Gson();
+                String json = sharedPref.getString("user", "");
+                User user = gson.fromJson(json, User.class);
+                user.resetEverything();
+
+                SharedPreferences.Editor sharedPrefEditor = sharedPref.edit();
+                json = gson.toJson(user);
+                sharedPrefEditor.putString("user", json);
+                sharedPrefEditor.commit();
+                Toast.makeText(getContext().getApplicationContext(),"Kaikki nollattu",Toast.LENGTH_SHORT).show();
             }
             return super.onPreferenceTreeClick(preference);
         }

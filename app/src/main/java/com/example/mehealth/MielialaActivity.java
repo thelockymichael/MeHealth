@@ -92,7 +92,6 @@ public class MielialaActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(getApplicationContext(),"terve",Toast.LENGTH_SHORT).show();
             }
         });
 

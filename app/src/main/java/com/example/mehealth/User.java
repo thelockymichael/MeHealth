@@ -87,4 +87,12 @@ public class User  {
         this.weightHistory.clear();
     }
 
+    public void resetEverything() {
+        this.weightHistory.clear();
+        this.lowerBloodPressureHistory.clear();
+        this.upperBloodPressureHistory.clear();
+        this.moodHistory.clear();
+        this.waterDrankToday = 0;
+    }
+
 }

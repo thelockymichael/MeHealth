@@ -49,9 +49,14 @@
         app:title="Pituus"/>
 
     <Preference
-        android:title="Reset paino"
-        android:key="buttonResetPainoHistoria"
+        android:title="Nollaa paino"
+        android:key="buttonResetWeight"
         android:summary="Tyhjentää painohistorian"/>
+
+    <Preference
+        android:title="Nollaa kaikki"
+        android:key="buttonResetEverything"
+        android:summary="Nollaa tallenetut arvot"/>
 
 
 
