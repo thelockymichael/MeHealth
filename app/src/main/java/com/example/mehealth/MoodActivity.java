@@ -93,7 +93,7 @@ public class MoodActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int progress = ((SeekBar)findViewById(R.id.seekbarMieliala)).getProgress();
-                user.addMoodRecord(progress);
+                user.mood.addMoodRecord(progress);
             }
         });
     }
@@ -108,8 +108,8 @@ public class MoodActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent asetukset = new Intent(this, SettingsActivity.class);
-                startActivity(asetukset);
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
     }

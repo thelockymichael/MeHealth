@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
 
-        //Checks if a navigation icon is pressed
+        //Checks if a bottom navigation icon is pressed
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -122,9 +122,9 @@ public class MainActivity extends AppCompatActivity {
         TextView textHello = findViewById(R.id.textHello);
         TextView textWaterDrankToday = findViewById(R.id.textWaterDrankToday);
         textHello.setText(hello + "\n" + name);
-        textWaterDrankToday.setText("Tänään juotu " + user.getWaterDrankToday() + "dl");
+        textWaterDrankToday.setText("Tänään juotu " + user.water.getWaterDrankToday() + "dl");
 
-        ((TextView)findViewById(R.id.textMoodNow)).setText("Viimeisin mielialasi oli\n" + user.getLatestMoodRecord());
+        ((TextView)findViewById(R.id.textMoodNow)).setText("Viimeisin mielialasi oli\n" + user.mood.getLatestMoodRecord());
 
     }
 

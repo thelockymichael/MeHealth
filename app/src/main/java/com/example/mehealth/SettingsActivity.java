@@ -45,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (preference.getKey().equals("buttonResetWeight")) {
                 SharedPref pref = new SharedPref(getContext());
                 User user = pref.getUser();
-                user.resetWeightHistory();
+                user.weight.resetWeightHistory();
                 pref.saveUser(user);
             } else if (preference.getKey().equals("buttonResetEverything")) {
                 SharedPref pref = new SharedPref(getContext());

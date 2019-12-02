@@ -48,8 +48,8 @@ public class WaterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent asetukset = new Intent(this, SettingsActivity.class);
-                startActivity(asetukset);
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -102,28 +102,28 @@ public class WaterActivity extends AppCompatActivity {
         button1dl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.drinkWater(1);
+                user.water.drinkWater(1);
                 paivitaVesi(user);
             }
         });
         button2dl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.drinkWater(2);
+                user.water.drinkWater(2);
                 paivitaVesi(user);
             }
         });
         button5dl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.drinkWater(5);
+                user.water.drinkWater(5);
                 paivitaVesi(user);
             }
         });
         button1l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.drinkWater(10);
+                user.water.drinkWater(10);
                 paivitaVesi(user);
             }
         });
@@ -151,7 +151,7 @@ public class WaterActivity extends AppCompatActivity {
 
         if (!formattedDate.equals(oldFormattedDate)) {
             Log.d(TAG, "date: reset vesi yo");
-            user.waterDrankTodayReset();
+            user.water.waterDrankTodayReset();
         }
         oldFormattedDate = formattedDate;
         pref.putString("oldDate", oldFormattedDate);
@@ -167,8 +167,8 @@ public class WaterActivity extends AppCompatActivity {
 
     protected void paivitaVesi(User user) {
         TextView juotuMaara = findViewById(R.id.juotuMaara);
-        juotuMaara.setText(user.getWaterDrankToday() + "dl");
-        Log.d(TAG, "paivitaVesi: juotu" + user.getWaterDrankToday());
+        juotuMaara.setText(user.water.getWaterDrankToday() + "dl");
+        Log.d(TAG, "paivitaVesi: juotu" + user.water.getWaterDrankToday());
         pref.saveUser(user);
     }
 

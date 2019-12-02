@@ -1,0 +1,26 @@
+package com.example.mehealth;
+
+import java.util.ArrayList;
+
+public class Mood {
+    private ArrayList<Integer> moodHistory;
+
+    public Mood() {
+        moodHistory = new ArrayList<>();
+    }
+
+    public int getLatestMoodRecord() {
+        if (moodHistory.size() == 0) {
+            return 0;
+        }
+        return moodHistory.get(moodHistory.size() - 1);
+    }
+
+    public void addMoodRecord(int mood) {
+        this.moodHistory.add(mood);
+    }
+
+    public void clear() {
+        this.moodHistory.clear();
+    }
+}

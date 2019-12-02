@@ -48,8 +48,8 @@ public class WeightActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent asetukset = new Intent(this, SettingsActivity.class);
-                startActivity(asetukset);
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -122,9 +122,9 @@ public class WeightActivity extends AppCompatActivity {
         TextView alaPaineText = findViewById(R.id.textViewAlaPaine);
         TextView ylaPaineText = findViewById(R.id.textViewYlaPaine);
 
-        painoText.setText("paino\n" + user.getLatestWeight());
-        alaPaineText.setText("alaP\n" + user.getLatestLowerBloodPressure());
-        ylaPaineText.setText("ylaP\n" + user.getLatestUpperBloodPressure());
+        painoText.setText("paino\n" + user.weight.getLatestWeight());
+        alaPaineText.setText("alaP\n" + user.bloodPressure.getLatestLowerBloodPressure());
+        ylaPaineText.setText("ylaP\n" + user.bloodPressure.getLatestUpperBloodPressure());
     }
     public void buttonAddValues(View view) {
         EditText painoEditText = findViewById(R.id.editTextPaino);
@@ -134,13 +134,13 @@ public class WeightActivity extends AppCompatActivity {
         String painoText = painoEditText.getText().toString();
         String alaPaineText = alaPaineEditText.getText().toString();
         String ylaPaineText = ylaPaineEditText.getText().toString();
-        if (!painoText.isEmpty()) user.addWeightRecord(Integer.parseInt(painoText));
-        if (!alaPaineText.isEmpty()) user.addLowerBloodPressureRecord(Integer.parseInt(alaPaineText));
-        if (!ylaPaineText.isEmpty()) user.addUpperBloodPressureRecord(Integer.parseInt(ylaPaineText));
+        if (!painoText.isEmpty()) user.weight.addWeightRecord(Integer.parseInt(painoText));
+        if (!alaPaineText.isEmpty()) user.bloodPressure.addLowerBloodPressureRecord(Integer.parseInt(alaPaineText));
+        if (!ylaPaineText.isEmpty()) user.bloodPressure.addUpperBloodPressureRecord(Integer.parseInt(ylaPaineText));
     }
 
     protected void updateGraph(User user) {
-        ArrayList<Integer> weightHistory = user.getWeightHistoryList();
+        ArrayList<Integer> weightHistory = user.weight.getWeightHistoryList();
         DataPoint[] data = new DataPoint[weightHistory.size()];
 
         for (int i = 0; i < weightHistory.size(); i++) {
