@@ -60,7 +60,6 @@ public class WaterActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //Initialize the bottom navigation bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         MainActivity.menuIconHighlight(bottomNavigationView, 2);
 
@@ -95,32 +94,28 @@ public class WaterActivity extends AppCompatActivity {
         });
 
         //Set the onClickListeners for the imagebuttons to add water drank throughout the day
-        ImageButton button1dl = findViewById(R.id.button1dl);
-        ImageButton button2dl = findViewById(R.id.button2dl);
-        ImageButton button5dl = findViewById(R.id.button5dl);
-        ImageButton button1l = findViewById(R.id.button1l);
-        button1dl.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button1dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.water.drinkWater(1);
                 paivitaVesi(user);
             }
         });
-        button2dl.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button2dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.water.drinkWater(2);
                 paivitaVesi(user);
             }
         });
-        button5dl.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button5dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.water.drinkWater(5);
                 paivitaVesi(user);
             }
         });
-        button1l.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button1l).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 user.water.drinkWater(10);
@@ -146,10 +141,13 @@ public class WaterActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Updates the textview containing the amount of water drank today.
+     * @param user  User object in use.
+     */
     protected void paivitaVesi(User user) {
         TextView juotuMaara = findViewById(R.id.juotuMaara);
         juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday(user, pref)));
-        Log.d(TAG, "paivitaVesi: juotu" + user.water.getWaterDrankToday(user, pref));
         pref.saveUser(user);
     }
 

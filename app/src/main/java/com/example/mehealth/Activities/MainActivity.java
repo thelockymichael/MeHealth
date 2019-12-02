@@ -21,6 +21,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * Home screen of the app.
+ * Welcomes the user and contains recent information about the user.
+ * Always has one task of the activity open so every backclick redirects to the main activity
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -62,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-
         //Highlight the icon for the current tab
         menuIconHighlight(bottomNavigationView, 0);
 
@@ -103,9 +107,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //Always gets the latest user from shared preferences when activity resumes
         user = pref.getUser();
 
-        //Takes the name set in settings from shared preferences
+        //Takes the user's name that is set in settings from shared preferences
         String name = pref.getString("name", "tuntematon");
 
         //Sets the textviews
@@ -120,16 +125,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        //Saves the user into shared preferences whenever the activity is paused
         pref.saveUser(user);
     }
 
+    /**
+     * Decides the greeting based on time of day taken from the phone.
+     * @return  A greeting string
+     */
     public String greeting() {
+        //Gets the date and time from android
         Date date = Calendar.getInstance().getTime();
+        //Sets the wanted format to only contain the current hour
         SimpleDateFormat dateFormat = new SimpleDateFormat("H", Locale.getDefault());
+        //Formats the string to only contain the current hour
         String formattedDate = dateFormat.format(date);
 
+        //Converts the hour string into an integer
         int time = Integer.parseInt(formattedDate);
         String greeting;
+        //Depending on the time of day the greeting string changes
         if (time >= 21 || time <= 3) greeting = "Öitä";
         else if (time <= 10) greeting = "Huomenta";
         else if (time <= 17) greeting = "Päivää";
@@ -137,6 +152,12 @@ public class MainActivity extends AppCompatActivity {
         return greeting;
     }
 
+    /**
+     * A method that lights up the bottom navigation menu item depending on which activity is open.
+     * Called from every activity that has the bottom navigation toolbar.
+     * @param bottomNavigationView  The bottom navigation toolbar
+     * @param item                  The number of the activity in the menu list.
+     */
     public static void menuIconHighlight(BottomNavigationView bottomNavigationView, int item) {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(item);

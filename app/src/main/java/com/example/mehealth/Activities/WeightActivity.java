@@ -119,28 +119,41 @@ public class WeightActivity extends AppCompatActivity {
         finish();
     }
 
-    private void paivitaTextit(User user) {
-        TextView painoText = findViewById(R.id.textViewPaino);
-        TextView alaPaineText = findViewById(R.id.textViewAlaPaine);
-        TextView ylaPaineText = findViewById(R.id.textViewYlaPaine);
+    /**
+     * Updates the TextViews with the latest values from weight and blood pressures.
+     * @param user
+     */
+    private void updateText(User user) {
+        TextView weightText = findViewById(R.id.textViewWeight);
+        TextView lowerBPText = findViewById(R.id.textViewLowerBP);
+        TextView upperBPText = findViewById(R.id.textViewUpperBP);
 
-        painoText.setText(String.format(Locale.getDefault(), "paino\n%d", user.weight.getLatestWeight()));
-        alaPaineText.setText(String.format(Locale.getDefault(), "alaP\n%d", user.bloodPressure.getLatestLowerBloodPressure()));
-        ylaPaineText.setText(String.format(Locale.getDefault(), "ylaP\n%d", user.bloodPressure.getLatestUpperBloodPressure()));
+        weightText.setText(String.format(Locale.getDefault(), "paino\n%d", user.weight.getLatestWeight()));
+        lowerBPText.setText(String.format(Locale.getDefault(), "alaP\n%d", user.bloodPressure.getLatestLowerBP()));
+        upperBPText.setText(String.format(Locale.getDefault(), "ylaP\n%d", user.bloodPressure.getLatestUpperBP()));
     }
+
+    /**
+     * Gets the values from user input and saves them into the user's history.
+     * @param view
+     */
     public void buttonAddValues(View view) {
-        EditText painoEditText = findViewById(R.id.editTextPaino);
-        EditText alaPaineEditText = findViewById(R.id.editTextAlaPaine);
-        EditText ylaPaineEditText = findViewById(R.id.editTextYlaPaine);
+        EditText editTextWeight = findViewById(R.id.editTextPaino);
+        EditText editTextLowerBP = findViewById(R.id.editTextAlaPaine);
+        EditText editTextUpperBP = findViewById(R.id.editTextYlaPaine);
 
-        String painoText = painoEditText.getText().toString();
-        String alaPaineText = alaPaineEditText.getText().toString();
-        String ylaPaineText = ylaPaineEditText.getText().toString();
-        if (!painoText.isEmpty()) user.weight.addWeightRecord(Integer.parseInt(painoText));
-        if (!alaPaineText.isEmpty()) user.bloodPressure.addLowerBloodPressureRecord(Integer.parseInt(alaPaineText));
-        if (!ylaPaineText.isEmpty()) user.bloodPressure.addUpperBloodPressureRecord(Integer.parseInt(ylaPaineText));
+        String weight = editTextWeight.getText().toString();
+        String lowerBP = editTextLowerBP.getText().toString();
+        String upperBP = editTextUpperBP.getText().toString();
+        if (!weight.isEmpty()) user.weight.addWeightRecord(Integer.parseInt(weight));
+        if (!lowerBP.isEmpty()) user.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP));
+        if (!upperBP.isEmpty()) user.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP));
     }
 
+    /**
+     * Updates the weight graph with the newest values
+     * @param user
+     */
     protected void updateGraph(User user) {
         ArrayList<Integer> weightHistory = user.weight.getWeightHistoryList();
         DataPoint[] data = new DataPoint[weightHistory.size()];
@@ -149,7 +162,7 @@ public class WeightActivity extends AppCompatActivity {
             data[i] = new DataPoint(i , weightHistory.get(i));
         }
 
-        GraphView graph = findViewById(R.id.graph);
+        GraphView graph = findViewById(R.id.weightGraph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
@@ -159,8 +172,12 @@ public class WeightActivity extends AppCompatActivity {
         graph.getViewport().setScalable(true);
     }
 
+    /**
+     * Updates the text and graph with the latest values.
+     * @param user
+     */
     protected void updateUI(User user) {
-        paivitaTextit(user);
+        updateText(user);
         updateGraph(user);
     }
 }

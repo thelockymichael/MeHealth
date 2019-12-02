@@ -16,12 +16,17 @@ import com.example.mehealth.R;
 import com.example.mehealth.SharedPref;
 import com.example.mehealth.User.User;
 
+/**
+ * Settings activity containing the preferences fragment.
+ * User can set basic values such as their name and reset the values collected by the app thus far.
+ */
 public class SettingsActivity extends AppCompatActivity {
     //private static final String TAG = "SettingsActivity";
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Default settings for creating a settings activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         getSupportFragmentManager()
@@ -33,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        //Sets the toolbar for the activity
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
@@ -44,14 +50,22 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
         }
 
+        /**
+         * Listens for clicks on the preferences.
+         * If a preference given preference based on their id is clicked, executes the code below.
+         * @param preference    Name of the preference clicked
+         * @return
+         */
         @Override
         public boolean onPreferenceTreeClick(Preference preference) {
             if (preference.getKey().equals("buttonResetWeight")) {
+                //Gets user class from shared preferences and calls the method to reset the weight history.
                 SharedPref pref = new SharedPref(getContext());
                 User user = pref.getUser();
-                user.weight.resetWeightHistory();
+                user.weight.clear();
                 pref.saveUser(user);
             } else if (preference.getKey().equals("buttonResetEverything")) {
+                //Gets the user class from shared preferences and calls the method to reset everything.
                 SharedPref pref = new SharedPref(getContext());
                 User user = pref.getUser();
                 user.resetEverything();
@@ -59,11 +73,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
             return super.onPreferenceTreeClick(preference);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -80,6 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //Replaces the normal settings icon in the toolbar with a backarrow that opens the main activity
         if (item.getItemId() == R.id.backArrow) {
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);

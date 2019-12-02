@@ -6,41 +6,41 @@ import java.util.ArrayList;
  * Keeps track of the user's blood pressure history.
  */
 public class BloodPressure {
-    private ArrayList<Integer> lowerBloodPressureHistory;
-    private ArrayList<Integer> upperBloodPressureHistory;
+    private ArrayList<Integer> lowerBPHistory;
+    private ArrayList<Integer> upperBPHistory;
 
     public BloodPressure() {
-        this.lowerBloodPressureHistory = new ArrayList<>();
-        this.upperBloodPressureHistory = new ArrayList<>();
+        this.lowerBPHistory = new ArrayList<>();
+        this.upperBPHistory = new ArrayList<>();
     }
 
-    public int getLatestLowerBloodPressure() {
-        if (lowerBloodPressureHistory.size() == 0) {
+    public int getLatestLowerBP() {
+        if (lowerBPHistory.size() == 0) {
             return 0;
         }
-        return lowerBloodPressureHistory.get(lowerBloodPressureHistory.size() - 1);
+        return lowerBPHistory.get(lowerBPHistory.size() - 1);
     }
 
-    public int getLatestUpperBloodPressure() {
-        if (upperBloodPressureHistory.size() == 0) {
+    public int getLatestUpperBP() {
+        if (upperBPHistory.size() == 0) {
             return 0;
         }
-        return upperBloodPressureHistory.get(upperBloodPressureHistory.size() - 1);
+        return upperBPHistory.get(upperBPHistory.size() - 1);
     }
 
-    public void addLowerBloodPressureRecord(int lowerBloodPressure) {
-        this.lowerBloodPressureHistory.add(lowerBloodPressure);
+    public void addLowerBPRecord(int lowerBloodPressure) {
+        this.lowerBPHistory.add(lowerBloodPressure);
     }
 
-    public void addUpperBloodPressureRecord(int upperBloodPressure) {
-        this.upperBloodPressureHistory.add(upperBloodPressure);
+    public void addUpperBPRecord(int upperBloodPressure) {
+        this.upperBPHistory.add(upperBloodPressure);
     }
 
     public void clearLowerBP() {
-        lowerBloodPressureHistory.clear();
+        lowerBPHistory.clear();
     }
 
     public void clearUpperBP() {
-        upperBloodPressureHistory.clear();
+        upperBPHistory.clear();
     }
 }

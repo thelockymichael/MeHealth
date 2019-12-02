@@ -38,16 +38,23 @@ public class MoodActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
 
+        //Declares the ImageView and sets the first image to be the neutral smiley corresponding to 5
         final ImageView imageMieliala = findViewById(R.id.imageMieliala);
+        imageMieliala.setImageResource(R.drawable.smiley5);
+        //This TextView contains the current progress of the seekbar
         final TextView textMieliala = findViewById(R.id.textMieliala);
+        //The default value of the seekbar is 5 when opening the activity, hence the textview is set to 5 at start
         textMieliala.setText("5");
-        imageMieliala.setImageResource(R.drawable.smiley10);
 
+        //Declares the seekbar and sets the listener for it
         final SeekBar seekBarMood = findViewById(R.id.seekbarMieliala);
         seekBarMood.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //Depending on the progress of the seekbar, the smiley image changes color
+                //There are smileys ranging from smiley0 being red to smiley10 being green'
+                //smiley5 is the neutral yellow
                 textMieliala.setText(Integer.toString(progress));
                 switch (progress) {
                     case 0:
@@ -90,16 +97,20 @@ public class MoodActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                //These methods are not used but need to be declared
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                //These methods are not used but need to be declared
             }
         });
 
+        //Declares the listener for the button to save a mood state
         findViewById(R.id.buttonAddMood).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Depending on the seekbar's progress, saves a mood state from 0-10 to the user objects mood history
                 int progress = ((SeekBar)findViewById(R.id.seekbarMieliala)).getProgress();
                 user.mood.addMoodRecord(progress);
             }

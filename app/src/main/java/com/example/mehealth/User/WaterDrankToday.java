@@ -36,14 +36,16 @@ public class WaterDrankToday {
         return this.waterDrankToday;
     }
 
-    public void waterDrankTodayReset() {
-        this.waterDrankToday = 0;
-    }
-
     public void clear() {
         waterDrankToday = 0;
     }
 
+    /**
+     * Checks whether a new day has come to reset the water drank.
+     * If current date is different from the date saved before, water drank today is set to 0;
+     * @param user
+     * @param pref
+     */
     public void checkWater(User user, SharedPref pref) {
         //Get the current date
         Date date = Calendar.getInstance().getTime();
@@ -53,10 +55,11 @@ public class WaterDrankToday {
         //Get the previous date from shared preferences
         String oldFormattedDate = pref.getString("oldDate");
 
-
+        //If the current date differs from the old date, water drank today is set to 0
         if (!formattedDate.equals(oldFormattedDate)) {
-            user.water.waterDrankTodayReset();
+            clear();
         }
+        //Saves the current date into shared preferences as the old date
         oldFormattedDate = formattedDate;
         pref.putString("oldDate", oldFormattedDate);
     }

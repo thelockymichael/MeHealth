@@ -36,7 +36,7 @@
 
 
             <TextView
-                android:id="@+id/textViewPaino"
+                android:id="@+id/textViewWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
@@ -49,7 +49,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewAlaPaine"
+                android:id="@+id/textViewLowerBP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -57,12 +57,12 @@
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/textViewYlaPaine"
-                app:layout_constraintStart_toEndOf="@+id/textViewPaino"
+                app:layout_constraintEnd_toStartOf="@+id/textViewUpperBP"
+                app:layout_constraintStart_toEndOf="@+id/textViewWeight"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewYlaPaine"
+                android:id="@+id/textViewUpperBP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -111,7 +111,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAlaPaine" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewLowerBP" />
 
             <EditText
                 android:id="@+id/editTextYlaPaine"
@@ -126,7 +126,7 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <com.jjoe64.graphview.GraphView
-                android:id="@+id/graph"
+                android:id="@+id/weightGraph"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"

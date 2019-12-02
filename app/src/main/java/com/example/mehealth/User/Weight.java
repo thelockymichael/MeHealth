@@ -31,11 +31,7 @@ public class Weight {
         this.weightHistory.add(weight);
     }
 
-    public void resetWeightHistory() {
-        this.weightHistory.clear();
-    }
-
-    void clear() {
+    public void clear() {
         weightHistory.clear();
     }
 

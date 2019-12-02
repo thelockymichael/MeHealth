@@ -18,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Objects;
 
 public class ExerciseActivity extends AppCompatActivity {
-    //private static final String TAG = "ExerciseActivity";
+    private static final String TAG = "ExerciseActivity";
     User user;
     Toolbar toolbar;
     SharedPref pref;
