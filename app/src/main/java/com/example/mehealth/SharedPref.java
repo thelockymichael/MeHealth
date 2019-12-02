@@ -15,13 +15,12 @@ public class SharedPref {
     public SharedPreferences sharedPref;
     public SharedPreferences.Editor sharedPrefEditor;
     private Gson gson;
-    private Context context;
 
     public SharedPref(Context context) {
-        this.context = context;
-        this.sharedPref = this.context.getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
-        this.sharedPrefEditor = this.sharedPref.edit();
-        this.gson = new Gson();
+        sharedPref = context.getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
+        sharedPrefEditor = this.sharedPref.edit();
+        sharedPrefEditor.apply();
+        gson = new Gson();
     }
 
     /**
