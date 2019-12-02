@@ -31,4 +31,14 @@ public class SharedPref {
         sharedPrefEditor.commit();
     }
 
+    public String getString(String key) {
+        String string = sharedPref.getString(key, "");
+        return string;
+    }
+
+    public void putString(String key, String text) {
+        sharedPrefEditor.putString(key, text);
+        sharedPrefEditor.commit();
+    }
+
 }

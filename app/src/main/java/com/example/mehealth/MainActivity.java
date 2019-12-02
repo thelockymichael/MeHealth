@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         else hello = "Iltaa";
 
         //Takes the name set in settings from shared preferences
-        String name = sharedPref.getString("name", "perkele");
+        String name = sharedPref.getString("name", "nimi");
 
         //Sets the textviews
         TextView textHello = findViewById(R.id.textHello);

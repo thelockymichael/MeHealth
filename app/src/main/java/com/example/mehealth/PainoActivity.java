@@ -31,6 +31,7 @@ public class PainoActivity extends AppCompatActivity {
     Toolbar toolbar;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+    SharedPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

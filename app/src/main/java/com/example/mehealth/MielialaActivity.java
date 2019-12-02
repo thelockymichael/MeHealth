@@ -1,6 +1,5 @@
 package com.example.mehealth;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,25 +17,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
 
 public class MielialaActivity extends AppCompatActivity {
     private static final String TAG = "MielialaActivity";
     User user;
     Toolbar toolbar;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
-    SharedPref perkele;
+    SharedPref preferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mieliala);
+        preferences = new SharedPref(getApplicationContext());
+
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
-
-        perkele = new SharedPref(getApplicationContext());
 
         final ImageView imageMieliala = findViewById(R.id.imageMieliala);
         final TextView textMieliala = findViewById(R.id.textMieliala);
@@ -163,24 +158,13 @@ public class MielialaActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        user = perkele.getUser();
-
-        /*sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPref.getString("user", "");
-        user = gson.fromJson(json, User.class);*/
+        user = preferences.getUser();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        perkele.saveUser(user);
-
-        /*editor = sharedPref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        editor.putString("user", json);
-        editor.commit();*/
+        preferences.saveUser(user);
         finish();
     }
 }

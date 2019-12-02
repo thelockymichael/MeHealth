@@ -2,6 +2,10 @@ package com.example.mehealth;
 
 import java.util.ArrayList;
 
+/**
+ * Keeps track of the user's information including the water drank daily,
+ * weight history and blood pressure history.
+ */
 public class User  {
     public ArrayList<Integer> weightHistory;
     private ArrayList<Integer> lowerBloodPressureHistory;
@@ -17,16 +21,27 @@ public class User  {
         this.waterDrankToday = 0;
     }
 
+
+    /**
+     * Adds the water drank to according to the parameter
+     * @param dl    Amount of water to drink
+     */
     public void drinkWater(int dl) {
         this.waterDrankToday += dl;
     }
 
-
-
+    /**
+     * Getter for water drank todya
+     * @return  an int of how much water has been drank today
+     */
     public int getWaterDrankToday() {
         return this.waterDrankToday;
     }
 
+    /**
+     * Getter for latest value in weight history
+     * @return  an int from the weight list's latest value
+     */
     public int getLatestWeight() {
         if (weightHistory.size() == 0) {
             return 0;
@@ -87,6 +102,9 @@ public class User  {
         this.weightHistory.clear();
     }
 
+    /**
+     * Resets every value in the user class that is being tracked
+     */
     public void resetEverything() {
         this.weightHistory.clear();
         this.lowerBloodPressureHistory.clear();

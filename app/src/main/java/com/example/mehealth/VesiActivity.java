@@ -28,19 +28,17 @@ public class VesiActivity extends AppCompatActivity {
 
     User user;
     Toolbar toolbar;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor sharedPrefEditor;
+    SharedPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vesi);
+
+        pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
-        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
-        sharedPrefEditor = sharedPref.edit();
-
     }
 
     @Override
@@ -140,17 +138,15 @@ public class VesiActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //User shared preferences
-        Gson gson = new Gson();
-        String json = sharedPref.getString("user", "");
-        user = gson.fromJson(json, User.class);
+        user = pref.getUser();
 
-        //Date checking with the recent date in shared preferences
-        Date c = Calendar.getInstance().getTime();
+        //Get the current date
+        Date date = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c);
+        String formattedDate = df.format(date);
 
         //Get the previous date from shared preferences
-        String oldFormattedDate = sharedPref.getString("oldDate", "");
+        String oldFormattedDate = pref.getString("oldDate");
 
         //Logcat to check the date in memory vs the current date
         Log.d(TAG, "old date: " + oldFormattedDate);
@@ -161,15 +157,14 @@ public class VesiActivity extends AppCompatActivity {
             user.waterDrankTodayReset();
         }
         oldFormattedDate = formattedDate;
-        sharedPrefEditor.putString("oldDate", oldFormattedDate);
-        sharedPrefEditor.commit();
+        pref.putString("oldDate", oldFormattedDate);
         paivitaVesi(user);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        addUserToSharedPref();
+        pref.saveUser(user);
         finish();
     }
 
@@ -177,14 +172,7 @@ public class VesiActivity extends AppCompatActivity {
         TextView juotuMaara = findViewById(R.id.juotuMaara);
         juotuMaara.setText(user.getWaterDrankToday() + "dl");
         Log.d(TAG, "paivitaVesi: juotu" + user.getWaterDrankToday());
-        addUserToSharedPref();
-    }
-
-    protected void addUserToSharedPref() {
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        sharedPrefEditor.putString("user", json);
-        sharedPrefEditor.commit();
+        pref.saveUser(user);
     }
 
 }
