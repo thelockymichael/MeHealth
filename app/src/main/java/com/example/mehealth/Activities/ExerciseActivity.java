@@ -53,9 +53,7 @@ public class ExerciseActivity extends AppCompatActivity {
         super.onStart();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(3);
-        menuItem.setChecked(true);
+        MainActivity.menuIconHighlight(bottomNavigationView, 3);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

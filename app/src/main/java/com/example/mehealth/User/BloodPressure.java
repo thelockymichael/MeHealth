@@ -2,6 +2,9 @@ package com.example.mehealth.User;
 
 import java.util.ArrayList;
 
+/**
+ * Keeps track of the user's blood pressure history.
+ */
 public class BloodPressure {
     private ArrayList<Integer> lowerBloodPressureHistory;
     private ArrayList<Integer> upperBloodPressureHistory;

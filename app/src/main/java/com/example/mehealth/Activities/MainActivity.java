@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
     User user;
     Toolbar toolbar;
     SharedPref pref;
@@ -64,9 +64,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
 
         //Highlight the icon for the current tab
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(true);
+        menuIconHighlight(bottomNavigationView, 0);
 
         //Checks if a bottom navigation icon is pressed
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -107,35 +105,42 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         user = pref.getUser();
 
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("H", Locale.getDefault());
-        String formattedDate = dateFormat.format(date);
-
-        //Based on the hour, the welcome string changes appropriately
-        int time = Integer.parseInt(formattedDate);
-        String hello;
-        if (time >= 21 || time <= 3) hello = "Öitä";
-        else if (time <= 10) hello = "Huomenta";
-        else if (time <= 17) hello = "Päivää";
-        else hello = "Iltaa";
-
         //Takes the name set in settings from shared preferences
-        String name = pref.getString("name", "nimi");
+        String name = pref.getString("name", "tuntematon");
 
         //Sets the textviews
         TextView textHello = findViewById(R.id.textHello);
         TextView textWaterDrankToday = findViewById(R.id.textWaterDrankToday);
-        textHello.setText(String.format("%s\n%s", hello, name));
-        textWaterDrankToday.setText(String.format(Locale.getDefault(), "Tänään juotu %ddl", user.water.getWaterDrankToday()));
+        textHello.setText(String.format("%s\n%s", greeting(), name));
+        textWaterDrankToday.setText(String.format(Locale.getDefault(), "Tänään juotu %ddl", user.water.getWaterDrankToday(user, pref)));
 
         ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         pref.saveUser(user);
+    }
+
+    public String greeting() {
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("H", Locale.getDefault());
+        String formattedDate = dateFormat.format(date);
+
+        int time = Integer.parseInt(formattedDate);
+        String greeting;
+        if (time >= 21 || time <= 3) greeting = "Öitä";
+        else if (time <= 10) greeting = "Huomenta";
+        else if (time <= 17) greeting = "Päivää";
+        else greeting = "Iltaa";
+        return greeting;
+    }
+
+    public static void menuIconHighlight(BottomNavigationView bottomNavigationView, int item) {
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(item);
+        menuItem.setChecked(true);
     }
 
 }

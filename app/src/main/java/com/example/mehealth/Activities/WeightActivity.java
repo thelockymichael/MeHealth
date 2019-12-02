@@ -64,9 +64,7 @@ public class WeightActivity extends AppCompatActivity {
         Log.d(TAG, "onStart: started");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(1);
-        menuItem.setChecked(true);
+        MainActivity.menuIconHighlight(bottomNavigationView, 1);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

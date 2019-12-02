@@ -2,6 +2,9 @@ package com.example.mehealth.User;
 
 import java.util.ArrayList;
 
+/**
+ * Keeps track of the user's mood history
+ */
 public class Mood {
     private ArrayList<Integer> moodHistory;
 

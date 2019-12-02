@@ -126,9 +126,7 @@ public class MoodActivity extends AppCompatActivity {
         super.onStart();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(4);
-        menuItem.setChecked(true);
+        MainActivity.menuIconHighlight(bottomNavigationView, 4);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

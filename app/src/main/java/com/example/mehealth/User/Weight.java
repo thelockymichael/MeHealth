@@ -2,6 +2,9 @@ package com.example.mehealth.User;
 
 import java.util.ArrayList;
 
+/**
+ * Keeps track of the user's weight history.
+ */
 public class Weight {
     private ArrayList<Integer> weightHistory;
 
@@ -34,5 +37,10 @@ public class Weight {
 
     void clear() {
         weightHistory.clear();
+    }
+
+    public double getBMI(double height) {
+        double weight = 1.0 * weightHistory.get(weightHistory.size() - 1);
+        return (weight / height / height) * 10000;
     }
 }

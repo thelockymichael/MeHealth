@@ -20,9 +20,6 @@ import com.example.mehealth.SharedPref;
 import com.example.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -65,9 +62,7 @@ public class WaterActivity extends AppCompatActivity {
 
         //Initialize the bottom navigation bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(2);
-        menuItem.setChecked(true);
+        MainActivity.menuIconHighlight(bottomNavigationView, 2);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -139,27 +134,8 @@ public class WaterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //User shared preferences
         user = pref.getUser();
-
-        //Get the current date
-        Date date = Calendar.getInstance().getTime();
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = dateFormat.format(date);
-
-        //Get the previous date from shared preferences
-        String oldFormattedDate = pref.getString("oldDate");
-
-        //Logcat to check the date in memory vs the current date
-        Log.d(TAG, "old date: " + oldFormattedDate);
-        Log.d(TAG, "date now: " + formattedDate);
-
-        if (!formattedDate.equals(oldFormattedDate)) {
-            Log.d(TAG, "date: reset vesi yo");
-            user.water.waterDrankTodayReset();
-        }
-        oldFormattedDate = formattedDate;
-        pref.putString("oldDate", oldFormattedDate);
+        user.water.checkWater(user, pref);
         paivitaVesi(user);
     }
 
@@ -172,8 +148,8 @@ public class WaterActivity extends AppCompatActivity {
 
     protected void paivitaVesi(User user) {
         TextView juotuMaara = findViewById(R.id.juotuMaara);
-        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday()));
-        Log.d(TAG, "paivitaVesi: juotu" + user.water.getWaterDrankToday());
+        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday(user, pref)));
+        Log.d(TAG, "paivitaVesi: juotu" + user.water.getWaterDrankToday(user, pref));
         pref.saveUser(user);
     }
 
