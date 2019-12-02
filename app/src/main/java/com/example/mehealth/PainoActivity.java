@@ -107,6 +107,7 @@ public class PainoActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         user = pref.getUser();
+        updateUI(user);
     }
 
     @Override

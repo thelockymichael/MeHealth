@@ -4,17 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,25 +20,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     User user;
-    User emptyUser;
     Toolbar toolbar;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor sharedPrefEditor;
+    SharedPref pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Gets the shared preferences. If there is no user in shared preferences, saves a default value user into shared preferences
-        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
-        sharedPrefEditor = sharedPref.edit();
-        emptyUser = new User();
-        Gson gson = new Gson();
-        String defUserJson = gson.toJson(emptyUser);
-        String userJson = sharedPref.getString("user", defUserJson);
-        sharedPrefEditor.putString("user", userJson);
-        sharedPrefEditor.commit();
+        pref = new SharedPref(getApplicationContext());
 
         //Sets up the top toolbar
         toolbar = findViewById(R.id.toolbarTop);
@@ -117,11 +102,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPref.getString("user", "");
-        user = gson.fromJson(json, User.class);
-        Log.d(TAG, "onResume: juotu " + user.getWaterDrankToday());
+        user = pref.getUser();
 
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("H");
@@ -136,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         else hello = "Iltaa";
 
         //Takes the name set in settings from shared preferences
-        String name = sharedPref.getString("name", "nimi");
+        String name = pref.getString("name", "nimi");
 
         //Sets the textviews
         TextView textHello = findViewById(R.id.textHello);
@@ -151,13 +132,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        //Commits the current user into shared preferences and kills the activity
-        sharedPrefEditor = sharedPref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        sharedPrefEditor.putString("user", json);
-        sharedPrefEditor.commit();
+        pref.saveUser(user);
         finish();
     }
 
