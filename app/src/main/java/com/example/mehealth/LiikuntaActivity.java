@@ -1,8 +1,6 @@
 package com.example.mehealth;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,19 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
 
 public class LiikuntaActivity extends AppCompatActivity {
     private static final String TAG = "LiikuntaActivity";
     User user;
     Toolbar toolbar;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
+    SharedPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liikunta);
+        pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
@@ -90,20 +87,13 @@ public class LiikuntaActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPref.getString("user", "");
-        user = gson.fromJson(json, User.class);
+        user = pref.getUser();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        editor = sharedPref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        editor.putString("user", json);
-        editor.commit();
+        pref.saveUser(user);
         finish();
     }
 }

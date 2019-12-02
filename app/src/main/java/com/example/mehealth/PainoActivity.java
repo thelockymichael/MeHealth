@@ -1,8 +1,6 @@
 package com.example.mehealth;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -29,14 +26,13 @@ public class PainoActivity extends AppCompatActivity {
     private static final String TAG = "PainoActivity";
     User user;
     Toolbar toolbar;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
     SharedPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paino);
+        pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("MeHealth");
@@ -101,7 +97,7 @@ public class PainoActivity extends AppCompatActivity {
         buttonLisaaArvo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonLisaaArvoPaino(v);
+                buttonAddValues(v);
                 updateUI(user);
             }
         });
@@ -110,17 +106,13 @@ public class PainoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPref = getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPref.getString("user", "");
-        user = gson.fromJson(json, User.class);
-        updateUI(user);
+        user = pref.getUser();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        addUserToSharedPref();
+        pref.saveUser(user);
         finish();
     }
 
@@ -133,7 +125,7 @@ public class PainoActivity extends AppCompatActivity {
         alaPaineText.setText("alaP\n" + user.getLatestLowerBloodPressure());
         ylaPaineText.setText("ylaP\n" + user.getLatestUpperBloodPressure());
     }
-    public void buttonLisaaArvoPaino(View view) {
+    public void buttonAddValues(View view) {
         EditText painoEditText = findViewById(R.id.editTextPaino);
         EditText alaPaineEditText = findViewById(R.id.editTextAlaPaine);
         EditText ylaPaineEditText = findViewById(R.id.editTextYlaPaine);
@@ -141,18 +133,9 @@ public class PainoActivity extends AppCompatActivity {
         String painoText = painoEditText.getText().toString();
         String alaPaineText = alaPaineEditText.getText().toString();
         String ylaPaineText = ylaPaineEditText.getText().toString();
-
-        user.addWeightRecord(Integer.parseInt(painoText));
-        user.addLowerBloodPressureRecord(Integer.parseInt(alaPaineText));
-        user.addUpperBloodPressureRecord(Integer.parseInt(ylaPaineText));
-    }
-
-    protected void addUserToSharedPref() {
-        editor = sharedPref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        editor.putString("user", json);
-        editor.commit();
+        if (!painoText.isEmpty()) user.addWeightRecord(Integer.parseInt(painoText));
+        if (!alaPaineText.isEmpty()) user.addLowerBloodPressureRecord(Integer.parseInt(alaPaineText));
+        if (!ylaPaineText.isEmpty()) user.addUpperBloodPressureRecord(Integer.parseInt(ylaPaineText));
     }
 
     protected void updateGraph(User user) {
