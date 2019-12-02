@@ -17,7 +17,7 @@ import com.example.mehealth.SharedPref;
 import com.example.mehealth.User.User;
 
 public class SettingsActivity extends AppCompatActivity {
-    private static final String TAG = "SettingsActivity";
+    //private static final String TAG = "SettingsActivity";
     Toolbar toolbar;
 
     @Override
@@ -80,10 +80,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.backArrow:
-                Intent main = new Intent(this, MainActivity.class);
-                startActivity(main);
+        if (item.getItemId() == R.id.backArrow) {
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,5 +1,6 @@
 package com.example.mehealth.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 public class WaterActivity extends AppCompatActivity {
     private static final String TAG = "WaterActivity";
@@ -38,7 +41,7 @@ public class WaterActivity extends AppCompatActivity {
         pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
     }
 
     @Override
@@ -49,10 +52,9 @@ public class WaterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                Intent settings = new Intent(this, SettingsActivity.class);
-                startActivity(settings);
+        if (item.getItemId() == R.id.settings) {
+            Intent settings = new Intent(this, SettingsActivity.class);
+            startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -73,11 +75,11 @@ public class WaterActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
                         Intent home = new Intent(WaterActivity.this, MainActivity.class);
-                        startActivity(home.addFlags(home.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
                         Intent weight = new Intent(WaterActivity.this, WeightActivity.class);
-                        startActivity(weight.addFlags(weight.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
@@ -85,12 +87,12 @@ public class WaterActivity extends AppCompatActivity {
 
                     case R.id.ic_directions_run:
                         Intent exercise = new Intent(WaterActivity.this, ExerciseActivity.class);
-                        startActivity(exercise.addFlags(exercise.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
                         Intent mood = new Intent(WaterActivity.this, MoodActivity.class);
-                        startActivity(mood.addFlags(mood.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(mood.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
                 return false;
@@ -142,8 +144,8 @@ public class WaterActivity extends AppCompatActivity {
 
         //Get the current date
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(date);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = dateFormat.format(date);
 
         //Get the previous date from shared preferences
         String oldFormattedDate = pref.getString("oldDate");
@@ -170,7 +172,7 @@ public class WaterActivity extends AppCompatActivity {
 
     protected void paivitaVesi(User user) {
         TextView juotuMaara = findViewById(R.id.juotuMaara);
-        juotuMaara.setText(user.water.getWaterDrankToday() + "dl");
+        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday()));
         Log.d(TAG, "paivitaVesi: juotu" + user.water.getWaterDrankToday());
         pref.saveUser(user);
     }

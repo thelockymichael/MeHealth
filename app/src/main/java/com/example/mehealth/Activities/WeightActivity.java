@@ -24,6 +24,8 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
 
 public class WeightActivity extends AppCompatActivity {
     private static final String TAG = "WeightActivity";
@@ -38,7 +40,7 @@ public class WeightActivity extends AppCompatActivity {
         pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
     }
 
     @Override
@@ -49,10 +51,9 @@ public class WeightActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                Intent settings = new Intent(this, SettingsActivity.class);
-                startActivity(settings);
+        if (item.getItemId() == R.id.settings) {
+            Intent settings = new Intent(this, SettingsActivity.class);
+            startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -73,24 +74,24 @@ public class WeightActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
                         Intent home = new Intent(WeightActivity.this, MainActivity.class);
-                        startActivity(home.addFlags(home.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
                         break;
 
                     case R.id.ic_local_drink:
                         Intent water = new Intent(WeightActivity.this, WaterActivity.class);
-                        startActivity(water.addFlags(water.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
                         Intent exercise = new Intent(WeightActivity.this, ExerciseActivity.class);
-                        startActivity(exercise.addFlags(exercise.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
                         Intent mood = new Intent(WeightActivity.this, MoodActivity.class);
-                        startActivity(mood.addFlags(mood.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(mood.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
                 return false;
@@ -125,9 +126,9 @@ public class WeightActivity extends AppCompatActivity {
         TextView alaPaineText = findViewById(R.id.textViewAlaPaine);
         TextView ylaPaineText = findViewById(R.id.textViewYlaPaine);
 
-        painoText.setText("paino\n" + user.weight.getLatestWeight());
-        alaPaineText.setText("alaP\n" + user.bloodPressure.getLatestLowerBloodPressure());
-        ylaPaineText.setText("ylaP\n" + user.bloodPressure.getLatestUpperBloodPressure());
+        painoText.setText(String.format(Locale.getDefault(), "paino\n%d", user.weight.getLatestWeight()));
+        alaPaineText.setText(String.format(Locale.getDefault(), "alaP\n%d", user.bloodPressure.getLatestLowerBloodPressure()));
+        ylaPaineText.setText(String.format(Locale.getDefault(), "ylaP\n%d", user.bloodPressure.getLatestUpperBloodPressure()));
     }
     public void buttonAddValues(View view) {
         EditText painoEditText = findViewById(R.id.editTextPaino);
@@ -150,7 +151,7 @@ public class WeightActivity extends AppCompatActivity {
             data[i] = new DataPoint(i , weightHistory.get(i));
         }
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+        GraphView graph = findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);

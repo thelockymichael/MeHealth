@@ -1,11 +1,11 @@
 package com.example.mehealth.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -20,8 +20,10 @@ import com.example.mehealth.SharedPref;
 import com.example.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class MoodActivity extends AppCompatActivity {
-    private static final String TAG = "MoodActivity";
+    //private static final String TAG = "MoodActivity";
     User user;
     Toolbar toolbar;
     SharedPref pref;
@@ -34,7 +36,7 @@ public class MoodActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
 
         final ImageView imageMieliala = findViewById(R.id.imageMieliala);
         final TextView textMieliala = findViewById(R.id.textMieliala);
@@ -43,6 +45,7 @@ public class MoodActivity extends AppCompatActivity {
 
         final SeekBar seekBarMood = findViewById(R.id.seekbarMieliala);
         seekBarMood.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 textMieliala.setText(Integer.toString(progress));
@@ -80,6 +83,8 @@ public class MoodActivity extends AppCompatActivity {
                     case 10:
                         imageMieliala.setImageResource(R.drawable.smiley10);
                         break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + progress);
                 }
             }
 
@@ -92,7 +97,7 @@ public class MoodActivity extends AppCompatActivity {
             }
         });
 
-        ((Button)findViewById(R.id.buttonAddMood)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonAddMood).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int progress = ((SeekBar)findViewById(R.id.seekbarMieliala)).getProgress();
@@ -109,10 +114,9 @@ public class MoodActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                Intent settings = new Intent(this, SettingsActivity.class);
-                startActivity(settings);
+        if (item.getItemId() == R.id.settings) {
+            Intent settings = new Intent(this, SettingsActivity.class);
+            startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -132,21 +136,21 @@ public class MoodActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
                         Intent home = new Intent(MoodActivity.this, MainActivity.class);
-                        startActivity(home.addFlags(home.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
                         Intent weight = new Intent(MoodActivity.this, WeightActivity.class);
-                        startActivity(weight.addFlags(weight.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
                         Intent water = new Intent(MoodActivity.this, WaterActivity.class);
-                        startActivity(water.addFlags(water.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
                         Intent exercise = new Intent(MoodActivity.this, ExerciseActivity.class);
-                        startActivity(exercise.addFlags(exercise.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:

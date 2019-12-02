@@ -3,9 +3,9 @@ package com.example.mehealth.User;
 import java.util.ArrayList;
 
 public class Weight {
-    public ArrayList<Integer> weightHistory;
+    private ArrayList<Integer> weightHistory;
 
-    public Weight() {
+    Weight() {
         weightHistory = new ArrayList<>();
     }
 
@@ -32,7 +32,7 @@ public class Weight {
         this.weightHistory.clear();
     }
 
-    public void clear() {
+    void clear() {
         weightHistory.clear();
     }
 }

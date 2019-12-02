@@ -18,10 +18,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    //private static final String TAG = "MainActivity";
     User user;
     Toolbar toolbar;
     SharedPref pref;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         //Sets up the top toolbar
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
     }
 
     //Creates the toolbar menu according to toolbar_menu file in menu folder
@@ -48,10 +50,9 @@ public class MainActivity extends AppCompatActivity {
     //Listener for the settings icon in the top toolbar. Opens the settings activity if clicked
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                Intent settings = new Intent(this, SettingsActivity.class);
-                startActivity(settings);
+        if (item.getItemId() == R.id.settings) {
+            Intent settings = new Intent(this, SettingsActivity.class);
+            startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -78,22 +79,22 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.ic_attach_money:
                         //Depending on the icon clicked, starts the corresponding activity
                         Intent weight = new Intent(MainActivity.this, WeightActivity.class);
-                        startActivity(weight.addFlags(weight.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
                         Intent water = new Intent(MainActivity.this, WaterActivity.class);
-                        startActivity(water.addFlags(water.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
                         Intent exercise = new Intent(MainActivity.this, ExerciseActivity.class);
-                        startActivity(exercise.addFlags(exercise.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
                         Intent mood = new Intent(MainActivity.this, MoodActivity.class);
-                        startActivity(mood.addFlags(mood.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(mood.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
                 return false;
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         user = pref.getUser();
 
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("H");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("H", Locale.getDefault());
         String formattedDate = dateFormat.format(date);
 
         //Based on the hour, the welcome string changes appropriately
@@ -124,10 +125,10 @@ public class MainActivity extends AppCompatActivity {
         //Sets the textviews
         TextView textHello = findViewById(R.id.textHello);
         TextView textWaterDrankToday = findViewById(R.id.textWaterDrankToday);
-        textHello.setText(hello + "\n" + name);
-        textWaterDrankToday.setText("Tänään juotu " + user.water.getWaterDrankToday() + "dl");
+        textHello.setText(String.format("%s\n%s", hello, name));
+        textWaterDrankToday.setText(String.format(Locale.getDefault(), "Tänään juotu %ddl", user.water.getWaterDrankToday()));
 
-        ((TextView)findViewById(R.id.textMoodNow)).setText("Viimeisin mielialasi oli\n" + user.mood.getLatestMoodRecord());
+        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
 
     }
 
