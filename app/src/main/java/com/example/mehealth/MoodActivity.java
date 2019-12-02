@@ -17,8 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MielialaActivity extends AppCompatActivity {
-    private static final String TAG = "MielialaActivity";
+public class MoodActivity extends AppCompatActivity {
+    private static final String TAG = "MoodActivity";
     User user;
     Toolbar toolbar;
     SharedPref pref;
@@ -108,7 +108,7 @@ public class MielialaActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent asetukset = new Intent(this, AsetuksetActivity.class);
+                Intent asetukset = new Intent(this, SettingsActivity.class);
                 startActivity(asetukset);
         }
         return super.onOptionsItemSelected(item);
@@ -128,22 +128,22 @@ public class MielialaActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
-                        Intent koti = new Intent(MielialaActivity.this, MainActivity.class);
-                        startActivity(koti.addFlags(koti.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent home = new Intent(MoodActivity.this, MainActivity.class);
+                        startActivity(home.addFlags(home.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
-                        Intent paino = new Intent(MielialaActivity.this, PainoActivity.class);
-                        startActivity(paino.addFlags(paino.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent weight = new Intent(MoodActivity.this, WeightActivity.class);
+                        startActivity(weight.addFlags(weight.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
-                        Intent vesi = new Intent(MielialaActivity.this, VesiActivity.class);
-                        startActivity(vesi.addFlags(vesi.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent water = new Intent(MoodActivity.this, WaterActivity.class);
+                        startActivity(water.addFlags(water.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
-                        Intent liikunta = new Intent(MielialaActivity.this, LiikuntaActivity.class);
-                        startActivity(liikunta.addFlags(liikunta.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent exercise = new Intent(MoodActivity.this, ExerciseActivity.class);
+                        startActivity(exercise.addFlags(exercise.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:

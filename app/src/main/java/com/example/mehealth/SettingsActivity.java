@@ -12,8 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-public class AsetuksetActivity extends AppCompatActivity {
-    private static final String TAG = "AsetuksetActivity";
+public class SettingsActivity extends AppCompatActivity {
+    private static final String TAG = "SettingsActivity";
     Toolbar toolbar;
 
     @Override

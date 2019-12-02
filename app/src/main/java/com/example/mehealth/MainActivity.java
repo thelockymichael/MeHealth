@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent settings = new Intent(this, AsetuksetActivity.class);
+                Intent settings = new Intent(this, SettingsActivity.class);
                 startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
@@ -74,22 +74,22 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.ic_attach_money:
                         //Depending on the icon clicked, starts the corresponding activity
-                        Intent weight = new Intent(MainActivity.this, PainoActivity.class);
+                        Intent weight = new Intent(MainActivity.this, WeightActivity.class);
                         startActivity(weight.addFlags(weight.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_local_drink:
-                        Intent water = new Intent(MainActivity.this, VesiActivity.class);
+                        Intent water = new Intent(MainActivity.this, WaterActivity.class);
                         startActivity(water.addFlags(water.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
-                        Intent exercise = new Intent(MainActivity.this, LiikuntaActivity.class);
+                        Intent exercise = new Intent(MainActivity.this, ExerciseActivity.class);
                         startActivity(exercise.addFlags(exercise.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
-                        Intent mood = new Intent(MainActivity.this, MielialaActivity.class);
+                        Intent mood = new Intent(MainActivity.this, MoodActivity.class);
                         startActivity(mood.addFlags(mood.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
         user = pref.getUser();
 
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("H");
-        String formattedDate = df.format(date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("H");
+        String formattedDate = dateFormat.format(date);
 
         //Based on the hour, the welcome string changes appropriately
         int time = Integer.parseInt(formattedDate);

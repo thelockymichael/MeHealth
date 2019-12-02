@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AsetuksetActivity"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_asetukset">
         </activity>
         <activity
@@ -22,10 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PainoActivity" />
-        <activity android:name=".VesiActivity"/>
-        <activity android:name=".LiikuntaActivity" />
-        <activity android:name=".MielialaActivity" />
+        <activity android:name=".WeightActivity" />
+        <activity android:name=".WaterActivity"/>
+        <activity android:name=".ExerciseActivity" />
+        <activity android:name=".MoodActivity" />
     </application>
 
 </manifest>

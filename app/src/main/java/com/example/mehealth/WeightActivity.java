@@ -22,8 +22,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
-public class PainoActivity extends AppCompatActivity {
-    private static final String TAG = "PainoActivity";
+public class WeightActivity extends AppCompatActivity {
+    private static final String TAG = "WeightActivity";
     User user;
     Toolbar toolbar;
     SharedPref pref;
@@ -48,7 +48,7 @@ public class PainoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent asetukset = new Intent(this, AsetuksetActivity.class);
+                Intent asetukset = new Intent(this, SettingsActivity.class);
                 startActivity(asetukset);
         }
         return super.onOptionsItemSelected(item);
@@ -69,25 +69,25 @@ public class PainoActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.ic_home:
-                        Intent koti = new Intent(PainoActivity.this, MainActivity.class);
-                        startActivity(koti.addFlags(koti.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent home = new Intent(WeightActivity.this, MainActivity.class);
+                        startActivity(home.addFlags(home.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                     case R.id.ic_attach_money:
                         break;
 
                     case R.id.ic_local_drink:
-                        Intent vesi = new Intent(PainoActivity.this, VesiActivity.class);
-                        startActivity(vesi.addFlags(vesi.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent water = new Intent(WeightActivity.this, WaterActivity.class);
+                        startActivity(water.addFlags(water.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_directions_run:
-                        Intent liikunta = new Intent(PainoActivity.this, LiikuntaActivity.class);
-                        startActivity(liikunta.addFlags(liikunta.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent exercise = new Intent(WeightActivity.this, ExerciseActivity.class);
+                        startActivity(exercise.addFlags(exercise.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
 
                     case R.id.ic_insert_emoticon:
-                        Intent mieliala = new Intent(PainoActivity.this, MielialaActivity.class);
-                        startActivity(mieliala.addFlags(mieliala.FLAG_ACTIVITY_NO_ANIMATION));
+                        Intent mood = new Intent(WeightActivity.this, MoodActivity.class);
+                        startActivity(mood.addFlags(mood.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
                 }
                 return false;
