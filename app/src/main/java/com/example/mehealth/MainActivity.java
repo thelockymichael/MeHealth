@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings:
                 Intent settings = new Intent(this, AsetuksetActivity.class);
                 startActivity(settings);
-                finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -133,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         pref.saveUser(user);
-        finish();
     }
 
 }

@@ -31,7 +31,7 @@ public class User  {
     }
 
     /**
-     * Getter for water drank todya
+     * Getter for water drank today
      * @return  an int of how much water has been drank today
      */
     public int getWaterDrankToday() {

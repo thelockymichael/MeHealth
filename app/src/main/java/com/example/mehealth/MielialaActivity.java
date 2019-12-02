@@ -21,13 +21,13 @@ public class MielialaActivity extends AppCompatActivity {
     private static final String TAG = "MielialaActivity";
     User user;
     Toolbar toolbar;
-    SharedPref preferences;
+    SharedPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mieliala);
-        preferences = new SharedPref(getApplicationContext());
+        pref = new SharedPref(getApplicationContext());
 
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
@@ -157,13 +157,13 @@ public class MielialaActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        user = preferences.getUser();
+        user = pref.getUser();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        preferences.saveUser(user);
+        pref.saveUser(user);
         finish();
     }
 }
