@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.mehealth.User.User;
 import com.google.gson.Gson;
 
 /**

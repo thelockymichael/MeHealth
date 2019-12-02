@@ -1,4 +1,4 @@
-package com.example.mehealth;
+package com.example.mehealth.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.mehealth.R;
+import com.example.mehealth.SharedPref;
+import com.example.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;

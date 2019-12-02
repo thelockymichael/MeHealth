@@ -1,4 +1,4 @@
-package com.example.mehealth;
+package com.example.mehealth.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.mehealth.R;
+import com.example.mehealth.SharedPref;
+import com.example.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.example.mehealth;
+package com.example.mehealth.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.example.mehealth.R;
+import com.example.mehealth.SharedPref;
+import com.example.mehealth.User.User;
 
 public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";

@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_asetukset">
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WeightActivity" />
-        <activity android:name=".WaterActivity"/>
-        <activity android:name=".ExerciseActivity" />
-        <activity android:name=".MoodActivity" />
+        <activity android:name=".Activities.WeightActivity" />
+        <activity android:name=".Activities.WaterActivity"/>
+        <activity android:name=".Activities.ExerciseActivity" />
+        <activity android:name=".Activities.MoodActivity" />
     </application>
 
 </manifest>

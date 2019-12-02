@@ -1,4 +1,4 @@
-package com.example.mehealth;
+package com.example.mehealth.User;
 
 public class WaterDrankToday {
     private int waterDrankToday;
