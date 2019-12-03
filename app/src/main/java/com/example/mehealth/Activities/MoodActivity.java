@@ -27,11 +27,12 @@ public class MoodActivity extends AppCompatActivity {
     User user;
     Toolbar toolbar;
     SharedPref pref;
+    Boolean settingsOpened;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mieliala);
+        setContentView(R.layout.activity_mood);
         pref = new SharedPref(getApplicationContext());
 
         toolbar = findViewById(R.id.toolbarTop);
@@ -128,6 +129,7 @@ public class MoodActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
+            settingsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -174,12 +176,15 @@ public class MoodActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         user = pref.getUser();
+        settingsOpened = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         pref.saveUser(user);
-        finish();
+        if (!settingsOpened) {
+            finish();
+        }
     }
 }

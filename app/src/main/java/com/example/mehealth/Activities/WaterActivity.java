@@ -2,7 +2,6 @@ package com.example.mehealth.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,11 +26,12 @@ public class WaterActivity extends AppCompatActivity {
     User user;
     Toolbar toolbar;
     SharedPref pref;
+    Boolean settingsOpened;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vesi);
+        setContentView(R.layout.activity_water);
 
         pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
@@ -50,6 +50,7 @@ public class WaterActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
+            settingsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -130,13 +131,16 @@ public class WaterActivity extends AppCompatActivity {
         user = pref.getUser();
         user.water.checkWater(user, pref);
         paivitaVesi(user);
+        settingsOpened = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         pref.saveUser(user);
-        finish();
+        if (!settingsOpened) {
+            finish();
+        }
     }
 
     /**
