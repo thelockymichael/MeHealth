@@ -1,6 +1,7 @@
 package com.example.mehealth.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Keeps track of the user's weight history.
@@ -9,7 +10,7 @@ public class Weight {
     private ArrayList<Integer> weightHistory;
 
     public Weight() {
-        weightHistory = new ArrayList<>();
+        weightHistory = new ArrayList<Integer>();
     }
 
     /**
@@ -28,7 +29,9 @@ public class Weight {
     }
 
     public void addWeightRecord(int weight) {
-        this.weightHistory.add(weight);
+        if (weight < 1000) {
+            this.weightHistory.add(weight);
+        }
     }
 
     public void clear() {
@@ -38,5 +41,29 @@ public class Weight {
     public double getBMI(double height) {
         double weight = 1.0 * weightHistory.get(weightHistory.size() - 1);
         return (weight / height / height) * 10000;
+    }
+
+    public void deleteRecord(int record) {
+        if (weightHistory.size() > 0) {
+            weightHistory.remove(record);
+        }
+    }
+
+    public int highestWeightRecord() {
+        return Collections.max(this.weightHistory);
+    }
+
+    public boolean latestWeightLower() {
+        if (weightHistory.size() < 2) {
+            return true;
+        }
+        return weightHistory.get(weightHistory.size() - 1) < weightHistory.get(weightHistory.size() - 2);
+    }
+
+    public boolean weightNotChanged() {
+        if (weightHistory.size() < 2) {
+            return true;
+        }
+        return weightHistory.get(weightHistory.size() - 1) == weightHistory.get(weightHistory.size() - 2);
     }
 }

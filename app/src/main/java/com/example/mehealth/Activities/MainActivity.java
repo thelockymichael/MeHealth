@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mehealth.R;
@@ -116,15 +118,29 @@ public class MainActivity extends AppCompatActivity {
 
         //Sets the textviews
         TextView textHello = findViewById(R.id.textHello);
-        TextView textWaterDrankToday = findViewById(R.id.textWaterDrankToday);
         textHello.setText(String.format("%s %s", greeting(), name));
-        if (user.water.howMuchWaterToDrink() != 0) {
-            textWaterDrankToday.setText(String.format(Locale.getDefault(), "Vielä %ddl päivän tavoitteseen", user.water.howMuchWaterToDrink()));
-        } else {
-            textWaterDrankToday.setText(String.format(Locale.getDefault(), "Olet juonut tarpeeksi tänään"));
-        }
+
 
         ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
+        ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
+        ImageView imageArrowWeight = findViewById(R.id.imageArrowWeight);
+        if (user.weight.latestWeightLower()) {
+            imageArrowWeight.setImageResource(R.drawable.ic_arrow_downward_grey);
+        } else {
+            imageArrowWeight.setImageResource(R.drawable.ic_arrow_upward_gray);
+        }
+        if (user.weight.weightNotChanged()) {
+            imageArrowWeight.setVisibility(View.INVISIBLE);
+        } else {
+            imageArrowWeight.setVisibility(View.VISIBLE);
+        }
+
+        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
+
+        ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
+
+        ((TextView)findViewById(R.id.textUpperBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestUpperBP()));
+
     }
 
     @Override

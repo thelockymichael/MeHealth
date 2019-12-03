@@ -29,11 +29,15 @@ public class BloodPressure {
     }
 
     public void addLowerBPRecord(int lowerBloodPressure) {
-        this.lowerBPHistory.add(lowerBloodPressure);
+        if (lowerBloodPressure < 1000) {
+            this.lowerBPHistory.add(lowerBloodPressure);
+        }
     }
 
     public void addUpperBPRecord(int upperBloodPressure) {
-        this.upperBPHistory.add(upperBloodPressure);
+        if (upperBloodPressure < 1000) {
+            this.upperBPHistory.add(upperBloodPressure);
+        }
     }
 
     public void clearLowerBP() {
