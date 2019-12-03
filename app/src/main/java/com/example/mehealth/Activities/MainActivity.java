@@ -120,27 +120,14 @@ public class MainActivity extends AppCompatActivity {
         TextView textHello = findViewById(R.id.textHello);
         textHello.setText(String.format("%s %s", greeting(), name));
 
-
         ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
         ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
-        ImageView imageArrowWeight = findViewById(R.id.imageArrowWeight);
-        if (user.weight.latestWeightLower()) {
-            imageArrowWeight.setImageResource(R.drawable.ic_arrow_downward_grey);
-        } else {
-            imageArrowWeight.setImageResource(R.drawable.ic_arrow_upward_gray);
-        }
-        if (user.weight.weightNotChanged()) {
-            imageArrowWeight.setVisibility(View.INVISIBLE);
-        } else {
-            imageArrowWeight.setVisibility(View.VISIBLE);
-        }
 
         ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
-
         ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
-
         ((TextView)findViewById(R.id.textUpperBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestUpperBP()));
 
+        updateArrow();
     }
 
     @Override
@@ -183,6 +170,45 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(item);
         menuItem.setChecked(true);
+    }
+
+    public void updateArrow() {
+        ImageView imageArrowWeight = findViewById(R.id.imageArrowWeight);
+        if (user.weight.latestWeightLower()) {
+            imageArrowWeight.setImageResource(R.drawable.ic_arrow_downward_grey);
+        } else {
+            imageArrowWeight.setImageResource(R.drawable.ic_arrow_upward_gray);
+        }
+        if (user.weight.weightNotChanged()) {
+            imageArrowWeight.setVisibility(View.INVISIBLE);
+        } else {
+            imageArrowWeight.setVisibility(View.VISIBLE);
+        }
+
+        ImageView imageArrowLowerBP = findViewById(R.id.imageArrowLowerBP);
+        if (user.bloodPressure.latestBPLower("lower")) {
+            imageArrowLowerBP.setImageResource(R.drawable.ic_arrow_downward_grey);
+        } else {
+            imageArrowLowerBP.setImageResource(R.drawable.ic_arrow_upward_gray);
+        }
+        if (user.bloodPressure.bpNotChanged("lower")) {
+            imageArrowLowerBP.setVisibility(View.INVISIBLE);
+        } else {
+            imageArrowLowerBP.setVisibility(View.VISIBLE);
+        }
+
+        ImageView imageArrowUpperBP = findViewById(R.id.imageArrowUpperBP);
+        if (user.bloodPressure.latestBPLower("upper")) {
+            imageArrowUpperBP.setImageResource(R.drawable.ic_arrow_downward_grey);
+        } else {
+            imageArrowUpperBP.setImageResource(R.drawable.ic_arrow_upward_gray);
+        }
+        if (user.bloodPressure.bpNotChanged("upper")) {
+            imageArrowUpperBP.setVisibility(View.INVISIBLE);
+        } else {
+            imageArrowUpperBP.setVisibility(View.VISIBLE);
+        }
+
     }
 
 }
