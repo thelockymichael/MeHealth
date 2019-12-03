@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -116,8 +117,12 @@ public class MainActivity extends AppCompatActivity {
         //Sets the textviews
         TextView textHello = findViewById(R.id.textHello);
         TextView textWaterDrankToday = findViewById(R.id.textWaterDrankToday);
-        textHello.setText(String.format("%s\n%s", greeting(), name));
-        textWaterDrankToday.setText(String.format(Locale.getDefault(), "Tänään juotu %ddl", user.water.getWaterDrankToday(user, pref)));
+        textHello.setText(String.format("%s %s", greeting(), name));
+        if (user.water.howMuchWaterToDrink() != 0) {
+            textWaterDrankToday.setText(String.format(Locale.getDefault(), "Vielä %ddl päivän tavoitteseen", user.water.howMuchWaterToDrink()));
+        } else {
+            textWaterDrankToday.setText(String.format(Locale.getDefault(), "Olet juonut tarpeeksi tänään"));
+        }
 
         ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
     }

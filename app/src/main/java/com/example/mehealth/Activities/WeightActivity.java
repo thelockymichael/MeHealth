@@ -130,7 +130,7 @@ public class WeightActivity extends AppCompatActivity {
 
         weightText.setText(String.format(Locale.getDefault(), "paino\n%d", user.weight.getLatestWeight()));
         lowerBPText.setText(String.format(Locale.getDefault(), "alaP\n%d", user.bloodPressure.getLatestLowerBP()));
-        upperBPText.setText(String.format(Locale.getDefault(), "ylaP\n%d", user.bloodPressure.getLatestUpperBP()));
+        upperBPText.setText(String.format(Locale.getDefault(), "yläP\n%d", user.bloodPressure.getLatestUpperBP()));
     }
 
     /**
@@ -168,7 +168,11 @@ public class WeightActivity extends AppCompatActivity {
         series.setDataPointsRadius(10);
         graph.addSeries(series);
         graph.setTitle("Paino");
-        graph.getViewport().setMaxX(50);
+        if (user.weight.getWeightHistoryList().size() == 0) {
+            graph.getViewport().setMaxX(1);
+        } else {
+            graph.getViewport().setMaxX(user.weight.getWeightHistoryList().size() - 1);
+        }
         graph.getViewport().setScalable(true);
     }
 

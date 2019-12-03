@@ -64,4 +64,11 @@ public class WaterDrankToday {
         pref.putString("oldDate", oldFormattedDate);
     }
 
+    public int howMuchWaterToDrink() {
+        if (20 - this.waterDrankToday > 0) {
+            return 20 - this.waterDrankToday;
+        }
+        return 0;
+    }
+
 }
