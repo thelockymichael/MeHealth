@@ -22,11 +22,12 @@ public class ExerciseActivity extends AppCompatActivity {
     User user;
     Toolbar toolbar;
     SharedPref pref;
+    Boolean settingsOpened;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_liikunta);
+        setContentView(R.layout.activity_exercise);
         pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
@@ -44,6 +45,7 @@ public class ExerciseActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
+            settingsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -90,12 +92,15 @@ public class ExerciseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         user = pref.getUser();
+        settingsOpened = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         pref.saveUser(user);
-        finish();
+        if (!settingsOpened) {
+            finish();
+        }
     }
 }

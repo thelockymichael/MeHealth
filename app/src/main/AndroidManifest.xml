@@ -22,10 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.WeightActivity" />
-        <activity android:name=".Activities.WaterActivity"/>
-        <activity android:name=".Activities.ExerciseActivity" />
-        <activity android:name=".Activities.MoodActivity" />
+        <activity android:name=".Activities.WeightActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Activities.WaterActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Activities.ExerciseActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Activities.MoodActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

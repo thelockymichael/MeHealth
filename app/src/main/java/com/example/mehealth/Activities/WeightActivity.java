@@ -7,10 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,15 +22,9 @@ import com.example.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.OnDataPointTapListener;
-import com.jjoe64.graphview.series.Series;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -41,11 +33,12 @@ public class WeightActivity extends AppCompatActivity {
     User user;
     Toolbar toolbar;
     SharedPref pref;
+    Boolean settingsOpened;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paino);
+        setContentView(R.layout.activity_weight);
         pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
@@ -63,6 +56,7 @@ public class WeightActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
+            settingsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -130,13 +124,16 @@ public class WeightActivity extends AppCompatActivity {
         super.onResume();
         user = pref.getUser();
         updateUI(user);
+        settingsOpened = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         pref.saveUser(user);
-        finish();
+        if (!settingsOpened) {
+            finish();
+        }
     }
 
     /**
