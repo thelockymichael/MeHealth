@@ -2,6 +2,7 @@ package com.example.mehealth.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.mehealth.InputFilterMinMax;
 import com.example.mehealth.R;
 import com.example.mehealth.SharedPref;
 import com.example.mehealth.User.User;
@@ -114,9 +116,13 @@ public class WeightActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 user.weight.deleteRecord(user.weight.getWeightHistoryList().size() - 1);
-                updateGraph(user);
+                updateUI(user);
             }
         });
+
+        ((EditText)findViewById(R.id.editTextPaino)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
+        ((EditText)findViewById(R.id.editTextAlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
+        ((EditText)findViewById(R.id.editTextYlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
     }
 
     @Override
@@ -155,6 +161,8 @@ public class WeightActivity extends AppCompatActivity {
         EditText editTextWeight = findViewById(R.id.editTextPaino);
         EditText editTextLowerBP = findViewById(R.id.editTextAlaPaine);
         EditText editTextUpperBP = findViewById(R.id.editTextYlaPaine);
+
+        editTextWeight.setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
 
         String weight = editTextWeight.getText().toString();
         String lowerBP = editTextLowerBP.getText().toString();

@@ -29,7 +29,9 @@ public class Weight {
     }
 
     public void addWeightRecord(int weight) {
-        this.weightHistory.add(weight);
+        if (weight < 1000) {
+            this.weightHistory.add(weight);
+        }
     }
 
     public void clear() {
@@ -49,5 +51,19 @@ public class Weight {
 
     public int highestWeightRecord() {
         return Collections.max(this.weightHistory);
+    }
+
+    public boolean latestWeightLower() {
+        if (weightHistory.size() < 2) {
+            return true;
+        }
+        return weightHistory.get(weightHistory.size() - 1) < weightHistory.get(weightHistory.size() - 2);
+    }
+
+    public boolean weightNotChanged() {
+        if (weightHistory.size() < 2) {
+            return true;
+        }
+        return weightHistory.get(weightHistory.size() - 1) == weightHistory.get(weightHistory.size() - 2);
     }
 }
