@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Weight {
     private ArrayList<Integer> weightHistory;
 
-    Weight() {
+    public Weight() {
         weightHistory = new ArrayList<>();
     }
 
