@@ -10,6 +10,9 @@ public class User  {
     public BloodPressure bloodPressure;
     public Weight weight;
 
+    /**
+     * Creates new user with default values of 0 in everything.
+     */
     public User() {
         weight = new Weight();
         water = new WaterDrankToday();

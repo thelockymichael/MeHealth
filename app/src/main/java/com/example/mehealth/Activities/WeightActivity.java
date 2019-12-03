@@ -168,7 +168,11 @@ public class WeightActivity extends AppCompatActivity {
         series.setDataPointsRadius(10);
         graph.addSeries(series);
         graph.setTitle("Paino");
-        graph.getViewport().setMaxX(user.weight.getWeightHistoryList().size() - 1);
+        if (user.weight.getWeightHistoryList().size() == 0) {
+            graph.getViewport().setMaxX(1);
+        } else {
+            graph.getViewport().setMaxX(user.weight.getWeightHistoryList().size() - 1);
+        }
         graph.getViewport().setScalable(true);
     }
 
