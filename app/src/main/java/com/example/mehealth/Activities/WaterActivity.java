@@ -132,6 +132,7 @@ public class WaterActivity extends AppCompatActivity {
         user = pref.getUser();
         user.water.checkWater(user, pref);
         paivitaVesi(user);
+        Log.d(TAG, "onResume: ");
     }
 
     @Override
