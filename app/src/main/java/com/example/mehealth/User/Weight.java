@@ -49,10 +49,6 @@ public class Weight {
         }
     }
 
-    public int highestWeightRecord() {
-        return Collections.max(this.weightHistory);
-    }
-
     public boolean latestWeightLower() {
         if (weightHistory.size() < 2) {
             return true;

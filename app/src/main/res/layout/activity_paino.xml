@@ -34,12 +34,11 @@
             android:layout_below="@id/relLayoutTop">
 
 
-
             <TextView
                 android:id="@+id/textViewWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/rounded_textview"
                 android:gravity="center"
@@ -66,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="48dp"
+                android:layout_marginEnd="32dp"
                 android:background="@drawable/rounded_textview"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
@@ -104,7 +103,7 @@
                 android:id="@+id/editTextAlaPaine"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:ems="10"
                 android:hint="Alapaine"
                 android:inputType="number"
