@@ -44,7 +44,7 @@
                 android:background="@drawable/rounded_textview"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,7 +56,7 @@
                 android:background="@drawable/rounded_textview"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toStartOf="@+id/textViewUpperBP"
                 app:layout_constraintStart_toEndOf="@+id/textViewWeight"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -70,13 +70,14 @@
                 android:background="@drawable/rounded_textview"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/buttonLisaaArvo"
                 style="@style/Widget.MaterialComponents.Button"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -135,6 +136,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/buttonLisaaArvo">
 
             </com.jjoe64.graphview.GraphView>
+
+            <Button
+                android:id="@+id/buttonDeleteLastWeightRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Poista viimeinen merkintä"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-light"
+                style="@style/Widget.AppCompat.Button.Colored"
+                app:layout_constraintTop_toBottomOf="@id/weightGraph"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

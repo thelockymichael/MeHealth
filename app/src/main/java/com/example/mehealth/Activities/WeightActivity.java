@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,9 +22,15 @@ import com.example.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -95,12 +102,19 @@ public class WeightActivity extends AppCompatActivity {
                 return false;
             }
         });
-        Button buttonLisaaArvo = findViewById(R.id.buttonLisaaArvo);
-        buttonLisaaArvo.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonLisaaArvo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 buttonAddValues(v);
                 updateUI(user);
+            }
+        });
+
+        findViewById(R.id.buttonDeleteLastWeightRecord).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user.weight.deleteRecord(user.weight.getWeightHistoryList().size() - 1);
+                updateGraph(user);
             }
         });
     }
@@ -128,9 +142,9 @@ public class WeightActivity extends AppCompatActivity {
         TextView lowerBPText = findViewById(R.id.textViewLowerBP);
         TextView upperBPText = findViewById(R.id.textViewUpperBP);
 
-        weightText.setText(String.format(Locale.getDefault(), "paino\n%d", user.weight.getLatestWeight()));
-        lowerBPText.setText(String.format(Locale.getDefault(), "alaP\n%d", user.bloodPressure.getLatestLowerBP()));
-        upperBPText.setText(String.format(Locale.getDefault(), "yläP\n%d", user.bloodPressure.getLatestUpperBP()));
+        weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", user.weight.getLatestWeight()));
+        lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", user.bloodPressure.getLatestLowerBP()));
+        upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", user.bloodPressure.getLatestUpperBP()));
     }
 
     /**
@@ -155,26 +169,29 @@ public class WeightActivity extends AppCompatActivity {
      * @param user
      */
     protected void updateGraph(User user) {
-        ArrayList<Integer> weightHistory = user.weight.getWeightHistoryList();
-        DataPoint[] data = new DataPoint[weightHistory.size()];
-
+        GraphView graph = findViewById(R.id.weightGraph);
+        ArrayList weightHistory = user.weight.getWeightHistoryList();
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
         for (int i = 0; i < weightHistory.size(); i++) {
-            data[i] = new DataPoint(i , weightHistory.get(i));
+            DataPoint dataPoint = new DataPoint(i, (int) weightHistory.get(i));
+            series.appendData(dataPoint, true, weightHistory.size());
         }
 
-        GraphView graph = findViewById(R.id.weightGraph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
+        graph.removeAllSeries();
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
         graph.addSeries(series);
         graph.setTitle("Paino");
-        if (user.weight.getWeightHistoryList().size() == 0) {
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setYAxisBoundsManual(false);
+        if (weightHistory.size() < 2) {
             graph.getViewport().setMaxX(1);
         } else {
-            graph.getViewport().setMaxX(user.weight.getWeightHistoryList().size() - 1);
+            graph.getViewport().setMaxX(weightHistory.size() - 1);
         }
-        graph.getViewport().setScalable(true);
     }
+
+
 
     /**
      * Updates the text and graph with the latest values.
