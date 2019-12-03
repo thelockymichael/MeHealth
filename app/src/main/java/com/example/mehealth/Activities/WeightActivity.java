@@ -114,9 +114,9 @@ public class WeightActivity extends AppCompatActivity {
             }
         });
 
-        ((EditText)findViewById(R.id.editTextPaino)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
-        ((EditText)findViewById(R.id.editTextAlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
-        ((EditText)findViewById(R.id.editTextYlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
+        ((EditText)findViewById(R.id.editTextPaino)).setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        ((EditText)findViewById(R.id.editTextAlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        ((EditText)findViewById(R.id.editTextYlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
     }
 
     @Override
