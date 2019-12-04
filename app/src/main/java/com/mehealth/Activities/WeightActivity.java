@@ -77,7 +77,7 @@ public class WeightActivity extends AppCompatActivity {
                         Intent home = new Intent(WeightActivity.this, MainActivity.class);
                         startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
-                    case R.id.ic_attach_money:
+                    case R.id.ic_weight_scale:
                         break;
 
                     case R.id.ic_local_drink:

@@ -43,7 +43,7 @@ public class ExerciseActivity extends AppCompatActivity {
         ListView exercises = findViewById(R.id.exerciseListView);
         exercises.setAdapter(new ArrayAdapter<Exercise>(
            this,
-                android.R.layout.simple_list_item_1,
+                R.layout.exercise_item_layout,
                 Exercises.getInstance().getExercises()
         ));
         exercises.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,7 +88,7 @@ public class ExerciseActivity extends AppCompatActivity {
                         Intent home = new Intent(ExerciseActivity.this, MainActivity.class);
                         startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
-                    case R.id.ic_attach_money:
+                    case R.id.ic_weight_scale:
                         Intent weight = new Intent(ExerciseActivity.this, WeightActivity.class);
                         startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;

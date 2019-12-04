@@ -4,19 +4,19 @@ import androidx.annotation.NonNull;
 
 public class Exercise {
     private String nimi;
-    private double kaloritTunnissaPerKilo;
+    private double kaloritMinuutissaPerKilo;
 
-    public Exercise(String nimi, double kaloritTunnissaPerKilo) {
+    public Exercise(String nimi, double kaloritMinuutissaPerKilo) {
         this.nimi = nimi;
-        this.kaloritTunnissaPerKilo = kaloritTunnissaPerKilo;
+        this.kaloritMinuutissaPerKilo = kaloritMinuutissaPerKilo;
     }
 
     public String getNimi() {
         return nimi;
     }
 
-    public double getKaloritTunnissa() {
-        return kaloritTunnissaPerKilo;
+    public double getKaloritMinuutissaPerKilo() {
+        return kaloritMinuutissaPerKilo;
     }
 
     @NonNull

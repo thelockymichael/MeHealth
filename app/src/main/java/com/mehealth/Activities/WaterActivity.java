@@ -70,7 +70,7 @@ public class WaterActivity extends AppCompatActivity {
                         Intent home = new Intent(WaterActivity.this, MainActivity.class);
                         startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
-                    case R.id.ic_attach_money:
+                    case R.id.ic_weight_scale:
                         Intent weight = new Intent(WaterActivity.this, WeightActivity.class);
                         startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;

@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/relLayoutBotBar"
-            android:layout_below="@id/relLayoutTop">
+            android:layout_below="@id/relLayoutTop"
+            android:background="@color/colorPrimaryLight">
 
             <TextView
                 android:id="@+id/textView"

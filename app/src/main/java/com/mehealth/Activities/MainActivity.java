@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.ic_home:
                         //Clicking the current activitys icon does nothing
                         break;
-                    case R.id.ic_attach_money:
+                    case R.id.ic_weight_scale:
                         //Depending on the icon clicked, starts the corresponding activity
                         Intent weight = new Intent(MainActivity.this, WeightActivity.class);
                         startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
