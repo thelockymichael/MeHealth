@@ -103,6 +103,7 @@ public class WeightActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonAddValues(v);
                 updateUI(user);
+                MainActivity.hideKeyboard(getApplicationContext(), v);
             }
         });
 
@@ -146,6 +147,10 @@ public class WeightActivity extends AppCompatActivity {
         weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", user.weight.getLatestWeight()));
         lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", user.bloodPressure.getLatestLowerBP()));
         upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", user.bloodPressure.getLatestUpperBP()));
+
+        ((EditText)findViewById(R.id.editTextPaino)).setText("");
+        ((EditText)findViewById(R.id.editTextAlaPaine)).setText("");
+        ((EditText)findViewById(R.id.editTextYlaPaine)).setText("");
     }
 
     /**
@@ -156,8 +161,6 @@ public class WeightActivity extends AppCompatActivity {
         EditText editTextWeight = findViewById(R.id.editTextPaino);
         EditText editTextLowerBP = findViewById(R.id.editTextAlaPaine);
         EditText editTextUpperBP = findViewById(R.id.editTextYlaPaine);
-
-        editTextWeight.setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
 
         String weight = editTextWeight.getText().toString();
         String lowerBP = editTextLowerBP.getText().toString();

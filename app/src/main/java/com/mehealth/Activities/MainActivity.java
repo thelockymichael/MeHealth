@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -115,21 +116,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //Always gets the latest user from shared preferences when activity resumes
         user = pref.getUser();
+        user.water.checkWater(user, pref);
+        user.exercisedToday.checkCalories(user, pref);
 
-        //Takes the user's name that is set in settings from shared preferences
-        String name = pref.getString("name", "tuntematon");
-
-        //Sets the textviews
-        TextView textHello = findViewById(R.id.textHello);
-        textHello.setText(String.format("%s %s", greeting(), name));
-
-        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
-        ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
-
-        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
-        ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
-        ((TextView)findViewById(R.id.textUpperBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestUpperBP()));
-
+        setupTextViews();
         updateArrow();
     }
 
@@ -178,6 +168,31 @@ public class MainActivity extends AppCompatActivity {
     public static void hideKeyboard(Context c, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager)c.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    protected void setupTextViews() {
+        //Takes the user's name that is set in settings from shared preferences
+
+        String name = pref.getString("name", "tuntematon");
+
+        //Sets the textviews
+        TextView textHello = findViewById(R.id.textHello);
+        textHello.setText(String.format("%s %s", greeting(), name));
+
+        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
+        ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
+
+        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
+        ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
+        ((TextView)findViewById(R.id.textUpperBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestUpperBP()));
+        ((TextView)findViewById(R.id.textCaloriesBurnedToday)).setText(String.format(Locale.getDefault(), "%d", user.exercisedToday.getCaloriesBurnedToday()));
+
+        TextView textCaloriesBurnedTodayDescription = findViewById(R.id.textCaloriesBurnedTodayDescription);
+        if (user.exercisedToday.getCaloriesBurnedToday() == 1) {
+            textCaloriesBurnedTodayDescription.setText("Kalori poltettu tänään");
+        } else {
+            textCaloriesBurnedTodayDescription.setText("Kaloria poltettu tänään");
+        }
     }
 
     public void updateArrow() {

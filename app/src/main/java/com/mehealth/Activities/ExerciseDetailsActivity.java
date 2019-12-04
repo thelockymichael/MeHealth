@@ -7,14 +7,18 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mehealth.Exercise;
 import com.mehealth.Exercises;
+import com.mehealth.InputFilterMinMax;
 import com.mehealth.R;
 import com.mehealth.SharedPref;
 import com.mehealth.User.User;
@@ -36,18 +40,26 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
 
-        Bundle received = getIntent().getExtras();
+        final Bundle received = getIntent().getExtras();
         int position = received.getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
+        final Exercise selectedExercise = Exercises.getInstance().getExercise(position);
 
         ((TextView)findViewById(R.id.textExerciseName))
-                .setText(Exercises.getInstance().getExercise(position).getNimi());
+                .setText(selectedExercise.getNimi());
 
-        findViewById(R.id.editHowManyMinutesExercised).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        final EditText editHowManyMinutesExercised = findViewById(R.id.editHowManyMinutesExercised);
+        setupEditText(editHowManyMinutesExercised);
+
+        ((Button)findViewById(R.id.buttonAddExercise)).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    MainActivity.hideKeyboard(getApplicationContext(), v);
+            public void onClick(View v) {
+                String stringMinutes = editHowManyMinutesExercised.getText().toString();
+                if (!stringMinutes.isEmpty()) {
+                    int iMinutes = Integer.parseInt(stringMinutes);
+                    user.exercisedToday.addExercise(selectedExercise, iMinutes, user);
+                    editHowManyMinutesExercised.setText("");
                 }
+                MainActivity.hideKeyboard(getApplicationContext(), v);
             }
         });
     }
@@ -82,6 +94,18 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         if (!settingsOrDetailsOpened) {
             finish();
         }
+    }
+
+    protected void setupEditText(EditText editText) {
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    MainActivity.hideKeyboard(getApplicationContext(), v);
+                }
+            }
+        });
+        editText.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
     }
 
 
