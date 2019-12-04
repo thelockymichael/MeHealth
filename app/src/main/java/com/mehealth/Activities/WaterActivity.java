@@ -129,7 +129,7 @@ public class WaterActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         user = pref.getUser();
-        user.water.checkWater(user, pref);
+        user.water.checkWater(pref);
         paivitaVesi(user);
         settingsOpened = false;
     }
@@ -149,7 +149,7 @@ public class WaterActivity extends AppCompatActivity {
      */
     protected void paivitaVesi(User user) {
         TextView juotuMaara = findViewById(R.id.juotuMaara);
-        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday(user, pref)));
+        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday(pref)));
         pref.saveUser(user);
     }
 
