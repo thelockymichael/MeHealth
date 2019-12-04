@@ -114,9 +114,7 @@ public class WeightActivity extends AppCompatActivity {
             }
         });
 
-        ((EditText)findViewById(R.id.editTextPaino)).setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
-        ((EditText)findViewById(R.id.editTextAlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
-        ((EditText)findViewById(R.id.editTextYlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        setupEditTexts();
     }
 
     @Override
@@ -206,4 +204,36 @@ public class WeightActivity extends AppCompatActivity {
         updateText(user);
         updateGraph(user);
     }
+
+    protected void setupEditTexts() {
+        EditText paino = findViewById(R.id.editTextPaino);
+        EditText alaPaine = findViewById(R.id.editTextAlaPaine);
+        EditText ylaPaine = findViewById(R.id.editTextYlaPaine);
+
+        paino.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        ylaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+
+        paino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+        alaPaine.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+        ylaPaine.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+    }
+
+
+
 }

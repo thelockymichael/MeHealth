@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -122,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
 
         ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
         ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
-        TextView xd = findViewById(R.id.textWeightNumber);
-        xd.setGravity(Gravity.BOTTOM|Gravity.END);
 
         ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
         ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
@@ -172,6 +173,11 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(item);
         menuItem.setChecked(true);
+    }
+
+    public static void hideKeyboard(Context c, View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager)c.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public void updateArrow() {

@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mehealth.Exercises;
@@ -37,6 +41,15 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
 
         ((TextView)findViewById(R.id.textExerciseName))
                 .setText(Exercises.getInstance().getExercise(position).getNimi());
+
+        findViewById(R.id.editHowManyMinutesExercised).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    MainActivity.hideKeyboard(getApplicationContext(), v);
+                }
+            }
+        });
     }
 
     @Override
@@ -70,4 +83,6 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
             finish();
         }
     }
+
+
 }

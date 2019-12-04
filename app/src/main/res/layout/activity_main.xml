@@ -87,13 +87,6 @@
 
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay1GuidelineVert2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.04" />
-
-                <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lay1GuidelineVert1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -118,14 +111,14 @@
                     android:id="@+id/textWeightNumber"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:textSize="72sp"
                     android:fontFamily="sans-serif-condensed-light"
-                    android:textStyle="bold"
                     android:gravity="bottom|end"
                     android:textAlignment="gravity"
+                    android:textSize="72sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/lay1GuidelineHori1"
                     app:layout_constraintEnd_toStartOf="@+id/lay1GuidelineVert1"
-                    app:layout_constraintStart_toStartOf="@+id/lay1GuidelineVert2"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/lay1GuidelineHori2" />
 
                 <TextView
@@ -136,15 +129,15 @@
                     android:text="Paino"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/lay1GuidelineVert1"
-                    app:layout_constraintStart_toStartOf="@+id/lay1GuidelineVert2"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/lay1GuidelineHori1" />
 
                 <ImageView
                     android:id="@+id/imageArrowWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    android:scaleY="3"
+                    android:scaleType="fitXY"
+                    android:scaleY="0.67"
                     app:layout_constraintBottom_toTopOf="@+id/lay1GuidelineHori1"
                     app:layout_constraintStart_toStartOf="@+id/lay1GuidelineVert1"
                     app:layout_constraintTop_toTopOf="@+id/lay1GuidelineHori2"
@@ -159,20 +152,6 @@
                 app:layout_constraintLeft_toLeftOf="@id/guidelineMiddle"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/guidelineTop">
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay2GuidelineVert2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.04" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay2GuidelineVert1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.75" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lay2GuidelineHori1"
@@ -192,27 +171,26 @@
                     android:id="@+id/textWaterLeftToDrink"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:textSize="72sp"
                     android:fontFamily="sans-serif-condensed-light"
-                    android:textStyle="bold"
-                    android:gravity="bottom|start"
+                    android:gravity="bottom|center"
                     android:textAlignment="gravity"
-                    app:layout_constraintTop_toBottomOf="@id/lay2GuidelineHori2"
+                    android:textSize="72sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/lay2GuidelineHori1"
-                    app:layout_constraintLeft_toRightOf="@id/lay2GuidelineVert2"
-                    app:layout_constraintRight_toLeftOf="@id/lay2GuidelineVert1"
-                    />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lay2GuidelineHori2" />
 
                 <TextView
                     android:id="@+id/textWaterLeftToDrinkDescription"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:gravity="top|center"
                     android:text="Vettä juomatta tänään"
-                    android:gravity="top|start"
                     android:textAlignment="gravity"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/lay2GuidelineVert1"
-                    app:layout_constraintStart_toStartOf="@+id/lay2GuidelineVert2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/lay2GuidelineHori1" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -263,13 +241,6 @@
                 app:layout_constraintRight_toLeftOf="@id/guidelineMiddle">
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay3GuidelineVert2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.04" />
-
-                <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lay3GuidelineVert1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -283,25 +254,18 @@
                     android:orientation="horizontal"
                     app:layout_constraintGuide_percent="0.52" />
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay3GuidelineHori2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.18" />
-
                 <TextView
                     android:id="@+id/textLowerBPNumber"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:textSize="72sp"
                     android:fontFamily="sans-serif-condensed-light"
-                    android:textStyle="bold"
                     android:gravity="bottom|end"
                     android:textAlignment="gravity"
+                    android:textSize="72sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/lay3GuidelineHori1"
                     app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
-                    app:layout_constraintStart_toStartOf="@+id/lay3GuidelineVert2"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -312,18 +276,18 @@
                     android:text="Alapaine"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
-                    app:layout_constraintStart_toStartOf="@+id/lay3GuidelineVert2"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/lay3GuidelineHori1" />
 
                 <ImageView
                     android:id="@+id/imageArrowLowerBP"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    android:scaleY="3"
+                    android:scaleType="fitXY"
+                    android:scaleY="0.8"
                     app:layout_constraintBottom_toTopOf="@+id/lay3GuidelineHori1"
                     app:layout_constraintStart_toStartOf="@+id/lay3GuidelineVert1"
-                    app:layout_constraintTop_toTopOf="@+id/lay3GuidelineHori2"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@color/colorDivider" />
 
 
@@ -336,13 +300,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/guidelineMiddle"
                 app:layout_constraintRight_toRightOf="parent">
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay4GuidelineVert2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.04" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lay4GuidelineVert1"
@@ -358,12 +315,6 @@
                     android:orientation="horizontal"
                     app:layout_constraintGuide_percent="0.52" />
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay4GuidelineHori2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.18" />
                 <TextView
                     android:id="@+id/textUpperBPNumber"
                     android:layout_width="0dp"
@@ -375,7 +326,7 @@
                     android:textAlignment="gravity"
                     app:layout_constraintBottom_toTopOf="@+id/lay4GuidelineHori1"
                     app:layout_constraintEnd_toStartOf="@+id/lay4GuidelineVert1"
-                    app:layout_constraintStart_toStartOf="@+id/lay4GuidelineVert2"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -386,18 +337,18 @@
                     android:text="Alapaine"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/lay4GuidelineVert1"
-                    app:layout_constraintStart_toStartOf="@+id/lay4GuidelineVert2"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/lay4GuidelineHori1" />
 
                 <ImageView
                     android:id="@+id/imageArrowUpperBP"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    android:scaleY="3"
+                    android:scaleType="fitXY"
+                    android:scaleY="0.8"
                     app:layout_constraintBottom_toTopOf="@+id/lay4GuidelineHori1"
                     app:layout_constraintStart_toStartOf="@+id/lay4GuidelineVert1"
-                    app:layout_constraintTop_toTopOf="@+id/lay4GuidelineHori2"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@color/colorDivider" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

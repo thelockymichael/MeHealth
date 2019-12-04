@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarTop"
@@ -23,28 +25,73 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <TextView
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal75"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <TextView
+        android:id="@+id/textExerciseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-light"
         android:textSize="36sp"
-        android:id="@+id/textExerciseName"
         android:textStyle="bold"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical50"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical50"
         app:layout_constraintTop_toBottomOf="@id/toolbarTop" />
 
-    <TextView
-        android:id="@+id/textExerciseHowManyMinutes"
+    <EditText
+        android:id="@+id/editHowManyMinutesExercised"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="12"
+        android:hint="Montako minuuttia?"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonAddExercise"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
+        android:text="Lisää liikunta"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textHowManyCaloriesBurned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="Montako minuuttia?"
+        android:fontFamily="sans-serif-light"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/guidelineVertical50"
-        app:layout_constraintTop_toBottomOf="@+id/textExerciseName" />
+        app:layout_constraintTop_toTopOf="@id/guidelineHorizontal75" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
