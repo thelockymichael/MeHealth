@@ -56,7 +56,7 @@
     <Preference
         android:title="Nollaa kaikki"
         android:key="buttonResetEverything"
-        android:summary="Nollaa tallenetut arvot"/>
+        android:summary="Nollaa tallennetut arvot"/>
 
 
 
