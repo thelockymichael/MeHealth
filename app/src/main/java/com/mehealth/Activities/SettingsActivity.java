@@ -1,4 +1,4 @@
-package com.example.mehealth.Activities;
+package com.mehealth.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.example.mehealth.R;
-import com.example.mehealth.SharedPref;
-import com.example.mehealth.User.User;
+import com.mehealth.R;
+import com.mehealth.SharedPref;
+import com.mehealth.User.User;
 
 /**
  * Settings activity containing the preferences fragment.

@@ -1,27 +1,31 @@
-package com.example.mehealth.Activities;
+package com.mehealth.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mehealth.R;
-import com.example.mehealth.SharedPref;
-import com.example.mehealth.User.User;
+import com.mehealth.R;
+import com.mehealth.SharedPref;
+import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -81,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.ic_home:
                         //Clicking the current activitys icon does nothing
                         break;
-                    case R.id.ic_attach_money:
+                    case R.id.ic_weight_scale:
                         //Depending on the icon clicked, starts the corresponding activity
                         Intent weight = new Intent(MainActivity.this, WeightActivity.class);
                         startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
@@ -112,21 +116,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //Always gets the latest user from shared preferences when activity resumes
         user = pref.getUser();
+        user.water.checkWater(user, pref);
+        user.exercisedToday.checkCalories(user, pref);
 
-        //Takes the user's name that is set in settings from shared preferences
-        String name = pref.getString("name", "tuntematon");
-
-        //Sets the textviews
-        TextView textHello = findViewById(R.id.textHello);
-        textHello.setText(String.format("%s %s", greeting(), name));
-
-        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
-        ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
-
-        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
-        ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
-        ((TextView)findViewById(R.id.textUpperBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestUpperBP()));
-
+        setupTextViews();
         updateArrow();
     }
 
@@ -170,6 +163,36 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(item);
         menuItem.setChecked(true);
+    }
+
+    public static void hideKeyboard(Context c, View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager)c.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    protected void setupTextViews() {
+        //Takes the user's name that is set in settings from shared preferences
+
+        String name = pref.getString("name", "tuntematon");
+
+        //Sets the textviews
+        TextView textHello = findViewById(R.id.textHello);
+        textHello.setText(String.format("%s %s", greeting(), name));
+
+        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
+        ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
+
+        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
+        ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
+        ((TextView)findViewById(R.id.textUpperBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestUpperBP()));
+        ((TextView)findViewById(R.id.textCaloriesBurnedToday)).setText(String.format(Locale.getDefault(), "%d", user.exercisedToday.getCaloriesBurnedToday()));
+
+        TextView textCaloriesBurnedTodayDescription = findViewById(R.id.textCaloriesBurnedTodayDescription);
+        if (user.exercisedToday.getCaloriesBurnedToday() == 1) {
+            textCaloriesBurnedTodayDescription.setText("Kalori poltettu tänään");
+        } else {
+            textCaloriesBurnedTodayDescription.setText("Kaloria poltettu tänään");
+        }
     }
 
     public void updateArrow() {

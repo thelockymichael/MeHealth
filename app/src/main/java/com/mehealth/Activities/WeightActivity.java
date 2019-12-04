@@ -1,4 +1,4 @@
-package com.example.mehealth.Activities;
+package com.mehealth.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.mehealth.InputFilterMinMax;
-import com.example.mehealth.R;
-import com.example.mehealth.SharedPref;
-import com.example.mehealth.User.User;
+import com.mehealth.InputFilterMinMax;
+import com.mehealth.R;
+import com.mehealth.SharedPref;
+import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -77,7 +77,7 @@ public class WeightActivity extends AppCompatActivity {
                         Intent home = new Intent(WeightActivity.this, MainActivity.class);
                         startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
-                    case R.id.ic_attach_money:
+                    case R.id.ic_weight_scale:
                         break;
 
                     case R.id.ic_local_drink:
@@ -103,6 +103,7 @@ public class WeightActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonAddValues(v);
                 updateUI(user);
+                MainActivity.hideKeyboard(getApplicationContext(), v);
             }
         });
 
@@ -114,9 +115,7 @@ public class WeightActivity extends AppCompatActivity {
             }
         });
 
-        ((EditText)findViewById(R.id.editTextPaino)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
-        ((EditText)findViewById(R.id.editTextAlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
-        ((EditText)findViewById(R.id.editTextYlaPaine)).setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
+        setupEditTexts();
     }
 
     @Override
@@ -148,6 +147,10 @@ public class WeightActivity extends AppCompatActivity {
         weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", user.weight.getLatestWeight()));
         lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", user.bloodPressure.getLatestLowerBP()));
         upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", user.bloodPressure.getLatestUpperBP()));
+
+        ((EditText)findViewById(R.id.editTextPaino)).setText("");
+        ((EditText)findViewById(R.id.editTextAlaPaine)).setText("");
+        ((EditText)findViewById(R.id.editTextYlaPaine)).setText("");
     }
 
     /**
@@ -158,8 +161,6 @@ public class WeightActivity extends AppCompatActivity {
         EditText editTextWeight = findViewById(R.id.editTextPaino);
         EditText editTextLowerBP = findViewById(R.id.editTextAlaPaine);
         EditText editTextUpperBP = findViewById(R.id.editTextYlaPaine);
-
-        editTextWeight.setFilters(new InputFilter[] { new InputFilterMinMax("1", "999")});
 
         String weight = editTextWeight.getText().toString();
         String lowerBP = editTextLowerBP.getText().toString();
@@ -206,4 +207,36 @@ public class WeightActivity extends AppCompatActivity {
         updateText(user);
         updateGraph(user);
     }
+
+    protected void setupEditTexts() {
+        EditText paino = findViewById(R.id.editTextPaino);
+        EditText alaPaine = findViewById(R.id.editTextAlaPaine);
+        EditText ylaPaine = findViewById(R.id.editTextYlaPaine);
+
+        paino.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        ylaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+
+        paino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+        alaPaine.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+        ylaPaine.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+    }
+
+
+
 }

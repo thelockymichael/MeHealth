@@ -1,4 +1,4 @@
-package com.example.mehealth.Activities;
+package com.mehealth.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.mehealth.R;
-import com.example.mehealth.SharedPref;
-import com.example.mehealth.User.User;
+import com.mehealth.R;
+import com.mehealth.SharedPref;
+import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
@@ -149,7 +149,7 @@ public class MoodActivity extends AppCompatActivity {
                         Intent home = new Intent(MoodActivity.this, MainActivity.class);
                         startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;
-                    case R.id.ic_attach_money:
+                    case R.id.ic_weight_scale:
                         Intent weight = new Intent(MoodActivity.this, WeightActivity.class);
                         startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                         break;

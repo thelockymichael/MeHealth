@@ -1,4 +1,4 @@
-package com.example.mehealth.User;
+package com.mehealth.User;
 
 /**
  * Keeps track of the user's information including the water drank daily,
@@ -9,6 +9,7 @@ public class User  {
     public Mood mood;
     public BloodPressure bloodPressure;
     public Weight weight;
+    public ExercisedToday exercisedToday;
 
     /**
      * Creates new user with default values of 0 in everything.
@@ -18,6 +19,7 @@ public class User  {
         water = new WaterDrankToday();
         mood = new Mood();
         bloodPressure = new BloodPressure();
+        exercisedToday = new ExercisedToday();
     }
     /**
      * Resets every value in the user class that is being tracked
@@ -28,6 +30,7 @@ public class User  {
         bloodPressure.clearUpperBP();
         water.clear();
         mood.clear();
+        exercisedToday.clear();
     }
 
 }

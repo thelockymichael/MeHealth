@@ -6,8 +6,8 @@
         android:icon="@drawable/ic_home"
         android:title="Home"/>
     <item
-        android:id="@+id/ic_attach_money"
-        android:icon="@drawable/ic_attach_money"
+        android:id="@+id/ic_weight_scale"
+        android:icon="@drawable/ic_weight_scale"
         android:title="Paino"/>
     <item
         android:id="@+id/ic_local_drink"

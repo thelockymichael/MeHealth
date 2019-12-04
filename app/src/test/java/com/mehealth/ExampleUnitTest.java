@@ -1,4 +1,4 @@
-package com.example.mehealth;
+package com.mehealth;
 
 import org.junit.Test;
 
