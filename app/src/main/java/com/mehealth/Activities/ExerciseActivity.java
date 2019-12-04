@@ -4,12 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.mehealth.Exercise;
+import com.mehealth.Exercises;
 import com.mehealth.R;
 import com.mehealth.SharedPref;
 import com.mehealth.User.User;
@@ -19,10 +25,11 @@ import java.util.Objects;
 
 public class ExerciseActivity extends AppCompatActivity {
     private static final String TAG = "ExerciseActivity";
+    public static final String EXTRA_MESSAGE = "com.mehealth.MESSAGE";
     User user;
     Toolbar toolbar;
     SharedPref pref;
-    Boolean settingsOpened;
+    Boolean settingsOrDetailsOpened;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +39,22 @@ public class ExerciseActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
+
+        ListView exercises = findViewById(R.id.exerciseListView);
+        exercises.setAdapter(new ArrayAdapter<Exercise>(
+           this,
+                android.R.layout.simple_list_item_1,
+                Exercises.getInstance().getExercises()
+        ));
+        exercises.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent exercise = new Intent(ExerciseActivity.this, ExerciseDetailsActivity.class);
+                exercise.putExtra(EXTRA_MESSAGE, position);
+                startActivity(exercise);
+                settingsOrDetailsOpened = true;
+            }
+        });
     }
 
     @Override
@@ -45,7 +68,7 @@ public class ExerciseActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
-            settingsOpened = true;
+            settingsOrDetailsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -92,14 +115,14 @@ public class ExerciseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         user = pref.getUser();
-        settingsOpened = false;
+        settingsOrDetailsOpened = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         pref.saveUser(user);
-        if (!settingsOpened) {
+        if (!settingsOrDetailsOpened) {
             finish();
         }
     }
