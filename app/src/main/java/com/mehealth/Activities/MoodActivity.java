@@ -1,4 +1,4 @@
-package com.example.mehealth.Activities;
+package com.mehealth.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.mehealth.R;
-import com.example.mehealth.SharedPref;
-import com.example.mehealth.User.User;
+import com.mehealth.R;
+import com.mehealth.SharedPref;
+import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;

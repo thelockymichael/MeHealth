@@ -1,4 +1,4 @@
-package com.example.mehealth.User;
+package com.mehealth.User;
 
 import java.util.ArrayList;
 import java.util.Collections;

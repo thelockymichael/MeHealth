@@ -1,9 +1,8 @@
-package com.example.mehealth.User;
+package com.mehealth.User;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
-import com.example.mehealth.SharedPref;
+import com.mehealth.SharedPref;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

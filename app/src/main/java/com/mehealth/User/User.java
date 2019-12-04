@@ -1,4 +1,4 @@
-package com.example.mehealth.User;
+package com.mehealth.User;
 
 /**
  * Keeps track of the user's information including the water drank daily,

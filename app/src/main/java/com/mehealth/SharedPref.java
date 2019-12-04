@@ -1,10 +1,10 @@
-package com.example.mehealth;
+package com.mehealth;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.mehealth.User.User;
+import com.mehealth.User.User;
 import com.google.gson.Gson;
 
 /**
@@ -17,7 +17,7 @@ public class SharedPref {
     private Gson gson;
 
     public SharedPref(Context context) {
-        sharedPref = context.getSharedPreferences("com.example.mehealth_preferences", Activity.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences("com.mehealth_preferences", Activity.MODE_PRIVATE);
         sharedPrefEditor = this.sharedPref.edit();
         sharedPrefEditor.apply();
         gson = new Gson();
