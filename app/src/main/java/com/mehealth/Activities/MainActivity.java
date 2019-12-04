@@ -116,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //Always gets the latest user from shared preferences when activity resumes
         user = pref.getUser();
-        user.water.checkWater(user, pref);
-        user.exercisedToday.checkCalories(user, pref);
+        user.exercisedToday.checkCalories(pref);
+        user.water.checkWater(pref);
 
         setupTextViews();
         updateArrow();

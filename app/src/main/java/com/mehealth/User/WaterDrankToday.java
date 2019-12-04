@@ -1,21 +1,18 @@
 package com.mehealth.User;
 
-import android.annotation.SuppressLint;
-
+import com.mehealth.DateCheck;
 import com.mehealth.SharedPref;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Keeps track of the water drank by the user.
  */
 public class WaterDrankToday {
     private int waterDrankToday;
+    private DateCheck dateCheck;
 
     public WaterDrankToday() {
         waterDrankToday = 0;
+        dateCheck = new DateCheck();
     }
 
     /**
@@ -30,8 +27,8 @@ public class WaterDrankToday {
      * Getter for water drank today
      * @return  an int of how much water has been drank today
      */
-    public int getWaterDrankToday(User user, SharedPref pref) {
-        checkWater(user, pref);
+    public int getWaterDrankToday(SharedPref pref) {
+        checkWater(pref);
         return this.waterDrankToday;
     }
 
@@ -42,25 +39,12 @@ public class WaterDrankToday {
     /**
      * Checks whether a new day has come to reset the water drank.
      * If current date is different from the date saved before, water drank today is set to 0;
-     * @param user
      * @param pref
      */
-    public void checkWater(User user, SharedPref pref) {
-        //Get the current date
-        Date date = Calendar.getInstance().getTime();
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = dateFormat.format(date);
-
-        //Get the previous date from shared preferences
-        String oldFormattedDate = pref.getString("oldDate");
-
-        //If the current date differs from the old date, water drank today is set to 0
-        if (!formattedDate.equals(oldFormattedDate)) {
+    public void checkWater(SharedPref pref) {
+        if (dateCheck.newDay(pref, "oldDateWater")) {
             clear();
         }
-        //Saves the current date into shared preferences as the old date
-        oldFormattedDate = formattedDate;
-        pref.putString("oldDate", oldFormattedDate);
     }
 
     public int howMuchWaterToDrink() {
