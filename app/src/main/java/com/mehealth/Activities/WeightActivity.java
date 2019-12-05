@@ -190,6 +190,7 @@ public class WeightActivity extends AppCompatActivity {
         graph.setTitle("Paino");
         graph.getViewport().setScalable(true);
         graph.getViewport().setYAxisBoundsManual(false);
+        graph.getViewport().setXAxisBoundsManual(true);
         if (weightHistory.size() < 2) {
             graph.getViewport().setMaxX(1);
         } else {

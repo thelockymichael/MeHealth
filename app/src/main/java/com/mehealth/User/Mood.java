@@ -19,6 +19,10 @@ public class Mood {
         return moodHistory.get(moodHistory.size() - 1);
     }
 
+    public ArrayList<Integer> getMoodHistory() {
+        return moodHistory;
+    }
+
     public void addMoodRecord(int mood) {
         this.moodHistory.add(mood);
     }

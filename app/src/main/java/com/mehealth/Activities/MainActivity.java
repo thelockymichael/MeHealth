@@ -179,13 +179,16 @@ public class MainActivity extends AppCompatActivity {
         TextView textHello = findViewById(R.id.textHello);
         textHello.setText(String.format("%s %s", greeting(), name));
 
-        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
+        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "%d", user.mood.getLatestMoodRecord()));
+        ((TextView)findViewById(R.id.textMoodNowDescription)).setText("Viimeisin mielialasi oli");
+
         ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
 
-        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
         ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
         ((TextView)findViewById(R.id.textUpperBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestUpperBP()));
         ((TextView)findViewById(R.id.textCaloriesBurnedToday)).setText(String.format(Locale.getDefault(), "%d", user.exercisedToday.getCaloriesBurnedToday()));
+
+        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
 
         TextView textCaloriesBurnedTodayDescription = findViewById(R.id.textCaloriesBurnedTodayDescription);
         if (user.exercisedToday.getCaloriesBurnedToday() == 1) {

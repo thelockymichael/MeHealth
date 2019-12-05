@@ -41,7 +41,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
 
         final Bundle received = getIntent().getExtras();
-        int position = received.getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
+        final int position = received.getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
         final Exercise selectedExercise = Exercises.getInstance().getExercise(position);
 
         ((TextView)findViewById(R.id.textExerciseName))
@@ -59,7 +59,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
                     user.exercisedToday.addExercise(selectedExercise, iMinutes, user);
                     editHowManyMinutesExercised.setText("");
                 }
-                MainActivity.hideKeyboard(getApplicationContext(), v);
+                finish();
             }
         });
     }

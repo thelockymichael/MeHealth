@@ -12,11 +12,6 @@ public class InputFilterMinMax implements InputFilter {
         this.max = max;
     }
 
-    public InputFilterMinMax(String min, String max) {
-        this.min = Integer.parseInt(min);
-        this.max = Integer.parseInt(max);
-    }
-
     @Override
     public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
         try {
@@ -28,6 +23,12 @@ public class InputFilterMinMax implements InputFilter {
     }
 
     private boolean isInRange(int a, int b, int c) {
+        /*if (b > a) {
+            return c >= a && c <= b;
+        } else {
+            return c >= b && c <= a;
+        }*/
+
         return b > a ? c >= a && c <= b : c >= b && c <= a;
     }
 }
