@@ -77,13 +77,14 @@
 
             <Button
                 android:id="@+id/buttonLisaaArvo"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:fontFamily="sans-serif-light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/layout_weight_add"
                 android:textSize="24sp"
+                android:background="@drawable/soft_corners"
+                android:textColor="@color/colorWhite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
@@ -140,13 +141,16 @@
 
             <Button
                 android:id="@+id/buttonDeleteLastWeightRecord"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/layout_weight_deleteLastRecord"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:fontFamily="sans-serif-light"
+                android:background="@drawable/soft_corners"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/colorWhite"
                 app:layout_constraintTop_toBottomOf="@id/weightGraph"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent" />

@@ -86,13 +86,16 @@
 
             <Button
                 android:id="@+id/buttonAddMood"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="64dp"
                 android:text="@string/layout_mood_addMood"
                 android:textSize="24sp"
                 android:fontFamily="sans-serif-light"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/soft_corners"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
