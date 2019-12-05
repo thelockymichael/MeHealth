@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         //Sets the toolbar for the activity
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("MeHealth");
+        getSupportActionBar().setTitle("Asetukset");
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

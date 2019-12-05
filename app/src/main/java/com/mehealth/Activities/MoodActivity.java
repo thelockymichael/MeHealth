@@ -41,7 +41,7 @@ public class MoodActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Mieliala");
 
         //Declares the ImageView and sets the first image to be the neutral smiley corresponding to 5
         final ImageView imageMieliala = findViewById(R.id.imageMieliala);

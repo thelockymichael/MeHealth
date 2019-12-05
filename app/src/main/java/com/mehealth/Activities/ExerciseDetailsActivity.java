@@ -23,6 +23,7 @@ import com.mehealth.R;
 import com.mehealth.SharedPref;
 import com.mehealth.User.User;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class ExerciseDetailsActivity extends AppCompatActivity {
@@ -38,7 +39,9 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Lisää liikunta");
+
+        user = pref.getUser();
 
         final Bundle received = getIntent().getExtras();
         final int position = received.getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
@@ -49,8 +52,9 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
 
         final EditText editHowManyMinutesExercised = findViewById(R.id.editHowManyMinutesExercised);
         setupEditText(editHowManyMinutesExercised);
+        setupTextViews(selectedExercise);
 
-        ((Button)findViewById(R.id.buttonAddExercise)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonAddExercise).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String stringMinutes = editHowManyMinutesExercised.getText().toString();
@@ -106,6 +110,13 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
             }
         });
         editText.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+    }
+
+    protected void setupTextViews(Exercise exercise) {
+        TextView weightNow= findViewById(R.id.weightNow);
+        //TextView caloriesBurnedPerHour = findViewById(R.id.caloriesBurnedPerHour);
+
+        weightNow.setText(String.format(Locale.getDefault(), "Poltat %d kaloria tunnissa painollasi", exercise.getKaloritTunnissa(user)));
     }
 
 

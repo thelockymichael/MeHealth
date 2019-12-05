@@ -38,7 +38,7 @@ public class ExerciseActivity extends AppCompatActivity {
         pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Liikunta");
 
         ListView exercises = findViewById(R.id.exerciseListView);
         exercises.setAdapter(new ArrayAdapter<Exercise>(

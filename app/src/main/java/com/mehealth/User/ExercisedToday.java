@@ -15,9 +15,6 @@ public class ExercisedToday {
 
     public void addExercise(Exercise exercise, int minutes, User user) {
         double weight = user.weight.getLatestWeight();
-        if (user.weight.getLatestWeight() == 0) {
-            weight = 50;
-        }
         double dCaloriesBurned = exercise.getKaloritMinuutissaPerKilo() * (1.0* minutes) * weight;
 
         int iCaloriesBurned = (int) Math.round(dCaloriesBurned);
