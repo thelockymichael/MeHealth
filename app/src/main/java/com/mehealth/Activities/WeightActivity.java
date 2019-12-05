@@ -137,7 +137,7 @@ public class WeightActivity extends AppCompatActivity {
 
     /**
      * Updates the TextViews with the latest values from weight and blood pressures.
-     * @param user
+     * @param user  Current user
      */
     private void updateText(User user) {
         TextView weightText = findViewById(R.id.textViewWeight);
@@ -155,7 +155,7 @@ public class WeightActivity extends AppCompatActivity {
 
     /**
      * Gets the values from user input and saves them into the user's history.
-     * @param view
+     * @param view  Current view
      */
     public void buttonAddValues(View view) {
         EditText editTextWeight = findViewById(R.id.editTextPaino);
@@ -172,7 +172,7 @@ public class WeightActivity extends AppCompatActivity {
 
     /**
      * Updates the weight graph with the newest values
-     * @param user
+     * @param user  Current user
      */
     protected void updateGraph(User user) {
         GraphView graph = findViewById(R.id.weightGraph);
@@ -202,7 +202,7 @@ public class WeightActivity extends AppCompatActivity {
 
     /**
      * Updates the text and graph with the latest values.
-     * @param user
+     * @param user  Current user
      */
     protected void updateUI(User user) {
         updateText(user);

@@ -12,8 +12,8 @@ import com.google.gson.Gson;
  * Makes transferring the user class around activities easy.
  */
 public class SharedPref {
-    public SharedPreferences sharedPref;
-    public SharedPreferences.Editor sharedPrefEditor;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor sharedPrefEditor;
     private Gson gson;
 
     public SharedPref(Context context) {
@@ -26,15 +26,14 @@ public class SharedPref {
     /**
      * Gets user from shared preferences.
      * Returns a default value user if there is no user in shared preferences.
-     * @return
+     * @return  User
      */
     public User getUser() {
         User defaultUser = new User();
         String defaultUserJson = gson.toJson(defaultUser);
 
         String userJson = sharedPref.getString("user", defaultUserJson);
-        User user = gson.fromJson(userJson, User.class);
-        return user;
+        return gson.fromJson(userJson, User.class);
     }
 
     /**
@@ -59,13 +58,12 @@ public class SharedPref {
 
     /**
      * Variation of getString where user decides the default value.
-     * @param key
-     * @param defaultValue
-     * @return
+     * @param key   Key for shared preferences
+     * @param defaultValue  Default value set by user
+     * @return  String corresponding to the key
      */
     public String getString(String key, String defaultValue) {
-        String string = sharedPref.getString(key, defaultValue);
-        return string;
+        return sharedPref.getString(key, defaultValue);
     }
 
     /**

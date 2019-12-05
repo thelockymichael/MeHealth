@@ -150,7 +150,9 @@ public class MainActivity extends AppCompatActivity {
      */
     public static void hideKeyboard(Context c, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager)c.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     /**
@@ -215,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Sets the mood TextViews
         ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "%d", user.mood.getLatestMoodRecord()));
-        ((TextView)findViewById(R.id.textMoodNowDescription)).setText("Viimeisin mielialasi oli");
+        ((TextView)findViewById(R.id.textMoodNowDescription)).setText(R.string.activity_main_lastMood);
 
         //Sets the weight and blood pressure TextViews
         ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
@@ -235,9 +237,9 @@ public class MainActivity extends AppCompatActivity {
          */
         TextView textCaloriesBurnedTodayDescription = findViewById(R.id.textCaloriesBurnedTodayDescription);
         if (user.exercisedToday.getCaloriesBurnedToday() == 1) {
-            textCaloriesBurnedTodayDescription.setText("Kalori poltettu tänään");
+            textCaloriesBurnedTodayDescription.setText(R.string.activity_main_calorieBurnedToday);
         } else {
-            textCaloriesBurnedTodayDescription.setText("Kaloria poltettu tänään");
+            textCaloriesBurnedTodayDescription.setText(R.string.activity_main_caloriesBurnedToday);
         }
     }
 

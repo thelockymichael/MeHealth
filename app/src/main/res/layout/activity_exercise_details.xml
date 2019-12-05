@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="12"
-        android:hint="Montako minuuttia?"
+        android:hint="@string/layout_exercise_details_howManyMinutes"
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal25"
@@ -87,7 +87,7 @@
             android:layout_height="30dp"
             android:paddingStart="0dp"
             android:paddingEnd="10dp"
-            android:text="Rento" />
+            android:text="@string/layout_exercise_details_intensityRelaxed" />
 
         <RadioButton
             android:id="@+id/intensityNormal"
@@ -95,7 +95,7 @@
             android:layout_height="30dp"
             android:paddingStart="0dp"
             android:paddingEnd="10dp"
-            android:text="Normaali" />
+            android:text="@string/layout_exercise_details_intensityNormal" />
 
         <RadioButton
             android:id="@+id/intensityHeavy"
@@ -103,7 +103,7 @@
             android:layout_height="30dp"
             android:paddingStart="0dp"
             android:paddingEnd="10dp"
-            android:text="Raskas"/>
+            android:text="@string/layout_exercise_details_intensityHeavy"/>
 
     </RadioGroup>
 
@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:text="Lisää liikunta"
+        android:text="@string/layout_exercise_details_addExercise"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal50"
         app:layout_constraintEnd_toEndOf="parent"
