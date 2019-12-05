@@ -70,6 +70,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <RadioGroup
+        android:id="@+id/intensityGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@id/intensityNormal"
+        app:layout_constraintTop_toBottomOf="@id/editHowManyMinutesExercised"
+        app:layout_constraintBottom_toTopOf="@id/weightNow"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <RadioButton
+            android:id="@+id/intensityRelaxed"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:text="Rento" />
+
+        <RadioButton
+            android:id="@+id/intensityNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:text="Normaali" />
+
+        <RadioButton
+            android:id="@+id/intensityHeavy"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:text="Raskas"/>
+
+    </RadioGroup>
+
     <TextView
         android:id="@+id/weightNow"
         android:layout_width="wrap_content"
@@ -77,7 +114,6 @@
         android:fontFamily="sans-serif-light"
         android:textSize="24sp"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/editHowManyMinutesExercised"
         app:layout_constraintBottom_toTopOf="@id/buttonAddExercise"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -94,15 +130,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textHowManyCaloriesBurned"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-light"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guidelineHorizontal75" />
 
 
 

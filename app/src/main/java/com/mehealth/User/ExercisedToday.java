@@ -13,9 +13,9 @@ public class ExercisedToday {
         dateCheck = new DateCheck();
     }
 
-    public void addExercise(Exercise exercise, int minutes, User user) {
+    public void addExercise(Exercise exercise, int minutes, User user, double intensity) {
         double weight = user.weight.getLatestWeight();
-        double dCaloriesBurned = exercise.getKaloritMinuutissaPerKilo() * (1.0* minutes) * weight;
+        double dCaloriesBurned = exercise.getKaloritMinuutissaPerKilo() * (1.0* minutes) * weight * intensity;
 
         int iCaloriesBurned = (int) Math.round(dCaloriesBurned);
         this.caloriesBurnedToday += iCaloriesBurned;

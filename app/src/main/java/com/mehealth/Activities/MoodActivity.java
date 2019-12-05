@@ -217,5 +217,6 @@ public class MoodActivity extends AppCompatActivity {
         }
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMaxY(10);
+        graph.getViewport().setMinY(0);
     }
 }

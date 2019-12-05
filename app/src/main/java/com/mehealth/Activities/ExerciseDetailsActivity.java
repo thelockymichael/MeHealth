@@ -4,16 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.mehealth.Exercise;
@@ -31,17 +29,18 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
     Toolbar toolbar;
     SharedPref pref;
     Boolean settingsOrDetailsOpened;
+    double currentIntensity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_details);
         pref = new SharedPref(getApplicationContext());
+        user = pref.getUser();
+        currentIntensity = 1;
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Lisää liikunta");
-
-        user = pref.getUser();
 
         final Bundle received = getIntent().getExtras();
         final int position = received.getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
@@ -54,13 +53,37 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         setupEditText(editHowManyMinutesExercised);
         setupTextViews(selectedExercise);
 
+        RadioGroup intensityGroup = findViewById(R.id.intensityGroup);
+        intensityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (group.getCheckedRadioButtonId()) {
+                    case R.id.intensityRelaxed:
+                        currentIntensity = 0.75;
+                        setupTextViews(selectedExercise);
+                        break;
+
+                    case R.id.intensityNormal:
+                        currentIntensity = 1;
+                        setupTextViews(selectedExercise);
+                        break;
+
+                    case R.id.intensityHeavy:
+                        currentIntensity = 1.25;
+                        setupTextViews(selectedExercise);
+                        break;
+                }
+            }
+        });
+
+
         findViewById(R.id.buttonAddExercise).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String stringMinutes = editHowManyMinutesExercised.getText().toString();
                 if (!stringMinutes.isEmpty()) {
                     int iMinutes = Integer.parseInt(stringMinutes);
-                    user.exercisedToday.addExercise(selectedExercise, iMinutes, user);
+                    user.exercisedToday.addExercise(selectedExercise, iMinutes, user, currentIntensity);
                     editHowManyMinutesExercised.setText("");
                 }
                 finish();
@@ -116,7 +139,8 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         TextView weightNow= findViewById(R.id.weightNow);
         //TextView caloriesBurnedPerHour = findViewById(R.id.caloriesBurnedPerHour);
 
-        weightNow.setText(String.format(Locale.getDefault(), "Poltat %d kaloria tunnissa painollasi", exercise.getKaloritTunnissa(user)));
+        weightNow.setText(String.format(Locale.getDefault(), "Poltat %d kaloria tunnissa painollasi",
+                Math.round((1.0 * exercise.getKaloritTunnissa(user)) * currentIntensity)));
     }
 
 
