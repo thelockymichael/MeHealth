@@ -42,7 +42,7 @@ public class WeightActivity extends AppCompatActivity {
         pref = new SharedPref(getApplicationContext());
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Paino");
     }
 
     @Override
@@ -190,6 +190,7 @@ public class WeightActivity extends AppCompatActivity {
         graph.setTitle("Paino");
         graph.getViewport().setScalable(true);
         graph.getViewport().setYAxisBoundsManual(false);
+        graph.getViewport().setXAxisBoundsManual(true);
         if (weightHistory.size() < 2) {
             graph.getViewport().setMaxX(1);
         } else {

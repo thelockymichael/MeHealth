@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.MainActivity">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/relLayout">
         <RelativeLayout
             android:id="@+id/relLayoutTop"
             android:layout_width="match_parent"
@@ -24,7 +19,6 @@
                 android:minHeight="?attr/actionBarSize" />
         </RelativeLayout>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relLayoutMiddle"
             android:layout_width="match_parent"
@@ -32,20 +26,6 @@
             android:layout_above="@id/relLayoutBotBar"
             android:layout_below="@id/relLayoutTop"
             >
-
-            <TextView
-                android:id="@+id/textHello"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="TextView"
-                android:textSize="24sp"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="3dp"
-                app:layout_constraintBottom_toTopOf="@id/guidelineTop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineMiddle"
@@ -78,8 +58,11 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoutWeight"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:focusable="true"
+                android:clickable="true"
                 app:layout_constraintBottom_toTopOf="@id/guideline1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="@id/guidelineMiddle"
@@ -142,10 +125,11 @@
                     app:layout_constraintStart_toStartOf="@+id/lay1GuidelineVert1"
                     app:layout_constraintTop_toTopOf="@+id/lay1GuidelineHori2"
                     app:srcCompat="@color/colorDivider" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
+                android:id="@+id/constraintLayoutWater"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@id/guideline1"
@@ -196,34 +180,75 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
+                android:id="@+id/constraintLayoutUpperBP"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/guideline1"
                 app:layout_constraintBottom_toTopOf="@id/guideline2"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/guidelineMiddle">
+                app:layout_constraintRight_toLeftOf="@id/guidelineMiddle"
+                app:layout_constraintTop_toBottomOf="@id/guideline1">
 
-                <TextView
-                    android:id="@+id/textMoodNow"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/lay3GuidelineVert1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="85dp"
-                    android:layout_marginEnd="52dp"
-                    android:layout_marginBottom="85dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textSize="25sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.75" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/lay3GuidelineHori1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.67" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/lay3GuidelineHori2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.20" />
+
+                <TextView
+                    android:id="@+id/textUpperBPNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:gravity="bottom|end"
+                    android:textAlignment="gravity"
+                    android:textSize="72sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/lay3GuidelineHori1"
+                    app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textUpperBPDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="top|end"
+                    android:text="Yläpaine"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/lay3GuidelineHori1" />
+
+                <ImageView
+                    android:id="@+id/imageArrowUpperBP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:scaleType="fitXY"
+                    android:scaleY="0.8"
+                    app:layout_constraintBottom_toTopOf="@+id/lay3GuidelineHori1"
+                    app:layout_constraintStart_toStartOf="@+id/lay3GuidelineVert1"
+                    app:layout_constraintTop_toTopOf="@+id/lay3GuidelineHori2"
+                    app:srcCompat="@color/colorDivider" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout4"
+                android:id="@+id/constraintLayoutCaloriesBurnedToday"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintTop_toBottomOf="@id/guideline1"
@@ -236,14 +261,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.52" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay4GuidelineHori2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.3" />
+                    app:layout_constraintGuide_percent="0.67" />
 
                 <TextView
                     android:id="@+id/textCaloriesBurnedToday"
@@ -274,7 +292,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout5"
+                android:id="@+id/constraintLayoutLowerBP"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintTop_toBottomOf="@id/guideline2"
@@ -336,7 +354,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout6"
+                android:id="@+id/constraintLayoutLatestMood"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintTop_toBottomOf="@id/guideline2"
@@ -345,55 +363,58 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/lay6GuidelineVert1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.75" />
-
-                <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lay6GuidelineHori1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintGuide_percent="0.52" />
 
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/lay6GuidelineHori2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.3" />
+
                 <TextView
-                    android:id="@+id/textUpperBPNumber"
+                    android:id="@+id/textMoodNow"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:fontFamily="sans-serif-condensed-light"
-                    android:gravity="bottom|end"
+                    android:gravity="center|bottom"
                     android:textAlignment="gravity"
                     android:textSize="72sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/lay6GuidelineHori1"
-                    app:layout_constraintEnd_toStartOf="@+id/lay6GuidelineVert1"
+                    app:layout_constraintBottom_toTopOf="@id/lay6GuidelineHori1"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textUpperBPDescription"
+                    android:id="@+id/textMoodNowDescription"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:gravity="top|end"
-                    android:text="YläPaine"
+                    android:gravity="top|center"
+                    android:textAlignment="gravity"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/lay6GuidelineVert1"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/lay6GuidelineHori1" />
 
-                <ImageView
-                    android:id="@+id/imageArrowUpperBP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:scaleType="fitXY"
-                    android:scaleY="0.8"
-                    app:layout_constraintBottom_toTopOf="@+id/lay6GuidelineHori1"
-                    app:layout_constraintStart_toStartOf="@+id/lay6GuidelineVert1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@color/colorDivider" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textHello"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -412,8 +433,7 @@
                 app:labelVisibilityMode="labeled">
             </com.google.android.material.bottomnavigation.BottomNavigationView>
         </RelativeLayout>
-    </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
 
     <!-- <RelativeLayout    //toolBarTop TabLayout
             android:layout_width="match_parent"

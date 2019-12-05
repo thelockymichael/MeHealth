@@ -3,13 +3,12 @@ package com.mehealth.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,28 +86,30 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.ic_weight_scale:
                         //Depending on the icon clicked, starts the corresponding activity
-                        Intent weight = new Intent(MainActivity.this, WeightActivity.class);
-                        startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        startSpecificActivity(WeightActivity.class);
                         break;
 
                     case R.id.ic_local_drink:
-                        Intent water = new Intent(MainActivity.this, WaterActivity.class);
-                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        startSpecificActivity(WaterActivity.class);
                         break;
 
                     case R.id.ic_directions_run:
-                        Intent exercise = new Intent(MainActivity.this, ExerciseActivity.class);
-                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        startSpecificActivity(ExerciseActivity.class);
                         break;
 
                     case R.id.ic_insert_emoticon:
-                        Intent mood = new Intent(MainActivity.this, MoodActivity.class);
-                        startActivity(mood.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        startSpecificActivity(MoodActivity.class);
                         break;
                 }
                 return false;
             }
         });
+        layoutOnClicks((ConstraintLayout)findViewById(R.id.constraintLayoutWeight), WeightActivity.class);
+        layoutOnClicks((ConstraintLayout)findViewById(R.id.constraintLayoutWater), WaterActivity.class);
+        layoutOnClicks((ConstraintLayout)findViewById(R.id.constraintLayoutUpperBP), WeightActivity.class);
+        layoutOnClicks((ConstraintLayout)findViewById(R.id.constraintLayoutCaloriesBurnedToday), ExerciseActivity.class);
+        layoutOnClicks((ConstraintLayout)findViewById(R.id.constraintLayoutLowerBP), WeightActivity.class);
+        layoutOnClicks((ConstraintLayout)findViewById(R.id.constraintLayoutLatestMood), MoodActivity.class);
     }
 
     @Override
@@ -131,29 +132,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Decides the greeting based on time of day taken from the phone.
-     * @return  A greeting string
-     */
-    public String greeting() {
-        //Gets the date and time from android
-        Date date = Calendar.getInstance().getTime();
-        //Sets the wanted format to only contain the current hour
-        SimpleDateFormat dateFormat = new SimpleDateFormat("H", Locale.getDefault());
-        //Formats the string to only contain the current hour
-        String formattedDate = dateFormat.format(date);
-
-        //Converts the hour string into an integer
-        int time = Integer.parseInt(formattedDate);
-        String greeting;
-        //Depending on the time of day the greeting string changes
-        if (time >= 21 || time <= 3) greeting = "Öitä";
-        else if (time <= 10) greeting = "Huomenta";
-        else if (time <= 17) greeting = "Päivää";
-        else greeting = "Iltaa";
-        return greeting;
-    }
-
-    /**
      * A method that lights up the bottom navigation menu item depending on which activity is open.
      * Called from every activity that has the bottom navigation toolbar.
      * @param bottomNavigationView  The bottom navigation toolbar
@@ -165,28 +143,96 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setChecked(true);
     }
 
+    /**
+     * Hides keyboard.
+     * @param c     Context of application
+     * @param view  Current view
+     */
     public static void hideKeyboard(Context c, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager)c.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    protected void setupTextViews() {
-        //Takes the user's name that is set in settings from shared preferences
+    /**
+     * Decides the greeting based on time of day taken from the phone.
+     * @return  A greeting string
+     */
+    public String greeting() {
+        //Gets the date and time from android
+        Date date = Calendar.getInstance().getTime();
 
+        //Sets the wanted format to only contain the current hour
+        SimpleDateFormat dateFormat = new SimpleDateFormat("H", Locale.getDefault());
+
+        //Formats the string to only contain the current hour
+        String formattedDate = dateFormat.format(date);
+
+        //Converts the hour string into an integer
+        int time = Integer.parseInt(formattedDate);
+        String greeting;
+
+        //Depending on the time of day the greeting string changes
+        if (time >= 21 || time <= 3) greeting = "Öitä";
+        else if (time <= 10) greeting = "Huomenta";
+        else if (time <= 17) greeting = "Päivää";
+        else greeting = "Iltaa";
+        return greeting;
+    }
+
+    /**
+     * Starts activity when layout is clicked.
+     * @param layout            Layout to click
+     * @param newActivityClass  Activity to start, e.g. ActivityName.class
+     */
+    protected void layoutOnClicks(ConstraintLayout layout, final Class<?> newActivityClass) {
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSpecificActivity(newActivityClass);
+            }
+        });
+    }
+
+    /**
+     * Starts specific activity with flag for no animation.
+     * @param newActivityClass  Activity to start, e.g. ActivityName.class
+     */
+    public void startSpecificActivity(Class<?> newActivityClass) {
+        Intent intent = new Intent(getApplicationContext(), newActivityClass);
+        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+    }
+
+    /**
+     * Sets up the textViews for the home screen.
+     */
+    protected void setupTextViews() {
+        //Takes the user's name that is set in settings from shared preferences, default is "tuntematon"
         String name = pref.getString("name", "tuntematon");
 
-        //Sets the textviews
+        //Sets the greeting TextView
         TextView textHello = findViewById(R.id.textHello);
         textHello.setText(String.format("%s %s", greeting(), name));
 
-        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "Viimeisin mielialasi oli\n%d", user.mood.getLatestMoodRecord()));
-        ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
+        //Sets the mood TextViews
+        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "%d", user.mood.getLatestMoodRecord()));
+        ((TextView)findViewById(R.id.textMoodNowDescription)).setText("Viimeisin mielialasi oli");
 
-        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
+        //Sets the weight and blood pressure TextViews
+        ((TextView)findViewById(R.id.textWeightNumber)).setText(String.format(Locale.getDefault(), "%d", user.weight.getLatestWeight()));
         ((TextView)findViewById(R.id.textLowerBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestLowerBP()));
         ((TextView)findViewById(R.id.textUpperBPNumber)).setText(String.format(Locale.getDefault(), "%d", user.bloodPressure.getLatestUpperBP()));
+
+        //Sets the water left to drink today TextView
+        ((TextView)findViewById(R.id.textWaterLeftToDrink)).setText(String.format(Locale.getDefault(), "%ddl", user.water.howMuchWaterToDrink()));
+
+        //Sets the calories burned today number TextView
         ((TextView)findViewById(R.id.textCaloriesBurnedToday)).setText(String.format(Locale.getDefault(), "%d", user.exercisedToday.getCaloriesBurnedToday()));
 
+        /*
+        Sets the calories burned today description TextView
+        If 1 calorie has been burned the text is "Kalori poltettu tänään" / "Calorie burned today"
+        Else it is "Kaloria poltettu tänään" / "Calories burned today"
+         */
         TextView textCaloriesBurnedTodayDescription = findViewById(R.id.textCaloriesBurnedTodayDescription);
         if (user.exercisedToday.getCaloriesBurnedToday() == 1) {
             textCaloriesBurnedTodayDescription.setText("Kalori poltettu tänään");
@@ -195,7 +241,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void updateArrow() {
+    /**
+     * Updates the ImageView arrows.
+     * If there was no change then arrow is invisible.
+     * If new value is higher than value before then image is arrow pointing up.
+     * If new value is lower than value before then image is arrow pointing down.
+     */
+    protected void updateArrow() {
+        //Arrow for weight
         ImageView imageArrowWeight = findViewById(R.id.imageArrowWeight);
         if (user.weight.latestWeightLower()) {
             imageArrowWeight.setImageResource(R.drawable.ic_arrow_downward_grey);
@@ -208,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
             imageArrowWeight.setVisibility(View.VISIBLE);
         }
 
+        //Arrow for lower blood pressure
         ImageView imageArrowLowerBP = findViewById(R.id.imageArrowLowerBP);
         if (user.bloodPressure.latestBPLower("lower")) {
             imageArrowLowerBP.setImageResource(R.drawable.ic_arrow_downward_grey);
@@ -220,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
             imageArrowLowerBP.setVisibility(View.VISIBLE);
         }
 
+        //Arrow for upper blood pressure
         ImageView imageArrowUpperBP = findViewById(R.id.imageArrowUpperBP);
         if (user.bloodPressure.latestBPLower("upper")) {
             imageArrowUpperBP.setImageResource(R.drawable.ic_arrow_downward_grey);
@@ -231,7 +286,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             imageArrowUpperBP.setVisibility(View.VISIBLE);
         }
-
     }
 
 }

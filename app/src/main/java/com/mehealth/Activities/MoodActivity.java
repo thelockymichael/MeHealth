@@ -15,11 +15,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.mehealth.R;
 import com.mehealth.SharedPref;
 import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MoodActivity extends AppCompatActivity {
@@ -37,7 +41,7 @@ public class MoodActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("MeHealth");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Mieliala");
 
         //Declares the ImageView and sets the first image to be the neutral smiley corresponding to 5
         final ImageView imageMieliala = findViewById(R.id.imageMieliala);
@@ -114,6 +118,7 @@ public class MoodActivity extends AppCompatActivity {
                 //Depending on the seekbar's progress, saves a mood state from 0-10 to the user objects mood history
                 int progress = ((SeekBar)findViewById(R.id.seekbarMieliala)).getProgress();
                 user.mood.addMoodRecord(progress);
+                updateGraph(user);
             }
         });
     }
@@ -176,6 +181,7 @@ public class MoodActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         user = pref.getUser();
+        updateGraph(user);
         settingsOpened = false;
     }
 
@@ -186,5 +192,31 @@ public class MoodActivity extends AppCompatActivity {
         if (!settingsOpened) {
             finish();
         }
+    }
+
+    protected void updateGraph(User user) {
+        GraphView graph = findViewById(R.id.moodGraph);
+        ArrayList moodHistory = user.mood.getMoodHistory();
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+        for (int i = 0; i < moodHistory.size(); i++) {
+            DataPoint dataPoint = new DataPoint(i, (int) moodHistory.get(i));
+            series.appendData(dataPoint, true, moodHistory.size());
+        }
+
+        graph.removeAllSeries();
+        series.setDrawDataPoints(true);
+        series.setDataPointsRadius(10);
+        graph.addSeries(series);
+        graph.setTitle("Mieliala");
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setXAxisBoundsManual(true);
+        if (moodHistory.size() < 2) {
+            graph.getViewport().setMaxX(1);
+        } else {
+            graph.getViewport().setMaxX(moodHistory.size() - 1);
+        }
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMaxY(10);
+        graph.getViewport().setMinY(0);
     }
 }

@@ -9,12 +9,13 @@ public class ExercisedToday {
     private DateCheck dateCheck;
 
     public ExercisedToday() {
-        this.caloriesBurnedToday = 0;
+        caloriesBurnedToday = 0;
         dateCheck = new DateCheck();
     }
 
-    public void addExercise(Exercise exercise, int minutes, User user) {
-        double dCaloriesBurned = exercise.getKaloritMinuutissaPerKilo() * (1.0* minutes) * (1.0 * user.weight.getLatestWeight());
+    public void addExercise(Exercise exercise, int minutes, User user, double intensity) {
+        double weight = user.weight.getLatestWeight();
+        double dCaloriesBurned = exercise.getKaloritMinuutissaPerKilo() * (1.0* minutes) * weight * intensity;
 
         int iCaloriesBurned = (int) Math.round(dCaloriesBurned);
         this.caloriesBurnedToday += iCaloriesBurned;
