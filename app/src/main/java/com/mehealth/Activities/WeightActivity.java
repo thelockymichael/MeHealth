@@ -1,5 +1,6 @@
 package com.mehealth.Activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,34 +17,78 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.mehealth.InputFilterMinMax;
 import com.mehealth.R;
 import com.mehealth.SharedPref;
 import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+import com.mehealth.User.WeightValue;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Objects;
 
-public class WeightActivity extends AppCompatActivity {
+public class WeightActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     private static final String TAG = "WeightActivity";
-    User user;
-    Toolbar toolbar;
-    SharedPref pref;
-    Boolean settingsOpened;
+    private User mUser;
+    private Toolbar mToolbar;
+    private SharedPref mPref;
+    private Boolean mSettingsOpened;
+    private Date mDate;
+    private TextView mTVDate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight);
-        pref = new SharedPref(getApplicationContext());
-        toolbar = findViewById(R.id.toolbarTop);
-        setSupportActionBar(toolbar);
+        mPref = new SharedPref(getApplicationContext());
+        mToolbar = findViewById(R.id.toolbarTop);
+        mDate = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH).getTime();
+        mTVDate = findViewById(R.id.tvDate);
+        setSupportActionBar(mToolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Paino");
+
+        findViewById(R.id.tvDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+    }
+
+    private void showDatePickerDialog() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        //datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+        datePickerDialog.getDatePicker().setFirstDayOfWeek(Calendar.MONDAY);
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+        mTVDate.setText(date);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month + 1, dayOfMonth);
+        mDate = new GregorianCalendar(year, month, dayOfMonth).getTime();
+        Log.d(TAG, "onDateSet: " + mDate.toString());
     }
 
     @Override
@@ -56,7 +102,7 @@ public class WeightActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
-            settingsOpened = true;
+            mSettingsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -102,7 +148,7 @@ public class WeightActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonAddValues(v);
-                updateUI(user);
+                updateUI();
                 MainActivity.hideKeyboard(getApplicationContext(), v);
             }
         });
@@ -110,43 +156,41 @@ public class WeightActivity extends AppCompatActivity {
         findViewById(R.id.buttonDeleteLastWeightRecord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.weight.deleteRecord(user.weight.getWeightHistoryList().size() - 1);
-                updateUI(user);
+                mUser.weight.deleteRecord(mUser.weight.getWeightHistory().size() - 1);
+                updateUI();
             }
         });
-
         setupEditTexts();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        user = pref.getUser();
-        updateUI(user);
-        settingsOpened = false;
+        mUser = mPref.getUser();
+        updateUI();
+        mSettingsOpened = false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        pref.saveUser(user);
-        if (!settingsOpened) {
+        mPref.saveUser(mUser);
+        if (!mSettingsOpened) {
             finish();
         }
     }
 
     /**
      * Updates the TextViews with the latest values from weight and blood pressures.
-     * @param user  Current user
      */
-    private void updateText(User user) {
+    protected void updateText() {
         TextView weightText = findViewById(R.id.textViewWeight);
         TextView lowerBPText = findViewById(R.id.textViewLowerBP);
         TextView upperBPText = findViewById(R.id.textViewUpperBP);
 
-        weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", user.weight.getLatestWeight()));
-        lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", user.bloodPressure.getLatestLowerBP()));
-        upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", user.bloodPressure.getLatestUpperBP()));
+        weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", mUser.weight.getLatestWeight()));
+        lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", mUser.bloodPressure.getLatestLowerBP()));
+        upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", mUser.bloodPressure.getLatestUpperBP()));
 
         ((EditText)findViewById(R.id.editTextPaino)).setText("");
         ((EditText)findViewById(R.id.editTextAlaPaine)).setText("");
@@ -154,7 +198,7 @@ public class WeightActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets the values from user input and saves them into the user's history.
+     * Gets the values from mUser input and saves them into the mUser's history.
      * @param view  Current view
      */
     public void buttonAddValues(View view) {
@@ -165,48 +209,72 @@ public class WeightActivity extends AppCompatActivity {
         String weight = editTextWeight.getText().toString();
         String lowerBP = editTextLowerBP.getText().toString();
         String upperBP = editTextUpperBP.getText().toString();
-        if (!weight.isEmpty()) user.weight.addWeightRecord(Integer.parseInt(weight));
-        if (!lowerBP.isEmpty()) user.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP));
-        if (!upperBP.isEmpty()) user.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP));
+        if (!weight.isEmpty()) mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+        if (!lowerBP.isEmpty()) mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP));
+        if (!upperBP.isEmpty()) mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP));
     }
 
     /**
      * Updates the weight graph with the newest values
-     * @param user  Current user
      */
-    protected void updateGraph(User user) {
-        GraphView graph = findViewById(R.id.weightGraph);
-        ArrayList weightHistory = user.weight.getWeightHistoryList();
+    protected void updateGraph() {
+        GraphView weightGraph = findViewById(R.id.weightGraph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
-        for (int i = 0; i < weightHistory.size(); i++) {
-            DataPoint dataPoint = new DataPoint(i, (int) weightHistory.get(i));
-            series.appendData(dataPoint, true, weightHistory.size());
+        ArrayList<WeightValue> weightHistory = mUser.weight.getWeightHistory();
+
+        Collections.sort(weightHistory, new Comparator<WeightValue>() {
+            @Override
+            public int compare(WeightValue o1, WeightValue o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+
+        long firstDate = 0;
+        long lastDate = 1;
+        if (weightHistory.size() > 1) {
+            firstDate = weightHistory.get(0).getDate().getTime();
+            lastDate = weightHistory.get(weightHistory.size() - 1).getDate().getTime();
         }
 
-        graph.removeAllSeries();
+        weightGraph.removeAllSeries();
+        weightGraph.addSeries(series);
+
+        if (weightHistory.size() > 0) {
+            for (int i = 0; i < weightHistory.size(); i++) {
+                WeightValue weightValue = weightHistory.get(i);
+                Date date = weightValue.getDate();
+                Double weight = (double) weightValue.getWeight();
+                Log.d(TAG, "updateGraph: " + date + "  paino: " + weight);
+
+                DataPoint dataPoint = new DataPoint(date, weight);
+                series.appendData(dataPoint, true, weightHistory.size());
+            }
+        }
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
-        graph.addSeries(series);
-        graph.setTitle("Paino");
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setYAxisBoundsManual(false);
-        graph.getViewport().setXAxisBoundsManual(true);
-        if (weightHistory.size() < 2) {
-            graph.getViewport().setMaxX(1);
-        } else {
-            graph.getViewport().setMaxX(weightHistory.size() - 1);
-        }
+        weightGraph.setTitle("Paino");
+
+        //weightGraph.getGridLabelRenderer().setNumHorizontalLabels(3);
+        weightGraph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(
+                this,
+                new SimpleDateFormat("dd-MM")
+        ));
+
+        weightGraph.getViewport().setMinX(firstDate);
+        weightGraph.getViewport().setMaxX(lastDate);
+        weightGraph.getViewport().setXAxisBoundsManual(true);
+        weightGraph.getViewport().setScalable(true);
+        weightGraph.getGridLabelRenderer().setHumanRounding(false, true);
     }
 
 
 
     /**
      * Updates the text and graph with the latest values.
-     * @param user  Current user
      */
-    protected void updateUI(User user) {
-        updateText(user);
-        updateGraph(user);
+    protected void updateUI() {
+        updateText();
+        updateGraph();
     }
 
     protected void setupEditTexts() {
@@ -237,7 +305,4 @@ public class WeightActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

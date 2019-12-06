@@ -75,19 +75,40 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@drawable/soft_corners"
+                android:fontFamily="sans-serif-light"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:hint="Valitse päivä"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColorHint="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonLisaaArvo"
+                app:layout_constraintEnd_toStartOf="@+id/buttonLisaaArvo"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/buttonLisaaArvo" />
+
             <Button
                 android:id="@+id/buttonLisaaArvo"
-                android:fontFamily="sans-serif-light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/layout_weight_add"
-                android:textSize="24sp"
                 android:background="@drawable/soft_corners"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/layout_weight_add"
                 android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvDate"
                 app:layout_constraintTop_toBottomOf="@+id/editTextAlaPaine" />
 
             <EditText
@@ -132,28 +153,41 @@
                 android:id="@+id/weightGraph"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/buttonDeleteLastWeightRecord"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonLisaaArvo">
-
+                app:layout_constraintTop_toTopOf="@+id/guideline3"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" >
             </com.jjoe64.graphview.GraphView>
 
             <Button
                 android:id="@+id/buttonDeleteLastWeightRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/layout_weight_deleteLastRecord"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-light"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/soft_corners"
+                android:fontFamily="sans-serif-light"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:text="@string/layout_weight_deleteLastRecord"
                 android:textColor="@color/colorWhite"
-                app:layout_constraintTop_toBottomOf="@id/weightGraph"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
