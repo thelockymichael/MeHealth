@@ -90,14 +90,14 @@
                 android:textSize="24sp"
                 android:textColorHint="@color/colorWhite"
                 android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="@+id/buttonLisaaArvo"
-                app:layout_constraintEnd_toStartOf="@+id/buttonLisaaArvo"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAddValue"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddValue"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonLisaaArvo" />
+                app:layout_constraintTop_toTopOf="@+id/btnAddValue" />
 
             <Button
-                android:id="@+id/buttonLisaaArvo"
+                android:id="@+id/btnAddValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/soft_corners"
@@ -154,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/buttonDeleteLastWeightRecord"
+                app:layout_constraintBottom_toTopOf="@+id/btnDelLastWeightRecord"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -164,7 +164,7 @@
             </com.jjoe64.graphview.GraphView>
 
             <Button
-                android:id="@+id/buttonDeleteLastWeightRecord"
+                android:id="@+id/btnDelLastWeightRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"

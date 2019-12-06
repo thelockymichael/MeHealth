@@ -33,4 +33,8 @@ public class WeightValue {
     public int hashCode() {
         return Objects.hash(weight, date);
     }
+
+    public boolean containsDate(Date date) {
+        return date.equals(this.date);
+    }
 }
