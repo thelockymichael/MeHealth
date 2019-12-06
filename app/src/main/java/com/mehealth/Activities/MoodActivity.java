@@ -1,6 +1,5 @@
 package com.mehealth.Activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,14 +23,14 @@ import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MoodActivity extends AppCompatActivity {
-    //private static final String TAG = "MoodActivity";
-    User user;
-    Toolbar toolbar;
-    SharedPref pref;
-    Boolean settingsOpened;
+    private static final String TAG = "MoodActivity";
+    private User user;
+    private SharedPref pref;
+    private Boolean settingsOpened;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class MoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mood);
         pref = new SharedPref(getApplicationContext());
 
-        toolbar = findViewById(R.id.toolbarTop);
+        Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Mieliala");
 
@@ -54,13 +53,12 @@ public class MoodActivity extends AppCompatActivity {
         //Declares the seekbar and sets the listener for it
         final SeekBar seekBarMood = findViewById(R.id.seekbarMieliala);
         seekBarMood.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //Depending on the progress of the seekbar, the smiley image changes color
                 //There are smileys ranging from smiley0 being red to smiley10 being green'
                 //smiley5 is the neutral yellow
-                textMieliala.setText(Integer.toString(progress));
+                textMieliala.setText(String.format(Locale.getDefault(), "%d", progress));
                 switch (progress) {
                     case 0:
                         imageMieliala.setImageResource(R.drawable.smiley0);
@@ -194,6 +192,10 @@ public class MoodActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates mood graph with newest information.
+     * @param user  Gets mood history list from user.
+     */
     protected void updateGraph(User user) {
         GraphView graph = findViewById(R.id.moodGraph);
         ArrayList moodHistory = user.mood.getMoodHistory();

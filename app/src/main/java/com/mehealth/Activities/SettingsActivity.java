@@ -16,6 +16,8 @@ import com.mehealth.R;
 import com.mehealth.SharedPref;
 import com.mehealth.User.User;
 
+import java.util.Objects;
+
 /**
  * Settings activity containing the preferences fragment.
  * User can set basic values such as their name and reset the values collected by the app thus far.
@@ -54,19 +56,18 @@ public class SettingsActivity extends AppCompatActivity {
          * Listens for clicks on the preferences.
          * If a preference given preference based on their id is clicked, executes the code below.
          * @param preference    Name of the preference clicked
-         * @return
          */
         @Override
         public boolean onPreferenceTreeClick(Preference preference) {
             if (preference.getKey().equals("buttonResetWeight")) {
                 //Gets user class from shared preferences and calls the method to reset the weight history.
-                SharedPref pref = new SharedPref(getContext());
+                SharedPref pref = new SharedPref(Objects.requireNonNull(getContext()));
                 User user = pref.getUser();
                 user.weight.clear();
                 pref.saveUser(user);
             } else if (preference.getKey().equals("buttonResetEverything")) {
                 //Gets the user class from shared preferences and calls the method to reset everything.
-                SharedPref pref = new SharedPref(getContext());
+                SharedPref pref = new SharedPref(Objects.requireNonNull(getContext()));
                 User user = pref.getUser();
                 user.resetEverything();
                 pref.saveUser(user);

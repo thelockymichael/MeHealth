@@ -3,10 +3,18 @@ package com.mehealth;
 import android.text.InputFilter;
 import android.text.Spanned;
 
+/**
+ * Filters input for editTexts in the app.
+ * Source: https://stackoverflow.com/questions/14212518/is-there-a-way-to-define-a-min-and-max-value-for-edittext-in-android
+ */
 public class InputFilterMinMax implements InputFilter {
 
     private int min, max;
 
+    /**
+     * @param min   Minimum number to be allowed.
+     * @param max   Maximum number to be allowed.
+     */
     public InputFilterMinMax(int min, int max) {
         this.min = min;
         this.max = max;

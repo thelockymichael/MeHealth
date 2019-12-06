@@ -43,7 +43,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("Lisää liikunta");
 
         final Bundle received = getIntent().getExtras();
-        final int position = received.getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
+        final int position = Objects.requireNonNull(received).getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
         final Exercise selectedExercise = Exercises.getInstance().getExercise(position);
 
         ((TextView)findViewById(R.id.textExerciseName))
