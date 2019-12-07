@@ -149,7 +149,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/editTextAlaPaine"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <com.jjoe64.graphview.GraphView
+            <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/weightGraph"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -158,10 +158,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline3"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" >
-            </com.jjoe64.graphview.GraphView>
+                app:layout_constraintTop_toTopOf="@+id/guideline3"/>
 
             <Button
                 android:id="@+id/btnDelLastWeightRecord"

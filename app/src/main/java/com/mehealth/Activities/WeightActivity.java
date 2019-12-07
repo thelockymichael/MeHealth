@@ -2,6 +2,7 @@ package com.mehealth.Activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -11,18 +12,25 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.LabelFormatter;
-import com.jjoe64.graphview.Viewport;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.mehealth.InputFilterMinMax;
 import com.mehealth.R;
 import com.mehealth.SharedPref;
@@ -30,8 +38,8 @@ import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mehealth.User.WeightValue;
 
-import org.w3c.dom.Text;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +47,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -228,11 +237,13 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
      * Updates the weight graph with the newest values
      */
     private void updateGraph() {
-        GraphView weightGraph = findViewById(R.id.weightGraph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+        //Declare needed variables
+        final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
+        LineChart chart = findViewById(R.id.weightGraph);
+        List<Entry> entries = new ArrayList<>();
         ArrayList<WeightValue> weightHistory = mUser.weight.getWeightHistory();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM", Locale.getDefault());
 
+        //Sort the weight list by date
         Collections.sort(weightHistory, new Comparator<WeightValue>() {
             @Override
             public int compare(WeightValue o1, WeightValue o2) {
@@ -240,56 +251,77 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
+        //Set firstDate to be today, and lastDate exactly one day after today
         long firstDate = mDate.getTime();
-        long lastDate = mDate.getTime();
-        lastDate = lastDate + 86400000;
+        long lastDate = mDate.getTime() + 86400000;
         if (weightHistory.size() > 1) {
             firstDate = weightHistory.get(0).getDate().getTime();
-            lastDate = weightHistory.get(weightHistory.size() - 1).getDate().getTime();
+            lastDate = weightHistory.get(weightHistory.size() - 1).getDate().getTime() + 4320000;
         }
 
-        weightGraph.removeAllSeries();
-        weightGraph.addSeries(series);
+        for (int i = 0; i < weightHistory.size(); i++) {
+            //Get the current weight weight value and intialize the current variables
+            WeightValue weightValue = weightHistory.get(i);
+            Date date = weightValue.getDate();
+            float weight = (float) weightValue.getWeight();
 
-        if (weightHistory.size() > 0) {
-            for (int i = 0; i < weightHistory.size(); i++) {
-                WeightValue weightValue = weightHistory.get(i);
-                Date date = weightValue.getDate();
-                Double weight = (double) weightValue.getWeight();
-
-                DataPoint dataPoint = new DataPoint(date, weight);
-                series.appendData(dataPoint, true, weightHistory.size());
-            }
+            //Add the entries to the entries list
+            entries.add(new Entry(date.getTime(), weight));
         }
-        series.setDrawDataPoints(true);
-        series.setDataPointsRadius(10);
-        weightGraph.setTitle("Paino");
 
-        weightGraph.getGridLabelRenderer().setLabelFormatter(new LabelFormatter() {
+        //Setup XAxis
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setLabelCount(weightHistory.size(), false);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter() {
             @Override
-            public String formatLabel(double value, boolean isValueX) {
-                return ""+((int) value);
+            public String getFormattedValue(float value) {
+                return dateFormat.format(value);
+            }
+        });
+        //xAxis.setAxisMinimum(firstDate);
+        //xAxis.setAxisMaximum(lastDate);
+
+        //Setups YAxis
+        YAxis rightYAxis = chart.getAxisRight();
+        rightYAxis.setEnabled(false);
+
+        YAxis leftYAxis = chart.getAxisLeft();
+
+
+        //Create linedata from the entries list
+        LineDataSet dataSet = new LineDataSet(entries, "Paino");
+        LineData lineData = new LineData(dataSet);
+
+        //Customize chart
+        Description desc = new Description();
+        desc.setEnabled(false);
+        chart.setDescription(desc);
+        chart.setDragEnabled(false);
+        dataSet.setValueTextSize(10);
+        dataSet.setColor(Color.BLUE);
+        dataSet.setFillAlpha(10);
+        dataSet.setLineWidth(3f);
+        dataSet.setCircleRadius(4);
+
+        chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                Toast.makeText(getApplicationContext(), dateFormat.format(h.getX()), Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void setViewport(Viewport viewport) {
+            public void onNothingSelected() {
 
             }
         });
 
-        weightGraph.getGridLabelRenderer().setNumHorizontalLabels(3);
-        weightGraph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(
-                this,
-                new SimpleDateFormat("dd-MM")
-        ));
-
-        if (weightHistory.size() > 1) weightGraph.getViewport().setScalable(true);
-
-        weightGraph.getViewport().setXAxisBoundsManual(true);
-        weightGraph.getViewport().setMinX(firstDate);
-        weightGraph.getViewport().setMaxX(lastDate);
-
-        weightGraph.getGridLabelRenderer().setHumanRounding(false, true);
+        //Add the values to the chart and intialize it
+        chart.setData(lineData);
+        chart.invalidate();
     }
 
     /**
