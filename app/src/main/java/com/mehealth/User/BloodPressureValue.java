@@ -45,6 +45,7 @@ public class BloodPressureValue {
         return date.equals(this.date);
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

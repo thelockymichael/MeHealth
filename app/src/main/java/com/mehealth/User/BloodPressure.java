@@ -34,6 +34,14 @@ public class BloodPressure {
         return upperBPHistory;
     }
 
+    public void setLowerBPHistory(ArrayList<BloodPressureValue> lowerBPHistory) {
+        this.lowerBPHistory = lowerBPHistory;
+    }
+
+    public void setUpperBPHistory(ArrayList<BloodPressureValue> upperBPHistory) {
+        this.upperBPHistory = upperBPHistory;
+    }
+
     /**
      *
      * @return The latest lower blood pressure value in the list.
@@ -149,6 +157,15 @@ public class BloodPressure {
             }
         }
         return false;
+    }
+
+    public void removeBPByDate(float date) {
+        for (int i = 0; i < lowerBPHistory.size(); i++) {
+            if (lowerBPHistory.get(i).getDate().getTime() == date) {
+                lowerBPHistory.remove(i);
+                upperBPHistory.remove(i);
+            }
+        }
     }
 
 }

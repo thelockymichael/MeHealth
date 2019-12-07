@@ -73,4 +73,12 @@ public class Weight {
         }
         return false;
     }
+
+    public void removeWeightByDate(float date) {
+        for (int i = 0; i < weightHistory.size(); i++) {
+            if (weightHistory.get(i).getDate().getTime() == date) {
+                weightHistory.remove(i);
+            }
+        }
+    }
 }
