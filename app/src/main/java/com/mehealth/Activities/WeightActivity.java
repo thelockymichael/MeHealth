@@ -1,6 +1,9 @@
 package com.mehealth.Activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,12 +41,10 @@ import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mehealth.User.WeightValue;
 
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -57,6 +59,9 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     private SharedPref mPref;
     private Boolean mSettingsOpened;
     private Date mDate;
+    private int mWeightValue;
+    private int mLowerBPValue;
+    private int mUpperBPValue;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +74,9 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     @Override
     protected void onStart() {
         super.onStart();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+
 
         Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
@@ -121,6 +129,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             public void onClick(View v) {
                 mUser.weight.deleteRecord(mUser.weight.getWeightHistory().size() - 1);
                 updateUI();
+                onCreateDialog(40, 200, "weight");
             }
         });
 
@@ -404,8 +413,8 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         EditText ylaPaine = findViewById(R.id.editTextYlaPaine);
 
         paino.setFilters(new InputFilter[] { new InputFilterMinMax(10, 999)});
-        alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(30, 180)});
-        ylaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(50, 250)});
+        alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(20, 200)});
+        ylaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(40, 240)});
 
         paino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -426,4 +435,38 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
     }
+
+    private Dialog onCreateDialog(int min, int max, final String value) {
+        final NumberPicker numberPicker = new NumberPicker(getApplicationContext());
+        numberPicker.setMinValue(min);
+        numberPicker.setMaxValue(max);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setTitle("Valitse numero");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (value) {
+                    case "weight":
+                        mWeightValue = numberPicker.getValue();
+                        break;
+
+                    case "lowerBP":
+                        mLowerBPValue = numberPicker.getValue();
+                        break;
+
+                    case "upperBP":
+                        mUpperBPValue = numberPicker.getValue();
+                        break;
+                }
+            }
+        });
+        builder.setNegativeButton("PERUUTA", null);
+        builder.setView(numberPicker);
+        return builder.show();
+    }
 }
+
+
+
+
