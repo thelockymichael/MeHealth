@@ -1,5 +1,8 @@
 package com.mehealth.Activities;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -60,17 +63,40 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public boolean onPreferenceTreeClick(Preference preference) {
             if (preference.getKey().equals("buttonResetWeight")) {
-                //Gets user class from shared preferences and calls the method to reset the weight history.
-                SharedPref pref = new SharedPref(Objects.requireNonNull(getContext()));
-                User user = pref.getUser();
-                user.weight.clear();
-                pref.saveUser(user);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Nollaa paino")
+                        .setMessage("Oletko varma?")
+                        .setNegativeButton("Peruuta", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Gets user class from shared preferences and calls the method to reset the weight history.
+                                SharedPref pref = new SharedPref(Objects.requireNonNull(getContext()));
+                                User user = pref.getUser();
+                                user.weight.clear();
+                                pref.saveUser(user);
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
             } else if (preference.getKey().equals("buttonResetEverything")) {
-                //Gets the user class from shared preferences and calls the method to reset everything.
-                SharedPref pref = new SharedPref(Objects.requireNonNull(getContext()));
-                User user = pref.getUser();
-                user.resetEverything();
-                pref.saveUser(user);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Nollaa kaikki")
+                        .setMessage("Oletko varma?")
+                        .setNegativeButton("Peruuta", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Gets the user class from shared preferences and calls the method to reset everything.
+                                SharedPref pref = new SharedPref(Objects.requireNonNull(getContext()));
+                                User user = pref.getUser();
+                                user.resetEverything();
+                                pref.saveUser(user);
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
             return super.onPreferenceTreeClick(preference);
         }
