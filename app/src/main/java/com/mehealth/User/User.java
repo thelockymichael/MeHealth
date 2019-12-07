@@ -2,7 +2,7 @@ package com.mehealth.User;
 
 /**
  * Keeps track of the user's information including the water drank daily,
- * weight history and blood pressure history.
+ * calories burned daily, weight history, blood pressure history, and mood history.
  */
 public class User  {
     public WaterDrankToday water;

@@ -10,6 +10,9 @@ public class WaterDrankToday {
     private int waterDrankToday;
     private DateCheck dateCheck;
 
+    /**
+     * Initialize with water drank today as 0.
+     */
     public WaterDrankToday() {
         waterDrankToday = 0;
         dateCheck = new DateCheck();
@@ -47,6 +50,10 @@ public class WaterDrankToday {
         }
     }
 
+    /**
+     *
+     * @return How much water left to drink today.
+     */
     public int howMuchWaterToDrink() {
         if (20 - this.waterDrankToday > 0) {
             return 20 - this.waterDrankToday;

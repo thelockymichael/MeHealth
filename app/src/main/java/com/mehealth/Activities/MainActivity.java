@@ -209,14 +209,14 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void setupTextViews() {
         //Takes the user's name that is set in settings from shared preferences, default is "tuntematon"
-        String name = pref.getString("name", "tuntematon");
+        String name = pref.getString("name", "");
 
         //Sets the greeting TextView
         TextView textHello = findViewById(R.id.textHello);
         textHello.setText(String.format("%s %s", greeting(), name));
 
         //Sets the mood TextViews
-        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "%d", user.mood.getLatestMoodRecord()));
+        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "%d", user.mood.getLatestMood()));
         ((TextView)findViewById(R.id.textMoodNowDescription)).setText(R.string.activity_main_lastMood);
 
         //Sets the weight and blood pressure TextViews

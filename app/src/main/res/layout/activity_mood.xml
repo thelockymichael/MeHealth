@@ -37,16 +37,16 @@
                 android:layout_height="wrap_content"
                 android:max="10"
                 android:progress="5"
-                app:layout_constraintBottom_toTopOf="@+id/buttonAddMood"
+                app:layout_constraintBottom_toTopOf="@+id/guideline6"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/imageMieliala"
                 style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/textMieliala"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.75" />
+                app:layout_constraintGuide_percent="0.65" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.55" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
             <TextView
                 android:id="@+id/textMieliala"
@@ -67,46 +81,57 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/seekbarMieliala"
-                app:layout_constraintEnd_toStartOf="@+id/guideline7"
-                app:layout_constraintStart_toStartOf="@+id/guideline6" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.75" />
-
-            <Button
-                android:id="@+id/buttonAddMood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="64dp"
-                android:text="@string/layout_mood_addMood"
-                android:textSize="24sp"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/colorWhite"
-                android:background="@drawable/soft_corners"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.jjoe64.graphview.GraphView
+            <TextView
+                android:id="@+id/tvDateMood"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/soft_corners"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:hint="VALITSE PÄIVÄ"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekbarMieliala"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"/>
+
+            <Button
+                android:id="@+id/buttonAddMood"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/soft_corners"
+                android:fontFamily="sans-serif-light"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="@string/layout_mood_addMood"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline7"
+                app:layout_constraintTop_toBottomOf="@+id/seekbarMieliala"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"/>
+
+            <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/moodGraph"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buttonAddMood"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -82,6 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             } else if (preference.getKey().equals("buttonResetEverything")) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
                 builder.setTitle("Nollaa kaikki")
                         .setMessage("Oletko varma?")
                         .setNegativeButton("Peruuta", null)
@@ -97,6 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
+
             }
             return super.onPreferenceTreeClick(preference);
         }

@@ -43,7 +43,7 @@
     <string name="layout_weight_weight">Paino</string>
     <string name="layout_weight_lowerBP">Alapaine</string>
     <string name="layout_weight_upperBP">Yläpaine</string>
-    <string name="layout_weight_deleteLastRecord">Poista viimeinen merkintä</string>
+    <string name="layout_weight_openBPChart">Verenpaineen kaavio</string>
 
     <!-- Sync Preferences -->
 </resources>

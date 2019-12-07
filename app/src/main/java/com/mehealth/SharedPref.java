@@ -16,6 +16,10 @@ public class SharedPref {
     private SharedPreferences.Editor sharedPrefEditor;
     private Gson gson;
 
+    /**
+     * Initialize the SharedPref.
+     * @param context Context of the application.
+     */
     public SharedPref(Context context) {
         sharedPref = context.getSharedPreferences("com.mehealth_preferences", Activity.MODE_PRIVATE);
         sharedPrefEditor = this.sharedPref.edit();

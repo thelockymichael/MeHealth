@@ -140,7 +140,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         //TextView caloriesBurnedPerHour = findViewById(R.id.caloriesBurnedPerHour);
 
         weightNow.setText(String.format(Locale.getDefault(), "Poltat %d kaloria tunnissa painollasi",
-                Math.round((1.0 * exercise.getKaloritTunnissa(user)) * currentIntensity)));
+                Math.round((1.0 * exercise.getCaloriesInAnHourPerKilo(user)) * currentIntensity)));
     }
 
 

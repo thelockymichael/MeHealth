@@ -2,14 +2,24 @@ package com.mehealth;
 
 import java.util.ArrayList;
 
+/**
+ * Singleton to keep track of the exercises available.
+ */
 public class Exercises {
     private static final Exercises ourInstance = new Exercises();
     private ArrayList<Exercise> exercises;
 
+    /**
+     *
+     * @return Instance of the singleton.
+     */
     public static Exercises getInstance() {
         return ourInstance;
     }
 
+    /**
+     * List of the exercises.
+     */
     private Exercises() {
         this.exercises = new ArrayList<>();
         exercises.add(new Exercise("Pyöräily", 0.1));
@@ -26,10 +36,19 @@ public class Exercises {
         exercises.add(new Exercise("Uinti", 0.09887005649717514124293785310734));
     }
 
+    /**
+     *
+     * @return The exercise list.
+     */
     public ArrayList getExercises() {
         return this.exercises;
     }
 
+    /**
+     *
+     * @param i The index of the exercise in the list.
+     * @return A single exercise from the list.
+     */
     public Exercise getExercise(int i) {
         return this.exercises.get(i);
     }

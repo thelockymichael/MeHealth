@@ -1,11 +1,13 @@
 package com.mehealth.Activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,15 +22,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.mehealth.InputFilterMinMax;
@@ -37,7 +38,6 @@ import com.mehealth.SharedPref;
 import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mehealth.User.WeightValue;
-
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -55,7 +55,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     private static final String TAG = "WeightActivity";
     private User mUser;
     private SharedPref mPref;
-    private Boolean mSettingsOpened;
+    private Boolean mSettingsOrBPChartOpened;
     private Date mDate;
 
     @Override
@@ -113,14 +113,16 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 buttonAddValues();
                 updateUI();
                 MainActivity.hideKeyboard(getApplicationContext(), v);
+
             }
         });
 
-        findViewById(R.id.btnDelLastWeightRecord).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnOpenBPChart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUser.weight.deleteRecord(mUser.weight.getWeightHistory().size() - 1);
-                updateUI();
+                Intent bpChart = new Intent(WeightActivity.this, BPChartActivity.class);
+                startActivity(bpChart.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                mSettingsOrBPChartOpened = true;
             }
         });
 
@@ -138,7 +140,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     protected void onResume() {
         super.onResume();
         mUser = mPref.getUser();
-        mSettingsOpened = false;
+        mSettingsOrBPChartOpened = false;
         updateUI();
     }
 
@@ -146,7 +148,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     protected void onPause() {
         super.onPause();
         mPref.saveUser(mUser);
-        if (!mSettingsOpened) {
+        if (!mSettingsOrBPChartOpened) {
             finish();
         }
     }
@@ -162,7 +164,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
-            mSettingsOpened = true;
+            mSettingsOrBPChartOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -239,9 +241,10 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     private void updateGraph() {
         //Declare needed variables
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
-        LineChart chart = findViewById(R.id.weightGraph);
-        List<Entry> entries = new ArrayList<>();
+        final LineChart chart = findViewById(R.id.weightGraph);
+        List<Entry> weightEntries = new ArrayList<>();
         ArrayList<WeightValue> weightHistory = mUser.weight.getWeightHistory();
+
 
         //Sort the weight list by date
         Collections.sort(weightHistory, new Comparator<WeightValue>() {
@@ -251,14 +254,8 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
-        //Set firstDate to be today, and lastDate exactly one day after today
-        long firstDate = mDate.getTime();
-        long lastDate = mDate.getTime() + 86400000;
-        if (weightHistory.size() > 1) {
-            firstDate = weightHistory.get(0).getDate().getTime();
-            lastDate = weightHistory.get(weightHistory.size() - 1).getDate().getTime() + 4320000;
-        }
 
+        //Set entries to entry list from weight history list
         for (int i = 0; i < weightHistory.size(); i++) {
             //Get the current weight weight value and intialize the current variables
             WeightValue weightValue = weightHistory.get(i);
@@ -266,7 +263,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             float weight = (float) weightValue.getWeight();
 
             //Add the entries to the entries list
-            entries.add(new Entry(date.getTime(), weight));
+            weightEntries.add(new Entry(date.getTime(), weight));
         }
 
         //Setup XAxis
@@ -282,35 +279,52 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 return dateFormat.format(value);
             }
         });
-        //xAxis.setAxisMinimum(firstDate);
-        //xAxis.setAxisMaximum(lastDate);
 
         //Setups YAxis
         YAxis rightYAxis = chart.getAxisRight();
         rightYAxis.setEnabled(false);
 
-        YAxis leftYAxis = chart.getAxisLeft();
-
-
         //Create linedata from the entries list
-        LineDataSet dataSet = new LineDataSet(entries, "Paino");
-        LineData lineData = new LineData(dataSet);
+        final LineDataSet weightDataSet = new LineDataSet(weightEntries, "Paino");
 
         //Customize chart
         Description desc = new Description();
         desc.setEnabled(false);
         chart.setDescription(desc);
-        chart.setDragEnabled(false);
-        dataSet.setValueTextSize(10);
-        dataSet.setColor(Color.BLUE);
-        dataSet.setFillAlpha(10);
-        dataSet.setLineWidth(3f);
-        dataSet.setCircleRadius(4);
+        chart.setMaxHighlightDistance(20);
+
+        weightDataSet.setValueTextSize(10);
+        weightDataSet.setColor(Color.BLUE);
+        weightDataSet.setFillAlpha(10);
+        weightDataSet.setLineWidth(3f);
+        weightDataSet.setCircleRadius(4);
+
+        weightDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "" + (int) value;
+            }
+        });
 
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                Toast.makeText(getApplicationContext(), dateFormat.format(h.getX()), Toast.LENGTH_SHORT).show();
+            public void onValueSelected(final Entry e, Highlight h) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
+                builder.setTitle("Poista arvo")
+                        .setMessage("Oletko varma?")
+                        .setNegativeButton("Peruuta", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                weightDataSet.removeEntry(e);
+                                chart.invalidate();
+
+                                mUser.weight.removeWeightByDate(e.getX());
+                            }
+                        });
+
+                AlertDialog alert = builder.create();
+                alert.show();
             }
 
             @Override
@@ -320,7 +334,8 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         });
 
         //Add the values to the chart and intialize it
-        chart.setData(lineData);
+        LineData weightLineData = new LineData(weightDataSet);
+        chart.setData(weightLineData);
         chart.invalidate();
     }
 
@@ -337,8 +352,10 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         String upperBP = editTextUpperBP.getText().toString();
 
         if (!weight.isEmpty()) mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
-        if (!lowerBP.isEmpty()) mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP));
-        if (!upperBP.isEmpty()) mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP));
+        if (!lowerBP.isEmpty() && !upperBP.isEmpty()) {
+            mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
+            mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+        }
     }
 
     private void setupEditTexts() {
@@ -370,3 +387,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         });
     }
 }
+
+
+
+
