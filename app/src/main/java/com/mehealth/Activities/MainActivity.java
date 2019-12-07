@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         textHello.setText(String.format("%s %s", greeting(), name));
 
         //Sets the mood TextViews
-        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "%d", user.mood.getLatestMoodRecord()));
+        ((TextView)findViewById(R.id.textMoodNow)).setText(String.format(Locale.getDefault(), "%d", user.mood.getLatestMood()));
         ((TextView)findViewById(R.id.textMoodNowDescription)).setText(R.string.activity_main_lastMood);
 
         //Sets the weight and blood pressure TextViews

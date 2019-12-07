@@ -21,6 +21,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -178,11 +179,25 @@ public class BPChartActivity extends AppCompatActivity {
         lowerBPDataSet.setLineWidth(3f);
         lowerBPDataSet.setCircleRadius(4);
 
+        upperBPDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "" + (int) value;
+            }
+        });
+
+        lowerBPDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "" + (int) value;
+            }
+        });
+
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(final Entry e, Highlight h) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(BPChartActivity.this);
-                builder.setTitle("Poista tämän päivän arvot?")
+                builder.setTitle("Poista tämän päivän arvot")
                         .setMessage("Oletko varma?")
                         .setNegativeButton("Peruuta", null)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {

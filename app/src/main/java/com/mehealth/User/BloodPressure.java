@@ -72,7 +72,7 @@ public class BloodPressure {
     public void addLowerBPRecord(int lowerBloodPressure, Date date) {
         BloodPressureValue bloodPressureValue = new BloodPressureValue(lowerBloodPressure, date);
 
-        if (lowerBloodPressure < 1000 && !listContainsDate(date, lowerBPHistory)) {
+        if (lowerBloodPressure < 1000 && !listContainsDate(date, lowerBPHistory) && !listContainsDate(date, upperBPHistory)) {
             this.lowerBPHistory.add(bloodPressureValue);
         }
     }

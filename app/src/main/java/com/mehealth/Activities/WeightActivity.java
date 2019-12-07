@@ -29,6 +29,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.mehealth.InputFilterMinMax;
@@ -56,7 +57,6 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     private SharedPref mPref;
     private Boolean mSettingsOrBPChartOpened;
     private Date mDate;
-    private boolean mRefreshChart;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +64,6 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.activity_weight);
         mPref = new SharedPref(getApplicationContext());
         mDate = Calendar.getInstance().getTime();
-
     }
 
     @Override
@@ -299,6 +298,13 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         weightDataSet.setFillAlpha(10);
         weightDataSet.setLineWidth(3f);
         weightDataSet.setCircleRadius(4);
+
+        weightDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "" + (int) value;
+            }
+        });
 
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
