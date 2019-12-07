@@ -3,17 +3,17 @@ package com.mehealth.User;
 import java.util.Date;
 import java.util.Objects;
 
-public class WeightValue {
-    private int weight;
+public class BloodPressureValue {
+    private int bloodPressure;
     private Date date;
 
-    public WeightValue(int weight, Date date) {
-        this.weight = weight;
+    public BloodPressureValue(int bloodPressure, Date date) {
+        this.bloodPressure = bloodPressure;
         this.date = date;
     }
 
-    public int getWeight() {
-        return weight;
+    public int getBloodPressure() {
+        return bloodPressure;
     }
 
     public Date getDate() {
@@ -28,13 +28,13 @@ public class WeightValue {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        WeightValue that = (WeightValue) o;
-        return weight == that.weight &&
+        BloodPressureValue that = (BloodPressureValue) o;
+        return bloodPressure == that.bloodPressure &&
                 Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(weight, date);
+        return Objects.hash(bloodPressure, date);
     }
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,20 +19,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.mehealth.InputFilterMinMax;
 import com.mehealth.R;
 import com.mehealth.SharedPref;
+import com.mehealth.User.BloodPressureValue;
 import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mehealth.User.WeightValue;
@@ -43,6 +42,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -240,8 +240,14 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         //Declare needed variables
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
         LineChart chart = findViewById(R.id.weightGraph);
-        List<Entry> entries = new ArrayList<>();
+        List<Entry> weightEntries = new ArrayList<>();
         ArrayList<WeightValue> weightHistory = mUser.weight.getWeightHistory();
+
+        ArrayList<BloodPressureValue> lowerBPHistory = mUser.bloodPressure.getLowerBPHistory();
+        ArrayList<BloodPressureValue> upperBPHistory = mUser.bloodPressure.getUpperBPHistory();
+        List<Entry> lowerBPEntries = new ArrayList<>();
+        List<Entry> upperBPEntries = new ArrayList<>();
+
 
         //Sort the weight list by date
         Collections.sort(weightHistory, new Comparator<WeightValue>() {
@@ -251,14 +257,29 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
+        Collections.sort(lowerBPHistory, new Comparator<BloodPressureValue>() {
+            @Override
+            public int compare(BloodPressureValue o1, BloodPressureValue o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        } );
+
+        Collections.sort(upperBPHistory, new Comparator<BloodPressureValue>() {
+            @Override
+            public int compare(BloodPressureValue o1, BloodPressureValue o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        } );
+
         //Set firstDate to be today, and lastDate exactly one day after today
-        long firstDate = mDate.getTime();
+        /*long firstDate = mDate.getTime();
         long lastDate = mDate.getTime() + 86400000;
         if (weightHistory.size() > 1) {
             firstDate = weightHistory.get(0).getDate().getTime();
             lastDate = weightHistory.get(weightHistory.size() - 1).getDate().getTime() + 4320000;
-        }
+        }*/
 
+        //Set entries to entry list from weight history list
         for (int i = 0; i < weightHistory.size(); i++) {
             //Get the current weight weight value and intialize the current variables
             WeightValue weightValue = weightHistory.get(i);
@@ -266,7 +287,21 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             float weight = (float) weightValue.getWeight();
 
             //Add the entries to the entries list
-            entries.add(new Entry(date.getTime(), weight));
+            weightEntries.add(new Entry(date.getTime(), weight));
+        }
+
+        //Set entries to blood pressure lists from
+        for (int i = 0; i < lowerBPHistory.size(); i++) {
+            BloodPressureValue lowerBPValue = lowerBPHistory.get(i);
+            BloodPressureValue upperBPValue = upperBPHistory.get(i);
+            Date lowerBPDate = lowerBPValue.getDate();
+            Date upperBPDate = upperBPValue.getDate();
+
+            float lowerBP = (float) lowerBPValue.getBloodPressure();
+            float upperBP = (float) upperBPValue.getBloodPressure();
+
+            lowerBPEntries.add(new Entry(lowerBPDate.getTime(), lowerBP));
+            upperBPEntries.add(new Entry(upperBPDate.getTime(), upperBP));
         }
 
         //Setup XAxis
@@ -282,8 +317,6 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 return dateFormat.format(value);
             }
         });
-        //xAxis.setAxisMinimum(firstDate);
-        //xAxis.setAxisMaximum(lastDate);
 
         //Setups YAxis
         YAxis rightYAxis = chart.getAxisRight();
@@ -293,19 +326,34 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
 
 
         //Create linedata from the entries list
-        LineDataSet dataSet = new LineDataSet(entries, "Paino");
-        LineData lineData = new LineData(dataSet);
+        LineDataSet weightDataSet = new LineDataSet(weightEntries, "Paino");
+        //LineData weightLineData = new LineData(weightDataSet);
+
+        LineDataSet upperBPDataSet = new LineDataSet(upperBPEntries, "Yläpaine");
+        LineDataSet lowerBPDataSet = new LineDataSet(lowerBPEntries, "Alapaine");
 
         //Customize chart
         Description desc = new Description();
         desc.setEnabled(false);
         chart.setDescription(desc);
         chart.setDragEnabled(false);
-        dataSet.setValueTextSize(10);
-        dataSet.setColor(Color.BLUE);
-        dataSet.setFillAlpha(10);
-        dataSet.setLineWidth(3f);
-        dataSet.setCircleRadius(4);
+        weightDataSet.setValueTextSize(10);
+        weightDataSet.setColor(Color.BLUE);
+        weightDataSet.setFillAlpha(10);
+        weightDataSet.setLineWidth(3f);
+        weightDataSet.setCircleRadius(4);
+
+        upperBPDataSet.setValueTextSize(10);
+        upperBPDataSet.setColor(Color.RED);
+        upperBPDataSet.setFillAlpha(10);
+        upperBPDataSet.setLineWidth(3f);
+        upperBPDataSet.setCircleRadius(4);
+
+        lowerBPDataSet.setValueTextSize(10);
+        lowerBPDataSet.setColor(Color.GREEN);
+        lowerBPDataSet.setFillAlpha(10);
+        lowerBPDataSet.setLineWidth(3f);
+        lowerBPDataSet.setCircleRadius(4);
 
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
@@ -320,7 +368,14 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         });
 
         //Add the values to the chart and intialize it
-        chart.setData(lineData);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lowerBPDataSet);
+        dataSets.add(upperBPDataSet);
+        dataSets.add(weightDataSet);
+        LineData allData = new LineData(dataSets);
+
+        //chart.setData(weightLineData);
+        chart.setData(allData);
         chart.invalidate();
     }
 
@@ -337,8 +392,10 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         String upperBP = editTextUpperBP.getText().toString();
 
         if (!weight.isEmpty()) mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
-        if (!lowerBP.isEmpty()) mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP));
-        if (!upperBP.isEmpty()) mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP));
+        if (!lowerBP.isEmpty() && !upperBP.isEmpty()) {
+            mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
+            mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+        }
     }
 
     private void setupEditTexts() {
@@ -346,9 +403,9 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         EditText alaPaine = findViewById(R.id.editTextAlaPaine);
         EditText ylaPaine = findViewById(R.id.editTextYlaPaine);
 
-        paino.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
-        alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
-        ylaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        paino.setFilters(new InputFilter[] { new InputFilterMinMax(10, 999)});
+        alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(30, 180)});
+        ylaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(50, 250)});
 
         paino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void setupTextViews() {
         //Takes the user's name that is set in settings from shared preferences, default is "tuntematon"
-        String name = pref.getString("name", "tuntematon");
+        String name = pref.getString("name", "");
 
         //Sets the greeting TextView
         TextView textHello = findViewById(R.id.textHello);
