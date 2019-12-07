@@ -30,9 +30,6 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.mehealth.R;
 import com.mehealth.SharedPref;
 import com.mehealth.User.MoodValue;
@@ -181,7 +178,7 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
                 //Depending on the seekbar's progress, saves a mood state from 0-10 to the user objects mood history
                 int progress = ((SeekBar)findViewById(R.id.seekbarMieliala)).getProgress();
                 mUser.mood.addMoodRecord(progress, mDate);
-                updateGraph();
+                updateChart();
                 updateDateText();
             }
         });
@@ -199,7 +196,7 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         super.onResume();
         mUser = mPref.getUser();
         mSettingsOpened = false;
-        updateGraph();
+        updateChart();
         updateDateText();
     }
 
@@ -267,10 +264,10 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         tvDateMood.setText(date);
     }
 
-    private void updateGraph() {
+    private void updateChart() {
         //Declare needed variables
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
-        final LineChart chart = findViewById(R.id.moodGraph);
+        final LineChart chart = findViewById(R.id.moodChart);
         List<Entry> moodEntries = new ArrayList<>();
         ArrayList<MoodValue> moodHistory = mUser.mood.getMoodHistory();
 

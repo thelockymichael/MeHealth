@@ -198,11 +198,11 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     /**
-     * Updates the text and graph with the latest values.
+     * Updates the text and chart with the latest values.
      */
     private void updateUI() {
         updateText();
-        updateGraph();
+        updateChart();
     }
 
     /**
@@ -236,12 +236,12 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     /**
-     * Updates the weight graph with the newest values
+     * Updates the weight chart with the newest values
      */
-    private void updateGraph() {
+    private void updateChart() {
         //Declare needed variables
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
-        final LineChart chart = findViewById(R.id.weightGraph);
+        final LineChart chart = findViewById(R.id.weightChart);
         List<Entry> weightEntries = new ArrayList<>();
         ArrayList<WeightValue> weightHistory = mUser.weight.getWeightHistory();
 
