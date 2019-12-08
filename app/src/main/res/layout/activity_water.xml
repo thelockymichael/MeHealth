@@ -33,57 +33,61 @@
             android:layout_below="@id/relLayoutTop">
 
             <ImageButton
-                android:id="@+id/button1l"
+                android:id="@+id/btn1l"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="76dp"
                 android:layout_height="166dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:contentDescription="@string/layout_water_description_1l"
                 android:scaleType="fitStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/water_bottle" />
 
             <ImageButton
-                android:id="@+id/button1dl"
+                android:id="@+id/btn1dl"
                 style="@android:style/Widget.Material.Button.Borderless"
                 android:layout_width="76dp"
                 android:layout_height="166dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:contentDescription="@string/layout_water_description_1dl"
                 android:scaleType="fitStart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/water_bottle" />
 
             <ImageButton
-                android:id="@+id/button5dl"
+                android:id="@+id/btn5dl"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="76dp"
                 android:layout_height="166dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="12dp"
+                android:contentDescription="@string/layout_water_description_5dl"
                 android:scaleType="fitStart"
-                app:layout_constraintEnd_toStartOf="@+id/button1l"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/btn1l"
+                app:layout_constraintStart_toStartOf="@+id/guidelineVertical50"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/water_bottle" />
 
             <ImageButton
-                android:id="@+id/button2dl"
+                android:id="@+id/btn2dl"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="76dp"
                 android:layout_height="166dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
+                android:contentDescription="@string/layout_water_description_2dl"
                 android:scaleType="fitStart"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
-                app:layout_constraintStart_toEndOf="@+id/button1dl"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineVertical50"
+                app:layout_constraintStart_toEndOf="@+id/btn1dl"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/water_bottle" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/tv1dl"
                 android:layout_width="76dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="16dp"
@@ -91,34 +95,34 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button1dl" />
+                app:layout_constraintTop_toBottomOf="@+id/btn1dl" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/tv2dl"
                 android:layout_width="76dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="12dp"
                 android:text="@string/layout_water_2dl"
                 android:textAlignment="center"
                 android:textSize="25sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
-                app:layout_constraintStart_toEndOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/button2dl" />
+                app:layout_constraintEnd_toStartOf="@+id/guidelineVertical50"
+                app:layout_constraintStart_toEndOf="@+id/tv1dl"
+                app:layout_constraintTop_toBottomOf="@+id/btn2dl" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/tv5dl"
                 android:layout_width="76dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="12dp"
                 android:text="@string/layout_water_5dl"
                 android:textAlignment="center"
                 android:textSize="25sp"
-                app:layout_constraintEnd_toStartOf="@+id/textView10"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/button5dl" />
+                app:layout_constraintEnd_toStartOf="@+id/tv1l"
+                app:layout_constraintStart_toStartOf="@+id/guidelineVertical50"
+                app:layout_constraintTop_toBottomOf="@+id/btn5dl" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tv1l"
                 android:layout_width="76dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="16dp"
@@ -126,17 +130,17 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button1l" />
+                app:layout_constraintTop_toBottomOf="@+id/btn1l" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
+                android:id="@+id/guidelineVertical50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvWaterDrankTodayDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/layout_water_drankToday"
@@ -150,7 +154,7 @@
                 app:layout_constraintVertical_bias="0.432" />
 
             <TextView
-                android:id="@+id/juotuMaara"
+                android:id="@+id/tvWaterDrankToday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -158,7 +162,7 @@
                 android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/tvWaterDrankTodayDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

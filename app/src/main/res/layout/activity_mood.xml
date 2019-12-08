@@ -32,55 +32,56 @@
             android:layout_below="@id/relLayoutTop">
 
             <SeekBar
-                android:id="@+id/seekbarMieliala"
+                android:id="@+id/seekbarMood"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:max="10"
                 android:progress="5"
-                app:layout_constraintBottom_toTopOf="@+id/guideline6"
+                app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal55"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
-                android:id="@+id/imageMieliala"
+                android:id="@+id/imgMood"
                 style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/textMieliala"
+                android:contentDescription="@string/layout_mood_imgDescription"
+                app:layout_constraintBottom_toTopOf="@+id/tvMood"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@color/colorAccent" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline5"
+                android:id="@+id/guidelineHorizontal65"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.65" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline6"
+                android:id="@+id/guidelineHorizontal55"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.55" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline7"
+                android:id="@+id/guidelineVertical50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
             <TextView
-                android:id="@+id/textMieliala"
+                android:id="@+id/tvMood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/seekbarMieliala"
+                app:layout_constraintBottom_toTopOf="@+id/seekbarMood"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -91,23 +92,23 @@
                 android:background="@drawable/soft_corners"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:hint="VALITSE PÄIVÄ"
+                android:hint="@string/layout_mood_chooseDate"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline5"
-                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal65"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineVertical50"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seekbarMieliala"
+                app:layout_constraintTop_toBottomOf="@+id/seekbarMood"
                 app:layout_constraintVertical_bias="0.0"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="4dp"/>
 
             <Button
-                android:id="@+id/buttonAddMood"
+                android:id="@+id/btnAddMood"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/soft_corners"
@@ -117,21 +118,21 @@
                 android:text="@string/layout_mood_addMood"
                 android:textColor="@color/colorWhite"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal65"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline7"
-                app:layout_constraintTop_toBottomOf="@+id/seekbarMieliala"
+                app:layout_constraintStart_toStartOf="@+id/guidelineVertical50"
+                app:layout_constraintTop_toBottomOf="@+id/seekbarMood"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="8dp"/>
 
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/moodChart"
+                android:id="@+id/chartMood"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline5" />
+                app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal65" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

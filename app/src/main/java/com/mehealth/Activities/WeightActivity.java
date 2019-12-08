@@ -2,7 +2,6 @@ package com.mehealth.Activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,83 +62,26 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.activity_weight);
         mPref = new SharedPref(getApplicationContext());
         mDate = Calendar.getInstance().getTime();
+
+        //Sets up the top toolbar
+        Toolbar toolbar = findViewById(R.id.toolbarTop);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Paino");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        Toolbar toolbar = findViewById(R.id.toolbarTop);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Paino");
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        MainActivity.menuIconHighlight(bottomNavigationView, 1);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.ic_home:
-                        Intent home = new Intent(WeightActivity.this, MainActivity.class);
-                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-                    case R.id.ic_weight_scale:
-                        break;
-
-                    case R.id.ic_local_drink:
-                        Intent water = new Intent(WeightActivity.this, WaterActivity.class);
-                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-
-                    case R.id.ic_directions_run:
-                        Intent exercise = new Intent(WeightActivity.this, ExerciseActivity.class);
-                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-
-                    case R.id.ic_insert_emoticon:
-                        Intent mood = new Intent(WeightActivity.this, MoodActivity.class);
-                        startActivity(mood.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-                }
-                return false;
-            }
-        });
-
-        findViewById(R.id.btnAddValue).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonAddValues();
-                updateUI();
-                MainActivity.hideKeyboard(getApplicationContext(), v);
-
-            }
-        });
-
-        findViewById(R.id.btnOpenBPChart).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent bpChart = new Intent(WeightActivity.this, BPChartActivity.class);
-                startActivity(bpChart.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                mSettingsOrBPChartOpened = true;
-            }
-        });
-
-        findViewById(R.id.tvDate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-                MainActivity.hideKeyboard(getApplicationContext(), v);
-            }
-        });
+        setupNavBar();
+        setupBtnListeners();
         setupEditTexts();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = mPref.getUser();
         mSettingsOrBPChartOpened = false;
+        mUser = mPref.getUser();
         updateUI();
     }
 
@@ -211,17 +152,17 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     private void updateText() {
         updateDateText();
 
-        TextView weightText = findViewById(R.id.textViewWeight);
-        TextView lowerBPText = findViewById(R.id.textViewLowerBP);
-        TextView upperBPText = findViewById(R.id.textViewUpperBP);
+        TextView weightText = findViewById(R.id.tvWeight);
+        TextView lowerBPText = findViewById(R.id.tvLowerBP);
+        TextView upperBPText = findViewById(R.id.tvUpperBP);
 
         weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", mUser.weight.getLatestWeight()));
         lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", mUser.bloodPressure.getLatestLowerBP()));
         upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", mUser.bloodPressure.getLatestUpperBP()));
 
-        ((EditText)findViewById(R.id.editTextPaino)).setText("");
-        ((EditText)findViewById(R.id.editTextAlaPaine)).setText("");
-        ((EditText)findViewById(R.id.editTextYlaPaine)).setText("");
+        ((EditText)findViewById(R.id.etWeight)).setText("");
+        ((EditText)findViewById(R.id.etLowerBP)).setText("");
+        ((EditText)findViewById(R.id.etUpperBP)).setText("");
     }
 
     private void updateDateText() {
@@ -343,9 +284,9 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
      * Gets the values from mUser input and saves them into the mUser's history.
      */
     private void buttonAddValues() {
-        EditText editTextWeight = findViewById(R.id.editTextPaino);
-        EditText editTextLowerBP = findViewById(R.id.editTextAlaPaine);
-        EditText editTextUpperBP = findViewById(R.id.editTextYlaPaine);
+        EditText editTextWeight = findViewById(R.id.etWeight);
+        EditText editTextLowerBP = findViewById(R.id.etLowerBP);
+        EditText editTextUpperBP = findViewById(R.id.etUpperBP);
 
         String weight = editTextWeight.getText().toString();
         String lowerBP = editTextLowerBP.getText().toString();
@@ -359,9 +300,9 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     private void setupEditTexts() {
-        EditText paino = findViewById(R.id.editTextPaino);
-        EditText alaPaine = findViewById(R.id.editTextAlaPaine);
-        EditText ylaPaine = findViewById(R.id.editTextYlaPaine);
+        EditText paino = findViewById(R.id.etWeight);
+        EditText alaPaine = findViewById(R.id.etLowerBP);
+        EditText ylaPaine = findViewById(R.id.etUpperBP);
 
         paino.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
         alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
@@ -382,6 +323,73 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         ylaPaine.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+    }
+
+    /**
+     * Setup bottom navigation bar
+     */
+    private void setupNavBar() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
+        MainActivity.menuIconHighlight(bottomNavigationView, 1);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.ic_home:
+                        Intent home = new Intent(WeightActivity.this, MainActivity.class);
+                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+                    case R.id.ic_weight_scale:
+                        break;
+
+                    case R.id.ic_local_drink:
+                        Intent water = new Intent(WeightActivity.this, WaterActivity.class);
+                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+
+                    case R.id.ic_directions_run:
+                        Intent exercise = new Intent(WeightActivity.this, ExerciseActivity.class);
+                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+
+                    case R.id.ic_insert_emoticon:
+                        Intent mood = new Intent(WeightActivity.this, MoodActivity.class);
+                        startActivity(mood.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void setupBtnListeners() {
+        findViewById(R.id.btnAddValue).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonAddValues();
+                updateUI();
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+
+            }
+        });
+
+        findViewById(R.id.btnOpenBPChart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent bpChart = new Intent(WeightActivity.this, BPChartActivity.class);
+                startActivity(bpChart.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                mSettingsOrBPChartOpened = true;
+            }
+        });
+
+        findViewById(R.id.tvDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
                 MainActivity.hideKeyboard(getApplicationContext(), v);
             }
         });

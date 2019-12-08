@@ -22,7 +22,7 @@ public class WeightValue {
 
     /**
      *
-     * @return The object.
+     * @return Weight of the object.
      */
     public int getWeight() {
         return weight;

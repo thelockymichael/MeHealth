@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -45,13 +44,15 @@ public class BPChartActivity extends AppCompatActivity {
     private static final String TAG = "BPChartActivity";
     private User mUser;
     private SharedPref mPref;
-    private Boolean settingsOrDetailsOpened;
+    private Boolean mSettingsOpenedOrOrientationChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bpchart);
+        mPref = new SharedPref(getApplicationContext());
 
+        //Sets up the top toolbar
         Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Verenpaine");
@@ -60,9 +61,8 @@ public class BPChartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mPref = new SharedPref(getApplicationContext());
+        mSettingsOpenedOrOrientationChanged = false;
         mUser = mPref.getUser();
-        settingsOrDetailsOpened = false;
         updateChart();
     }
 
@@ -70,15 +70,17 @@ public class BPChartActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mPref.saveUser(mUser);
-        if (!settingsOrDetailsOpened ) {
+        if (!mSettingsOpenedOrOrientationChanged) {
             finish();
         }
     }
 
+    //Runs when orientation changes
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        settingsOrDetailsOpened = hasFocus;
+        //Activity would finish when rotation changes if this boolean wasn't set here
+        mSettingsOpenedOrOrientationChanged = hasFocus;
     }
 
     @Override
@@ -92,21 +94,26 @@ public class BPChartActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
-            settingsOrDetailsOpened = true;
+            mSettingsOpenedOrOrientationChanged = true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void updateChart() {
+        //Declare the date formatter
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
-        final LineChart chart = findViewById(R.id.bloodPressureChart);
 
+        //Get the blood pressure lists from user object
         final ArrayList<BloodPressureValue> lowerBPHistory = mUser.bloodPressure.getLowerBPHistory();
         final ArrayList<BloodPressureValue> upperBPHistory = mUser.bloodPressure.getUpperBPHistory();
+
+        //Declare the chart and the entry lists
+        final LineChart chart = findViewById(R.id.bloodPressureChart);
         List<Entry> lowerBPEntries = new ArrayList<>();
         List<Entry> upperBPEntries = new ArrayList<>();
 
 
+        //Sorts the lower BP list by date
         Collections.sort(lowerBPHistory, new Comparator<BloodPressureValue>() {
             @Override
             public int compare(BloodPressureValue o1, BloodPressureValue o2) {
@@ -114,6 +121,7 @@ public class BPChartActivity extends AppCompatActivity {
             }
         } );
 
+        //Sorts the upper BP list by date
         Collections.sort(upperBPHistory, new Comparator<BloodPressureValue>() {
             @Override
             public int compare(BloodPressureValue o1, BloodPressureValue o2) {
@@ -121,7 +129,7 @@ public class BPChartActivity extends AppCompatActivity {
             }
         } );
 
-        //Set entries to blood pressure lists from
+        //Convert the blood pressure lists into entry lists
         for (int i = 0; i < lowerBPHistory.size(); i++) {
             BloodPressureValue lowerBPValue = lowerBPHistory.get(i);
             BloodPressureValue upperBPValue = upperBPHistory.get(i);
@@ -135,7 +143,7 @@ public class BPChartActivity extends AppCompatActivity {
             upperBPEntries.add(new Entry(upperBPDate.getTime(), upperBP));
         }
 
-        //Setup XAxis
+        //Setup the X Axis
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
@@ -149,15 +157,12 @@ public class BPChartActivity extends AppCompatActivity {
             }
         });
 
-        //Setups YAxis
+        //Deletes the right Y axis so only the left Y axis is left
         YAxis rightYAxis = chart.getAxisRight();
         rightYAxis.setEnabled(false);
 
-        YAxis leftYAxis = chart.getAxisLeft();
-
 
         //Create linedata from the entries list
-
         final LineDataSet upperBPDataSet = new LineDataSet(upperBPEntries, "Yläpaine");
         final LineDataSet lowerBPDataSet = new LineDataSet(lowerBPEntries, "Alapaine");
 
@@ -167,18 +172,21 @@ public class BPChartActivity extends AppCompatActivity {
         chart.setDescription(desc);
         chart.setMaxHighlightDistance(20);
 
+        //Customize the upper BP dataset
         upperBPDataSet.setValueTextSize(10);
         upperBPDataSet.setColor(Color.RED);
         upperBPDataSet.setFillAlpha(10);
         upperBPDataSet.setLineWidth(3f);
         upperBPDataSet.setCircleRadius(4);
 
+        //Customize the lower BP dataset
         lowerBPDataSet.setValueTextSize(10);
         lowerBPDataSet.setColor(Color.GREEN);
         lowerBPDataSet.setFillAlpha(10);
         lowerBPDataSet.setLineWidth(3f);
         lowerBPDataSet.setCircleRadius(4);
 
+        //Shows the values as integers rathen than floats
         upperBPDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
@@ -186,6 +194,8 @@ public class BPChartActivity extends AppCompatActivity {
             }
         });
 
+
+        //Shows the values as integers rathen than floats
         lowerBPDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
@@ -193,6 +203,7 @@ public class BPChartActivity extends AppCompatActivity {
             }
         });
 
+        //Opens dialog to delete the value when user clicks a value on the chart
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(final Entry e, Highlight h) {
@@ -203,15 +214,20 @@ public class BPChartActivity extends AppCompatActivity {
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                //Gets x value of the entry clicked
                                 float x = e.getX();
+
+                                //Removes the entry from both datasets based on the date
                                 lowerBPDataSet.removeEntryByXValue(x);
                                 upperBPDataSet.removeEntryByXValue(x);
+
+                                //Refreshes chart
                                 chart.invalidate();
 
+                                //Deletes the value from the user object
                                 mUser.bloodPressure.removeBPByDate(x);
                             }
                         });
-
                 AlertDialog alert = builder.create();
                 alert.show();
             }
@@ -222,13 +238,13 @@ public class BPChartActivity extends AppCompatActivity {
             }
         });
 
-        //Add the values to the chart and intialize it
+        //Make one linedata from the blood pressure values
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lowerBPDataSet);
         dataSets.add(upperBPDataSet);
         LineData allData = new LineData(dataSets);
 
-        //chart.setData(weightLineData);
+        //Set the linedate to the chart and update it
         chart.setData(allData);
         chart.invalidate();
     }
