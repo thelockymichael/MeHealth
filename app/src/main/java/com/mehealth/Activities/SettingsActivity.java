@@ -34,11 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
         //Default settings for creating a settings activity
         super.onCreate(savedInstanceState);
 
-        //Sets the toolbar for the activity
-        toolbar = findViewById(R.id.toolbarTop);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Asetukset");
-
         //Setup the settings fragment
         setContentView(R.layout.activity_settings);
         getSupportFragmentManager()
@@ -49,6 +44,11 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        //Sets the toolbar for the activity
+        toolbar = findViewById(R.id.toolbarTop);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Asetukset");
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
