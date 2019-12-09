@@ -9,7 +9,8 @@ import android.text.Spanned;
  */
 public class InputFilterMinMax implements InputFilter {
 
-    private int min, max;
+    private int min;
+    private int max;
 
     /**
      * @param min   Minimum number to be allowed.

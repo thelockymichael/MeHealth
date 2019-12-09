@@ -51,7 +51,7 @@ public class WaterActivity extends AppCompatActivity {
         mSettingsOpened = false;
         mUser = mPref.getUser();
         mUser.water.checkWater(mPref);
-        paivitaVesi(mUser);
+        updateWater(mUser);
     }
 
     @Override
@@ -77,16 +77,6 @@ public class WaterActivity extends AppCompatActivity {
             mSettingsOpened = true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Updates the textview containing the amount of water drank today.
-     * @param user  User object in use.
-     */
-    private void paivitaVesi(User user) {
-        TextView juotuMaara = findViewById(R.id.tvWaterDrankToday);
-        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday(mPref)));
-        mPref.saveUser(user);
     }
 
     /**
@@ -127,34 +117,44 @@ public class WaterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Updates the textview containing the amount of water drank today.
+     * @param user  User object in use.
+     */
+    private void updateWater(User user) {
+        TextView juotuMaara = findViewById(R.id.tvWaterDrankToday);
+        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday(mPref)));
+        mPref.saveUser(user);
+    }
+
     private void setupBtnListeners() {
         //Set the onClickListeners for the imagebuttons to add water drank throughout the day
         findViewById(R.id.btn1dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUser.water.drinkWater(1);
-                paivitaVesi(mUser);
+                updateWater(mUser);
             }
         });
         findViewById(R.id.btn2dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUser.water.drinkWater(2);
-                paivitaVesi(mUser);
+                updateWater(mUser);
             }
         });
         findViewById(R.id.btn5dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUser.water.drinkWater(5);
-                paivitaVesi(mUser);
+                updateWater(mUser);
             }
         });
         findViewById(R.id.btn1l).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUser.water.drinkWater(10);
-                paivitaVesi(mUser);
+                updateWater(mUser);
             }
         });
     }

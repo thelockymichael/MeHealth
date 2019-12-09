@@ -75,14 +75,6 @@ public class BPChartActivity extends AppCompatActivity {
         }
     }
 
-    //Runs when orientation changes
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        //Activity would finish when rotation changes if this boolean wasn't set here
-        mSettingsOpenedOrOrientationChanged = hasFocus;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
@@ -97,6 +89,14 @@ public class BPChartActivity extends AppCompatActivity {
             mSettingsOpenedOrOrientationChanged = true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //Runs when orientation changes
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        //Activity would finish when rotation changes if this boolean wasn't set here
+        mSettingsOpenedOrOrientationChanged = hasFocus;
     }
 
     private void updateChart() {

@@ -11,7 +11,7 @@ public class Mood {
 
     public Mood() {
         moodHistory = new ArrayList<>();
-    }
+        }
 
     /**
      * Get latest value in mood history.

@@ -122,7 +122,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void setupEditText(EditText editText) {
+    private void setupEditText(EditText editText) {
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -134,7 +134,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         editText.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
     }
 
-    protected void setupTextViews(Exercise exercise) {
+    private void setupTextViews(Exercise exercise) {
         TextView weightNow= findViewById(R.id.tvWeightNow);
         //TextView caloriesBurnedPerHour = findViewById(R.id.caloriesBurnedPerHour);
 

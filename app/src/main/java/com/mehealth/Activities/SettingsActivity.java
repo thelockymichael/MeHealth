@@ -26,8 +26,7 @@ import java.util.Objects;
  * User can set basic values such as their name and reset the values collected by the app thus far.
  */
 public class SettingsActivity extends AppCompatActivity {
-    //private static final String TAG = "SettingsActivity";
-    Toolbar toolbar;
+    private static final String TAG = "SettingsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         //Sets the toolbar for the activity
-        toolbar = findViewById(R.id.toolbarTop);
+        Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Asetukset");
     }

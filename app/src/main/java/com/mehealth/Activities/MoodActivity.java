@@ -110,6 +110,44 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Setup bottom navigation bar
+     */
+    private void setupNavBar() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
+        MainActivity.menuIconHighlight(bottomNavigationView, 4);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.ic_home:
+                        Intent home = new Intent(MoodActivity.this, MainActivity.class);
+                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+                    case R.id.ic_weight_scale:
+                        Intent weight = new Intent(MoodActivity.this, WeightActivity.class);
+                        startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+
+                    case R.id.ic_local_drink:
+                        Intent water = new Intent(MoodActivity.this, WaterActivity.class);
+                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+
+                    case R.id.ic_directions_run:
+                        Intent exercise = new Intent(MoodActivity.this, ExerciseActivity.class);
+                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+
+                    case R.id.ic_insert_emoticon:
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
@@ -249,44 +287,6 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         LineData moodLineData = new LineData(moodDataSet);
         chart.setData(moodLineData);
         chart.invalidate();
-    }
-
-    /**
-     * Setup bottom navigation bar
-     */
-    private void setupNavBar() {
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        MainActivity.menuIconHighlight(bottomNavigationView, 4);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.ic_home:
-                        Intent home = new Intent(MoodActivity.this, MainActivity.class);
-                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-                    case R.id.ic_weight_scale:
-                        Intent weight = new Intent(MoodActivity.this, WeightActivity.class);
-                        startActivity(weight.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-
-                    case R.id.ic_local_drink:
-                        Intent water = new Intent(MoodActivity.this, WaterActivity.class);
-                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-
-                    case R.id.ic_directions_run:
-                        Intent exercise = new Intent(MoodActivity.this, ExerciseActivity.class);
-                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-
-                    case R.id.ic_insert_emoticon:
-                        break;
-                }
-                return false;
-            }
-        });
     }
 
     private void setupMoodSetter() {

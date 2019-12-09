@@ -24,7 +24,7 @@ public class ExercisedToday {
      * @param exercise The exercise that was done.
      * @param minutes How many minutes were exercised.
      * @param user The user exercising.
-     * @param intensity The intensity of the exercise.
+     * @param intensity The intensity of the exercise.x
      */
     public void addExercise(Exercise exercise, int minutes, User user, double intensity) {
         double weight = user.weight.getLatestWeight();

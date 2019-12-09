@@ -110,6 +110,44 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Setup bottom navigation bar
+     */
+    private void setupNavBar() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
+        MainActivity.menuIconHighlight(bottomNavigationView, 1);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.ic_home:
+                        Intent home = new Intent(WeightActivity.this, MainActivity.class);
+                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+                    case R.id.ic_weight_scale:
+                        break;
+
+                    case R.id.ic_local_drink:
+                        Intent water = new Intent(WeightActivity.this, WaterActivity.class);
+                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+
+                    case R.id.ic_directions_run:
+                        Intent exercise = new Intent(WeightActivity.this, ExerciseActivity.class);
+                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+
+                    case R.id.ic_insert_emoticon:
+                        Intent mood = new Intent(WeightActivity.this, MoodActivity.class);
+                        startActivity(mood.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
@@ -324,44 +362,6 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 MainActivity.hideKeyboard(getApplicationContext(), v);
-            }
-        });
-    }
-
-    /**
-     * Setup bottom navigation bar
-     */
-    private void setupNavBar() {
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
-        MainActivity.menuIconHighlight(bottomNavigationView, 1);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.ic_home:
-                        Intent home = new Intent(WeightActivity.this, MainActivity.class);
-                        startActivity(home.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-                    case R.id.ic_weight_scale:
-                        break;
-
-                    case R.id.ic_local_drink:
-                        Intent water = new Intent(WeightActivity.this, WaterActivity.class);
-                        startActivity(water.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-
-                    case R.id.ic_directions_run:
-                        Intent exercise = new Intent(WeightActivity.this, ExerciseActivity.class);
-                        startActivity(exercise.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-
-                    case R.id.ic_insert_emoticon:
-                        Intent mood = new Intent(WeightActivity.this, MoodActivity.class);
-                        startActivity(mood.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                        break;
-                }
-                return false;
             }
         });
     }

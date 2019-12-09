@@ -1,7 +1,6 @@
 package com.mehealth.User;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * For storing a single weight value.
@@ -43,19 +42,5 @@ public class WeightValue {
      */
     public boolean containsDate(Date date) {
         return date.equals(this.date);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WeightValue that = (WeightValue) o;
-        return weight == that.weight &&
-                Objects.equals(date, that.date);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(weight, date);
     }
 }

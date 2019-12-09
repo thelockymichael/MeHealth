@@ -44,18 +44,4 @@ public class MoodValue {
     public boolean containsDate(Date date) {
         return date.equals(this.date);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MoodValue moodValue = (MoodValue) o;
-        return mood == moodValue.mood &&
-                Objects.equals(date, moodValue.date);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(mood, date);
-    }
 }
