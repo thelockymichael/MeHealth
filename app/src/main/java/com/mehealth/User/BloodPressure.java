@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ *
  * Keeps track of the user's blood pressure history.
  */
 public class BloodPressure {
@@ -101,7 +102,7 @@ public class BloodPressure {
      * @param bp uower or upper depending on if you want to check lower or upper blood pressure list.
      * @return True if the latest record is lower than the one before or if there are less than 2 values in the list.
      */
-    public boolean latestBPLower(String bp) {
+    public boolean isLatestBPLower(String bp) {
         if (bp.equals("lower")) {
             if (lowerBPHistory.size() < 2) {
                 return true;
@@ -121,7 +122,7 @@ public class BloodPressure {
      * @param bp lower or upper depending on if you want to check lower or upper blood pressure list.
      * @return True if value has not changed or if there are less than 2 values in the list.
      */
-    public boolean bpNotChanged(String bp) {
+    public boolean isBPNotChanged(String bp) {
         if (bp.equals("lower")) {
             if (lowerBPHistory.size() < 2) {
                 return true;
@@ -142,7 +143,7 @@ public class BloodPressure {
      * @param list List the check on.
      * @return True if the list contains a value with the given date.
      */
-    private boolean listDoesNotContainDate(Date date, ArrayList<BloodPressureValue> list) {
+    public boolean listDoesNotContainDate(Date date, ArrayList<BloodPressureValue> list) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).containsDate(date)) {
                 return false;

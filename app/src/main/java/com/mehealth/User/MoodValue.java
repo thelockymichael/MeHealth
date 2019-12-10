@@ -1,7 +1,6 @@
 package com.mehealth.User;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * For storing a single mood value.

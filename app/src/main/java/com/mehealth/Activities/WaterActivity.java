@@ -20,6 +20,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ *
+ */
 public class WaterActivity extends AppCompatActivity {
     private static final String TAG = "WaterActivity";
     private User mUser;

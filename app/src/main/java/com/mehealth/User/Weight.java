@@ -40,7 +40,7 @@ public class Weight {
     public void addWeightRecord(int weight, Date date) {
         WeightValue weightValue = new WeightValue(weight, date);
 
-        if (weight < 1000 && !listContainsDate(date)) {
+        if (weight < 1000 && listDoesNotContainsDate(date)) {
             weightHistory.add(weightValue);
         }
     }
@@ -94,13 +94,13 @@ public class Weight {
      * @param date The given date.
      * @return True if the list contains a record with the given date.
      */
-    private boolean listContainsDate(Date date) {
+    public boolean listDoesNotContainsDate(Date date) {
         for (int i = 0; i < weightHistory.size(); i++) {
             if (weightHistory.get(i).containsDate(date)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**

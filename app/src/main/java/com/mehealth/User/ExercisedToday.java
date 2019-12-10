@@ -5,6 +5,7 @@ import com.mehealth.Exercise;
 import com.mehealth.SharedPref;
 
 /**
+ *
  * Class to keep track of the calories burned by the user today.
  */
 public class ExercisedToday {
@@ -24,7 +25,7 @@ public class ExercisedToday {
      * @param exercise The exercise that was done.
      * @param minutes How many minutes were exercised.
      * @param user The user exercising.
-     * @param intensity The intensity of the exercise.x
+     * @param intensity The intensity of the exercise.
      */
     public void addExercise(Exercise exercise, int minutes, User user, double intensity) {
         double weight = user.weight.getLatestWeight();

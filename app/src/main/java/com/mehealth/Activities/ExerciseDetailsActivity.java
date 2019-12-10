@@ -24,6 +24,9 @@ import com.mehealth.User.User;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ *
+ */
 public class ExerciseDetailsActivity extends AppCompatActivity {
     private User mUser;
     private SharedPref mPref;
@@ -37,21 +40,23 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         mPref = new SharedPref(getApplicationContext());
         mUser = mPref.getUser();
         mCurrentIntensity = 1;
+
         Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Lisää liikunta");
 
-        final Bundle received = getIntent().getExtras();
-        final int position = Objects.requireNonNull(received).getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
+        Bundle received = getIntent().getExtras();
+        int position = Objects.requireNonNull(received).getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
         final Exercise selectedExercise = Exercises.getInstance().getExercise(position);
 
         ((TextView)findViewById(R.id.tvExerciseName))
                 .setText(selectedExercise.getNimi());
 
-        final EditText editHowManyMinutesExercised = findViewById(R.id.etMinutesExercised);
-        setupEditText(editHowManyMinutesExercised);
+        final EditText etHowManyMinutesExercised = findViewById(R.id.etMinutesExercised);
+        setupEditText(etHowManyMinutesExercised);
         setupTextViews(selectedExercise);
 
+        //Setup the listeners for the intensity buttons
         RadioGroup intensityGroup = findViewById(R.id.intensityGroup);
         intensityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -79,11 +84,11 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         findViewById(R.id.btnAddExercise).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String stringMinutes = editHowManyMinutesExercised.getText().toString();
+                String stringMinutes = etHowManyMinutesExercised.getText().toString();
                 if (!stringMinutes.isEmpty()) {
                     int iMinutes = Integer.parseInt(stringMinutes);
                     mUser.exercisedToday.addExercise(selectedExercise, iMinutes, mUser, mCurrentIntensity);
-                    editHowManyMinutesExercised.setText("");
+                    etHowManyMinutesExercised.setText("");
                 }
                 finish();
             }
@@ -136,7 +141,6 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
 
     private void setupTextViews(Exercise exercise) {
         TextView weightNow= findViewById(R.id.tvWeightNow);
-        //TextView caloriesBurnedPerHour = findViewById(R.id.caloriesBurnedPerHour);
 
         weightNow.setText(String.format(Locale.getDefault(), "Poltat %d kaloria tunnissa painollasi",
                 Math.round((1.0 * exercise.getCaloriesInAnHourPerKilo(mUser)) * mCurrentIntensity)));

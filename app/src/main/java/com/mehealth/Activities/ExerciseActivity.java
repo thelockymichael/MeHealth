@@ -25,6 +25,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ *
+ * Contains list of exercises the user can click to open the detail window.
+ */
 public class ExerciseActivity extends AppCompatActivity {
     private static final String TAG = "ExerciseActivity";
     public static final String EXTRA_MESSAGE = "com.mehealth.MESSAGE";
@@ -84,7 +88,7 @@ public class ExerciseActivity extends AppCompatActivity {
     }
 
     /**
-     * Setup bottom navigation bar
+     * Setup bottom navigation bar.
      */
     private void setupNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);

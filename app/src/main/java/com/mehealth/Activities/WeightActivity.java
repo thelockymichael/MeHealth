@@ -2,6 +2,7 @@ package com.mehealth.Activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -49,6 +50,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ *
+ */
 public class WeightActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     private static final String TAG = "WeightActivity";
     private User mUser;
@@ -220,7 +224,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     private void updateChart() {
         //Declare needed variables
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
-        final LineChart chart = findViewById(R.id.weightChart);
+        final LineChart chart = findViewById(R.id.chartWeight);
         List<Entry> weightEntries = new ArrayList<>();
         ArrayList<WeightValue> weightHistory = mUser.weight.getWeightHistory();
 
@@ -337,6 +341,9 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         }
     }
 
+    /**
+     * Set input filters for edit text input and when typing clickcing outside keyboard closes keyboard.
+     */
     private void setupEditTexts() {
         EditText paino = findViewById(R.id.etWeight);
         EditText alaPaine = findViewById(R.id.etLowerBP);
@@ -367,16 +374,17 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     private void setupBtnListeners() {
+        //Button to add value updates ui and closes keyboard
         findViewById(R.id.btnAddValue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 buttonAddValues();
                 updateUI();
                 MainActivity.hideKeyboard(getApplicationContext(), v);
-
             }
         });
 
+        //Button to open blood pressure chart sets opens blood pressure chart activity
         findViewById(R.id.btnOpenBPChart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -386,6 +394,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
+        //Clicking date button opens date picker and closes keyboard
         findViewById(R.id.tvDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

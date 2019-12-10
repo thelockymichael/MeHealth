@@ -3,6 +3,7 @@ package com.mehealth.User;
 import java.util.Date;
 
 /**
+ *
  * For storing a single blood pressure value. Contains date added and the actual blood pressure value.
  */
 public class BloodPressureValue {

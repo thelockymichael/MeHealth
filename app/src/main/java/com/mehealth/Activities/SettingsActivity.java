@@ -22,6 +22,7 @@ import com.mehealth.User.User;
 import java.util.Objects;
 
 /**
+ *
  * Settings activity containing the preferences fragment.
  * User can set basic values such as their name and reset the values collected by the app thus far.
  */

@@ -39,6 +39,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ *
+ */
 public class BPChartActivity extends AppCompatActivity {
 
     private static final String TAG = "BPChartActivity";
@@ -61,6 +64,7 @@ public class BPChartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //Set setting and orientation checker to false and get latest user info
         mSettingsOpenedOrOrientationChanged = false;
         mUser = mPref.getUser();
         updateChart();
@@ -108,12 +112,12 @@ public class BPChartActivity extends AppCompatActivity {
         final ArrayList<BloodPressureValue> upperBPHistory = mUser.bloodPressure.getUpperBPHistory();
 
         //Declare the chart and the entry lists
-        final LineChart chart = findViewById(R.id.bloodPressureChart);
+        final LineChart chart = findViewById(R.id.chartBloodPressure);
         List<Entry> lowerBPEntries = new ArrayList<>();
         List<Entry> upperBPEntries = new ArrayList<>();
 
 
-        //Sorts the lower BP list by date
+        //Sort the lower BP list by date
         Collections.sort(lowerBPHistory, new Comparator<BloodPressureValue>() {
             @Override
             public int compare(BloodPressureValue o1, BloodPressureValue o2) {
@@ -121,7 +125,7 @@ public class BPChartActivity extends AppCompatActivity {
             }
         } );
 
-        //Sorts the upper BP list by date
+        //Sort the upper BP list by date
         Collections.sort(upperBPHistory, new Comparator<BloodPressureValue>() {
             @Override
             public int compare(BloodPressureValue o1, BloodPressureValue o2) {
@@ -186,7 +190,7 @@ public class BPChartActivity extends AppCompatActivity {
         lowerBPDataSet.setLineWidth(3f);
         lowerBPDataSet.setCircleRadius(4);
 
-        //Shows the values as integers rathen than floats
+        //Shows the values as integers rather than floats
         upperBPDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
@@ -195,7 +199,7 @@ public class BPChartActivity extends AppCompatActivity {
         });
 
 
-        //Shows the values as integers rathen than floats
+        //Shows the values as integers rather than floats
         lowerBPDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {

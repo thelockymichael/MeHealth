@@ -28,6 +28,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
+ *
  * Home screen of the app.
  * Welcomes the user and contains recent information about the user.
  * Always has one task of the activity open so every backclick redirects to the main activity
@@ -242,12 +243,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Arrow for lower blood pressure
         ImageView imgArrowLowerBP = findViewById(R.id.imgArrowLowerBP);
-        if (mUser.bloodPressure.latestBPLower("lower")) {
+        if (mUser.bloodPressure.isLatestBPLower("lower")) {
             imgArrowLowerBP.setImageResource(R.drawable.ic_arrow_downward_grey);
         } else {
             imgArrowLowerBP.setImageResource(R.drawable.ic_arrow_upward_gray);
         }
-        if (mUser.bloodPressure.bpNotChanged("lower")) {
+        if (mUser.bloodPressure.isBPNotChanged("lower")) {
             imgArrowLowerBP.setVisibility(View.INVISIBLE);
         } else {
             imgArrowLowerBP.setVisibility(View.VISIBLE);
@@ -255,12 +256,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Arrow for upper blood pressure
         ImageView imgArrowUpperBP = findViewById(R.id.imgArrowUpperBP);
-        if (mUser.bloodPressure.latestBPLower("upper")) {
+        if (mUser.bloodPressure.isLatestBPLower("upper")) {
             imgArrowUpperBP.setImageResource(R.drawable.ic_arrow_downward_grey);
         } else {
             imgArrowUpperBP.setImageResource(R.drawable.ic_arrow_upward_gray);
         }
-        if (mUser.bloodPressure.bpNotChanged("upper")) {
+        if (mUser.bloodPressure.isBPNotChanged("upper")) {
             imgArrowUpperBP.setVisibility(View.INVISIBLE);
         } else {
             imgArrowUpperBP.setVisibility(View.VISIBLE);
