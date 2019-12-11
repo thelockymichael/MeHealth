@@ -310,6 +310,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks users age and latest bloodpressure values. If bloodpressure is too high, a warning appears on main page.
+     */
     private void checkBPWarning() {
         int normalDiastolic;
         int normalSystolic;

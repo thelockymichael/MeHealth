@@ -12,6 +12,9 @@ public class BloodValues {
         return ourInstance;
     }
 
+    /**
+     * Sets arraylist and limits for systolic and diastolic blood pressures.
+     */
     private BloodValues() {
         bloodvalues = new ArrayList<HighBloodPressure>();
         bloodvalues.add(new HighBloodPressure(0,120,80));
@@ -35,6 +38,11 @@ public class BloodValues {
         bloodvalues.add(new HighBloodPressure(18,120,80));
 
     }
+
+    /**
+     *
+      * @return bloodvalues arraylist.
+     */
     public List<HighBloodPressure> getBloodvalues() {
         return bloodvalues;
     }
