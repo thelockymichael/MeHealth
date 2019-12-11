@@ -292,6 +292,16 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         weightDataSet.setLineWidth(3f);
         weightDataSet.setCircleRadius(4);
 
+
+
+        //Shows the values as integers rather than floats
+        weightDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(Locale.getDefault(), "%.1f", value);
+            }
+        });
+
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(final Entry e, Highlight h) {
