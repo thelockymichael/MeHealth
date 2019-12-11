@@ -20,23 +20,50 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ *
+ */
 public class WaterActivity extends AppCompatActivity {
     private static final String TAG = "WaterActivity";
-
-    User user;
-    Toolbar toolbar;
-    SharedPref pref;
-    Boolean settingsOpened;
+    private User mUser;
+    private SharedPref mPref;
+    private Boolean mSettingsOpened;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water);
+        mPref = new SharedPref(getApplicationContext());
 
-        pref = new SharedPref(getApplicationContext());
-        toolbar = findViewById(R.id.toolbarTop);
+        //Sets up the top toolbar
+        Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Vesi");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setupNavBar();
+        setupBtnListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSettingsOpened = false;
+        mUser = mPref.getUser();
+        mUser.water.checkWater(mPref);
+        updateWater(mUser);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPref.saveUser(mUser);
+        if (!mSettingsOpened) {
+            finish();
+        }
     }
 
     @Override
@@ -50,15 +77,15 @@ public class WaterActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
-            settingsOpened = true;
+            mSettingsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+    /**
+     * Setup bottom navigation bar
+     */
+    private void setupNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         MainActivity.menuIconHighlight(bottomNavigationView, 2);
 
@@ -91,66 +118,48 @@ public class WaterActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        //Set the onClickListeners for the imagebuttons to add water drank throughout the day
-        findViewById(R.id.button1dl).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user.water.drinkWater(1);
-                paivitaVesi(user);
-            }
-        });
-        findViewById(R.id.button2dl).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user.water.drinkWater(2);
-                paivitaVesi(user);
-            }
-        });
-        findViewById(R.id.button5dl).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user.water.drinkWater(5);
-                paivitaVesi(user);
-            }
-        });
-        findViewById(R.id.button1l).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user.water.drinkWater(10);
-                paivitaVesi(user);
-            }
-        });
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        user = pref.getUser();
-        user.water.checkWater(pref);
-        paivitaVesi(user);
-        settingsOpened = false;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        pref.saveUser(user);
-        if (!settingsOpened) {
-            finish();
-        }
     }
 
     /**
      * Updates the textview containing the amount of water drank today.
      * @param user  User object in use.
      */
-    protected void paivitaVesi(User user) {
-        TextView juotuMaara = findViewById(R.id.juotuMaara);
-        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday(pref)));
-        pref.saveUser(user);
+    private void updateWater(User user) {
+        TextView juotuMaara = findViewById(R.id.tvWaterDrankToday);
+        juotuMaara.setText(String.format(Locale.getDefault(), "%ddl", user.water.getWaterDrankToday(mPref)));
+        mPref.saveUser(user);
+    }
+
+    private void setupBtnListeners() {
+        //Set the onClickListeners for the imagebuttons to add water drank throughout the day
+        findViewById(R.id.btn1dl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUser.water.drinkWater(1);
+                updateWater(mUser);
+            }
+        });
+        findViewById(R.id.btn2dl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUser.water.drinkWater(2);
+                updateWater(mUser);
+            }
+        });
+        findViewById(R.id.btn5dl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUser.water.drinkWater(5);
+                updateWater(mUser);
+            }
+        });
+        findViewById(R.id.btn1l).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUser.water.drinkWater(10);
+                updateWater(mUser);
+            }
+        });
     }
 
 }

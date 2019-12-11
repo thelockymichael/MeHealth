@@ -21,40 +21,54 @@ import com.mehealth.SharedPref;
 import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
+/**
+ *
+ * Contains list of exercises the user can click to open the detail window.
+ */
 public class ExerciseActivity extends AppCompatActivity {
     private static final String TAG = "ExerciseActivity";
     public static final String EXTRA_MESSAGE = "com.mehealth.MESSAGE";
-    User user;
-    Toolbar toolbar;
-    SharedPref pref;
-    Boolean settingsOrDetailsOpened;
+    private User mUser;
+    private SharedPref mPref;
+    private Boolean mSettingsOrDetailsOpened;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
-        pref = new SharedPref(getApplicationContext());
-        toolbar = findViewById(R.id.toolbarTop);
+        mPref = new SharedPref(getApplicationContext());
+
+        //Sets up the top toolbar
+        Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Liikunta");
+    }
 
-        ListView exercises = findViewById(R.id.exerciseListView);
-        exercises.setAdapter(new ArrayAdapter<Exercise>(
-           this,
-                R.layout.exercise_item_layout,
-                Exercises.getInstance().getExercises()
-        ));
-        exercises.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent exercise = new Intent(ExerciseActivity.this, ExerciseDetailsActivity.class);
-                exercise.putExtra(EXTRA_MESSAGE, position);
-                startActivity(exercise);
-                settingsOrDetailsOpened = true;
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setupNavBar();
+        setupExerciseListView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSettingsOrDetailsOpened = false;
+        mUser = mPref.getUser();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPref.saveUser(mUser);
+        if (!mSettingsOrDetailsOpened) {
+            finish();
+        }
     }
 
     @Override
@@ -68,15 +82,15 @@ public class ExerciseActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
-            settingsOrDetailsOpened = true;
+            mSettingsOrDetailsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+    /**
+     * Setup bottom navigation bar.
+     */
+    private void setupNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         MainActivity.menuIconHighlight(bottomNavigationView, 3);
 
@@ -111,19 +125,23 @@ public class ExerciseActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        user = pref.getUser();
-        settingsOrDetailsOpened = false;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        pref.saveUser(user);
-        if (!settingsOrDetailsOpened) {
-            finish();
-        }
+    private void setupExerciseListView() {
+        ListView exercises = findViewById(R.id.exerciseListView);
+        exercises.setAdapter(new ArrayAdapter<Exercise>(
+                this,
+                R.layout.exercise_item_layout,
+                Exercises.getInstance().getExercises()
+        ));
+        exercises.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent exercise = new Intent(ExerciseActivity.this, ExerciseDetailsActivity.class);
+                exercise.putExtra(EXTRA_MESSAGE, position);
+                startActivity(exercise);
+                mSettingsOrDetailsOpened = true;
+            }
+        });
     }
 }
+
+

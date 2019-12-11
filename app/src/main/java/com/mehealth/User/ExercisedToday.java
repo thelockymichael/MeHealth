@@ -5,6 +5,7 @@ import com.mehealth.Exercise;
 import com.mehealth.SharedPref;
 
 /**
+ *
  * Class to keep track of the calories burned by the user today.
  */
 public class ExercisedToday {

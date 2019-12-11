@@ -9,41 +9,43 @@
     <string name="nimi_title">Nimi</string>
     <string name="sukupuoli_title">Sukupuoli</string>
 
-    <!--Main Activity-->
+    <!--Activities-->
     <string name="activity_main_lastMood">Viimeisin mielialasi oli</string>
     <string name="activity_main_calorieBurnedToday">Kalori poltettu tänään</string>
     <string name="activity_main_caloriesBurnedToday">Kaloria poltettu tänään</string>
+    <string name="activity_weight_chooseDate">Valitse päivä</string>
 
-    <!--Layout Exercise-->
+    <!--Layouts-->
     <string name="layout_exercise_addExercise">Lisää liikunta</string>
     <string name="layout_exercise_details_howManyMinutes">Montako minuuttia?</string>
     <string name="layout_exercise_details_intensityRelaxed">Rento</string>
     <string name="layout_exercise_details_intensityNormal">Normaali</string>
     <string name="layout_exercise_details_intensityHeavy">Raskas</string>
     <string name="layout_exercise_details_addExercise">Lisää liikunta</string>
-
-    <!--Layout Main-->
     <string name="layout_main_weight">Paino</string>
     <string name="layout_main_waterToDrinkToday">Vettä juomatta tänään</string>
     <string name="layout_main_upperBP">Yläpaine</string>
     <string name="layout_main_lowerBP">Alapaine</string>
-
-    <!--Layout Mood-->
-    <string name="layout_mood_addMood">Lisää mieliala</string>
-
-    <!--Layout Water-->
+    <string name="layout_main_imgDescriptionWeight">Weight arrow</string>
+    <string name="layout_main_imgDescriptionUpperBP">Upper BP arrow</string>
+    <string name="layout_main_imgDescriptionLowerBP">Lower BP arrow</string>
     <string name="layout_water_1dl">1dl</string>
     <string name="layout_water_2dl">2dl</string>
     <string name="layout_water_5dl">5dl</string>
     <string name="layout_water_1l">1l</string>
     <string name="layout_water_drankToday">Tänään juotu</string>
-
-    <!--Layout Weight-->
+    <string name="layout_water_description_1l">1l Water bottle</string>
+    <string name="layout_water_description_1dl">1dl Water bottle</string>
+    <string name="layout_water_description_5dl">5dl Water bottle</string>
+    <string name="layout_water_description_2dl">2dl Water bottle</string>
     <string name="layout_weight_add">Lisää</string>
     <string name="layout_weight_weight">Paino</string>
     <string name="layout_weight_lowerBP">Alapaine</string>
     <string name="layout_weight_upperBP">Yläpaine</string>
     <string name="layout_weight_openBPChart">Verenpaineen kaavio</string>
+    <string name="layout_mood_imgDescription">Smiley that changes color</string>
+    <string name="layout_mood_chooseDate">VALITSE PÄIVÄ</string>
+    <string name="layout_mood_addMood">Lisää mieliala</string>
 
     <!-- Sync Preferences -->
 </resources>

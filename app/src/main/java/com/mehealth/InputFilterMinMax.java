@@ -4,12 +4,13 @@ import android.text.InputFilter;
 import android.text.Spanned;
 
 /**
- * Filters input for editTexts in the app.
  * Source: https://stackoverflow.com/questions/14212518/is-there-a-way-to-define-a-min-and-max-value-for-edittext-in-android
+ * Filters input for editTexts in the app.
  */
 public class InputFilterMinMax implements InputFilter {
 
-    private int min, max;
+    private int min;
+    private int max;
 
     /**
      * @param min   Minimum number to be allowed.

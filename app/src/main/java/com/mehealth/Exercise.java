@@ -16,7 +16,7 @@ public class Exercise {
      * @param nimi Name of the exercise.
      * @param kaloritMinuutissaPerKilo How many calories the exercise burns per kilo.
      */
-    public Exercise(String nimi, double kaloritMinuutissaPerKilo) {
+        public Exercise(String nimi, double kaloritMinuutissaPerKilo) {
         this.nimi = nimi;
         this.kaloritMinuutissaPerKilo = kaloritMinuutissaPerKilo;
     }

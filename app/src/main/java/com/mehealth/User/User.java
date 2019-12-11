@@ -21,6 +21,7 @@ public class User  {
         bloodPressure = new BloodPressure();
         exercisedToday = new ExercisedToday();
     }
+
     /**
      * Resets every value in the user class that is being tracked
      */

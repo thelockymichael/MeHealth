@@ -24,52 +24,56 @@ import com.mehealth.User.User;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ *
+ */
 public class ExerciseDetailsActivity extends AppCompatActivity {
-    User user;
-    Toolbar toolbar;
-    SharedPref pref;
-    Boolean settingsOrDetailsOpened;
-    double currentIntensity;
+    private User mUser;
+    private SharedPref mPref;
+    private Boolean mSettingsOrDetailsOpened;
+    private double mCurrentIntensity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_details);
-        pref = new SharedPref(getApplicationContext());
-        user = pref.getUser();
-        currentIntensity = 1;
-        toolbar = findViewById(R.id.toolbarTop);
+        mPref = new SharedPref(getApplicationContext());
+        mUser = mPref.getUser();
+        mCurrentIntensity = 1;
+
+        Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Lisää liikunta");
 
-        final Bundle received = getIntent().getExtras();
-        final int position = Objects.requireNonNull(received).getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
+        Bundle received = getIntent().getExtras();
+        int position = Objects.requireNonNull(received).getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
         final Exercise selectedExercise = Exercises.getInstance().getExercise(position);
 
-        ((TextView)findViewById(R.id.textExerciseName))
+        ((TextView)findViewById(R.id.tvExerciseName))
                 .setText(selectedExercise.getNimi());
 
-        final EditText editHowManyMinutesExercised = findViewById(R.id.editHowManyMinutesExercised);
-        setupEditText(editHowManyMinutesExercised);
+        final EditText etHowManyMinutesExercised = findViewById(R.id.etMinutesExercised);
+        setupEditText(etHowManyMinutesExercised);
         setupTextViews(selectedExercise);
 
+        //Setup the listeners for the intensity buttons
         RadioGroup intensityGroup = findViewById(R.id.intensityGroup);
         intensityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (group.getCheckedRadioButtonId()) {
                     case R.id.intensityRelaxed:
-                        currentIntensity = 0.75;
+                        mCurrentIntensity = 0.75;
                         setupTextViews(selectedExercise);
                         break;
 
                     case R.id.intensityNormal:
-                        currentIntensity = 1;
+                        mCurrentIntensity = 1;
                         setupTextViews(selectedExercise);
                         break;
 
                     case R.id.intensityHeavy:
-                        currentIntensity = 1.25;
+                        mCurrentIntensity = 1.25;
                         setupTextViews(selectedExercise);
                         break;
                 }
@@ -77,18 +81,34 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         });
 
 
-        findViewById(R.id.buttonAddExercise).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnAddExercise).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String stringMinutes = editHowManyMinutesExercised.getText().toString();
+                String stringMinutes = etHowManyMinutesExercised.getText().toString();
                 if (!stringMinutes.isEmpty()) {
                     int iMinutes = Integer.parseInt(stringMinutes);
-                    user.exercisedToday.addExercise(selectedExercise, iMinutes, user, currentIntensity);
-                    editHowManyMinutesExercised.setText("");
+                    mUser.exercisedToday.addExercise(selectedExercise, iMinutes, mUser, mCurrentIntensity);
+                    etHowManyMinutesExercised.setText("");
                 }
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mUser = mPref.getUser();
+        mSettingsOrDetailsOpened = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPref.saveUser(mUser);
+        if (!mSettingsOrDetailsOpened) {
+            finish();
+        }
     }
 
     @Override
@@ -102,28 +122,12 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settings) {
             Intent settings = new Intent(this, SettingsActivity.class);
             startActivity(settings);
-            settingsOrDetailsOpened = true;
+            mSettingsOrDetailsOpened = true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        user = pref.getUser();
-        settingsOrDetailsOpened = false;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        pref.saveUser(user);
-        if (!settingsOrDetailsOpened) {
-            finish();
-        }
-    }
-
-    protected void setupEditText(EditText editText) {
+    private void setupEditText(EditText editText) {
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -135,12 +139,11 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         editText.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
     }
 
-    protected void setupTextViews(Exercise exercise) {
-        TextView weightNow= findViewById(R.id.weightNow);
-        //TextView caloriesBurnedPerHour = findViewById(R.id.caloriesBurnedPerHour);
+    private void setupTextViews(Exercise exercise) {
+        TextView weightNow= findViewById(R.id.tvWeightNow);
 
         weightNow.setText(String.format(Locale.getDefault(), "Poltat %d kaloria tunnissa painollasi",
-                Math.round((1.0 * exercise.getCaloriesInAnHourPerKilo(user)) * currentIntensity)));
+                Math.round((1.0 * exercise.getCaloriesInAnHourPerKilo(mUser)) * mCurrentIntensity)));
     }
 
 

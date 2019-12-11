@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clickable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:focusable="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarTop"
@@ -47,7 +47,7 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <TextView
-        android:id="@+id/textExerciseName"
+        android:id="@+id/tvExerciseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbarTop" />
 
     <EditText
-        android:id="@+id/editHowManyMinutesExercised"
+        android:id="@+id/etMinutesExercised"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="12"
@@ -68,7 +68,8 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal25"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAutofill="no" />
 
     <RadioGroup
         android:id="@+id/intensityGroup"
@@ -76,8 +77,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:checkedButton="@id/intensityNormal"
-        app:layout_constraintTop_toBottomOf="@id/editHowManyMinutesExercised"
-        app:layout_constraintBottom_toTopOf="@id/weightNow"
+        app:layout_constraintTop_toBottomOf="@id/etMinutesExercised"
+        app:layout_constraintBottom_toTopOf="@id/tvWeightNow"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
 
@@ -108,18 +109,18 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/weightNow"
+        android:id="@+id/tvWeightNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textSize="24sp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@id/buttonAddExercise"
+        app:layout_constraintBottom_toTopOf="@id/btnAddExercise"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:id="@+id/buttonAddExercise"
+        android:id="@+id/btnAddExercise"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

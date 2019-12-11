@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +50,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ *
+ */
 public class WeightActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     private static final String TAG = "WeightActivity";
     private User mUser;
@@ -64,16 +66,58 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.activity_weight);
         mPref = new SharedPref(getApplicationContext());
         mDate = Calendar.getInstance().getTime();
+
+        //Sets up the top toolbar
+        Toolbar toolbar = findViewById(R.id.toolbarTop);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Paino");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        setupNavBar();
+        setupBtnListeners();
+        setupEditTexts();
+    }
 
-        Toolbar toolbar = findViewById(R.id.toolbarTop);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Paino");
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSettingsOrBPChartOpened = false;
+        mUser = mPref.getUser();
+        updateUI();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPref.saveUser(mUser);
+        if (!mSettingsOrBPChartOpened) {
+            finish();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.settings) {
+            Intent settings = new Intent(this, SettingsActivity.class);
+            startActivity(settings);
+            mSettingsOrBPChartOpened = true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Setup bottom navigation bar
+     */
+    private void setupNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         MainActivity.menuIconHighlight(bottomNavigationView, 1);
 
@@ -106,67 +150,6 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 return false;
             }
         });
-
-        findViewById(R.id.btnAddValue).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonAddValues();
-                updateUI();
-                MainActivity.hideKeyboard(getApplicationContext(), v);
-
-            }
-        });
-
-        findViewById(R.id.btnOpenBPChart).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent bpChart = new Intent(WeightActivity.this, BPChartActivity.class);
-                startActivity(bpChart.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                mSettingsOrBPChartOpened = true;
-            }
-        });
-
-        findViewById(R.id.tvDate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-                MainActivity.hideKeyboard(getApplicationContext(), v);
-            }
-        });
-        setupEditTexts();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mUser = mPref.getUser();
-        mSettingsOrBPChartOpened = false;
-        updateUI();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mPref.saveUser(mUser);
-        if (!mSettingsOrBPChartOpened) {
-            finish();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.settings) {
-            Intent settings = new Intent(this, SettingsActivity.class);
-            startActivity(settings);
-            mSettingsOrBPChartOpened = true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -198,11 +181,11 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     /**
-     * Updates the text and graph with the latest values.
+     * Updates the text and chart with the latest values.
      */
     private void updateUI() {
         updateText();
-        updateGraph();
+        updateChart();
     }
 
     /**
@@ -211,17 +194,17 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     private void updateText() {
         updateDateText();
 
-        TextView weightText = findViewById(R.id.textViewWeight);
-        TextView lowerBPText = findViewById(R.id.textViewLowerBP);
-        TextView upperBPText = findViewById(R.id.textViewUpperBP);
+        TextView weightText = findViewById(R.id.tvWeight);
+        TextView lowerBPText = findViewById(R.id.tvLowerBP);
+        TextView upperBPText = findViewById(R.id.tvUpperBP);
 
         weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", mUser.weight.getLatestWeight()));
         lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", mUser.bloodPressure.getLatestLowerBP()));
         upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", mUser.bloodPressure.getLatestUpperBP()));
 
-        ((EditText)findViewById(R.id.editTextPaino)).setText("");
-        ((EditText)findViewById(R.id.editTextAlaPaine)).setText("");
-        ((EditText)findViewById(R.id.editTextYlaPaine)).setText("");
+        ((EditText)findViewById(R.id.etWeight)).setText("");
+        ((EditText)findViewById(R.id.etLowerBP)).setText("");
+        ((EditText)findViewById(R.id.etUpperBP)).setText("");
     }
 
     private void updateDateText() {
@@ -236,12 +219,12 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     /**
-     * Updates the weight graph with the newest values
+     * Updates the weight chart with the newest values
      */
-    private void updateGraph() {
+    private void updateChart() {
         //Declare needed variables
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
-        final LineChart chart = findViewById(R.id.weightGraph);
+        final LineChart chart = findViewById(R.id.chartWeight);
         List<Entry> weightEntries = new ArrayList<>();
         ArrayList<WeightValue> weightHistory = mUser.weight.getWeightHistory();
 
@@ -343,9 +326,9 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
      * Gets the values from mUser input and saves them into the mUser's history.
      */
     private void buttonAddValues() {
-        EditText editTextWeight = findViewById(R.id.editTextPaino);
-        EditText editTextLowerBP = findViewById(R.id.editTextAlaPaine);
-        EditText editTextUpperBP = findViewById(R.id.editTextYlaPaine);
+        EditText editTextWeight = findViewById(R.id.etWeight);
+        EditText editTextLowerBP = findViewById(R.id.etLowerBP);
+        EditText editTextUpperBP = findViewById(R.id.etUpperBP);
 
         String weight = editTextWeight.getText().toString();
         String lowerBP = editTextLowerBP.getText().toString();
@@ -358,10 +341,13 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         }
     }
 
+    /**
+     * Set input filters for edit text input and when typing clickcing outside keyboard closes keyboard.
+     */
     private void setupEditTexts() {
-        EditText paino = findViewById(R.id.editTextPaino);
-        EditText alaPaine = findViewById(R.id.editTextAlaPaine);
-        EditText ylaPaine = findViewById(R.id.editTextYlaPaine);
+        EditText paino = findViewById(R.id.etWeight);
+        EditText alaPaine = findViewById(R.id.etLowerBP);
+        EditText ylaPaine = findViewById(R.id.etUpperBP);
 
         paino.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
         alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
@@ -382,6 +368,37 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         ylaPaine.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+    }
+
+    private void setupBtnListeners() {
+        //Button to add value updates ui and closes keyboard
+        findViewById(R.id.btnAddValue).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonAddValues();
+                updateUI();
+                MainActivity.hideKeyboard(getApplicationContext(), v);
+            }
+        });
+
+        //Button to open blood pressure chart sets opens blood pressure chart activity
+        findViewById(R.id.btnOpenBPChart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent bpChart = new Intent(WeightActivity.this, BPChartActivity.class);
+                startActivity(bpChart.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                mSettingsOrBPChartOpened = true;
+            }
+        });
+
+        //Clicking date button opens date picker and closes keyboard
+        findViewById(R.id.tvDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
                 MainActivity.hideKeyboard(getApplicationContext(), v);
             }
         });

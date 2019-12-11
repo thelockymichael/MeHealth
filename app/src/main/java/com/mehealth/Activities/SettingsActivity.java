@@ -22,17 +22,19 @@ import com.mehealth.User.User;
 import java.util.Objects;
 
 /**
+ *
  * Settings activity containing the preferences fragment.
  * User can set basic values such as their name and reset the values collected by the app thus far.
  */
 public class SettingsActivity extends AppCompatActivity {
-    //private static final String TAG = "SettingsActivity";
-    Toolbar toolbar;
+    private static final String TAG = "SettingsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Default settings for creating a settings activity
         super.onCreate(savedInstanceState);
+
+        //Setup the settings fragment
         setContentView(R.layout.activity_settings);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -44,9 +46,9 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         //Sets the toolbar for the activity
-        toolbar = findViewById(R.id.toolbarTop);
+        Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Asetukset");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Asetukset");
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

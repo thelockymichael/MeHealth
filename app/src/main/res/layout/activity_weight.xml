@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusableInTouchMode="true"
-    tools:context=".Activities.MainActivity">
+    tools:context=".Activities.MainActivity"
+    android:focusable="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +38,7 @@
 
 
             <TextView
-                android:id="@+id/textViewWeight"
+                android:id="@+id/tvWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -50,7 +51,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewLowerBP"
+                android:id="@+id/tvLowerBP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -58,12 +59,12 @@
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toStartOf="@+id/textViewUpperBP"
-                app:layout_constraintStart_toEndOf="@+id/textViewWeight"
+                app:layout_constraintEnd_toStartOf="@+id/tvUpperBP"
+                app:layout_constraintStart_toEndOf="@+id/tvWeight"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewUpperBP"
+                android:id="@+id/tvUpperBP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -84,7 +85,7 @@
                 android:fontFamily="sans-serif-light"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:hint="Valitse päivä"
+                android:hint="@string/activity_weight_chooseDate"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textSize="24sp"
@@ -109,10 +110,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tvDate"
-                app:layout_constraintTop_toBottomOf="@+id/editTextAlaPaine" />
+                app:layout_constraintTop_toBottomOf="@+id/etLowerBP" />
 
             <EditText
-                android:id="@+id/editTextPaino"
+                android:id="@+id/etWeight"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -120,11 +121,12 @@
                 android:hint="@string/layout_weight_weight"
                 android:inputType="number"
                 android:textAlignment="center"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAlaPaine"
+                android:importantForAutofill="no"
+                app:layout_constraintBaseline_toBaselineOf="@+id/etLowerBP"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/editTextAlaPaine"
+                android:id="@+id/etLowerBP"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -132,13 +134,14 @@
                 android:hint="@string/layout_weight_lowerBP"
                 android:inputType="number"
                 android:textAlignment="center"
+                android:importantForAutofill="no"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLowerBP" />
+                app:layout_constraintTop_toBottomOf="@+id/tvLowerBP" />
 
             <EditText
-                android:id="@+id/editTextYlaPaine"
+                android:id="@+id/etUpperBP"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
@@ -146,11 +149,12 @@
                 android:hint="@string/layout_weight_upperBP"
                 android:inputType="number"
                 android:textAlignment="center"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editTextAlaPaine"
+                android:importantForAutofill="no"
+                app:layout_constraintBaseline_toBaselineOf="@+id/etLowerBP"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/weightGraph"
+                android:id="@+id/chartWeight"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginBottom="8dp"
