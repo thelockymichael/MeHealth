@@ -258,7 +258,7 @@
                     android:shadowDx="1.2"
                     android:shadowDy="1.3"
                     android:shadowRadius="1.3"
-                    app:layout_constraintBottom_toTopOf="@id/textUpperBPNumber"
+                    app:layout_constraintBottom_toTopOf="@id/tvUpperBPNumber"
                     app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -273,9 +273,9 @@
                     android:shadowDx="1.2"
                     android:shadowDy="1.3"
                     android:shadowRadius="1.3"
-                    app:layout_constraintBottom_toBottomOf="@+id/textUpperBPDescription"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvUpperBPDescription"
                     app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
-                    app:layout_constraintStart_toStartOf="@+id/textUpperBPDescription" />
+                    app:layout_constraintStart_toStartOf="@+id/tvUpperBPDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

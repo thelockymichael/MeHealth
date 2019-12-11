@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         int normalDiastolic;
         int normalSystolic;
 
-        int userAge = Integer.parseInt(pref.getString("ika"));
+        int userAge = Integer.parseInt(mPref.getString("ika"));
 
         if (userAge >  18) {
             normalDiastolic = BloodValues.getInstance().getBloodvalues().get(0).getNormalDiastolic();
