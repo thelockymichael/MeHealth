@@ -119,7 +119,7 @@
                 android:layout_marginStart="32dp"
                 android:ems="10"
                 android:hint="@string/layout_weight_weight"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textAlignment="center"
                 android:importantForAutofill="no"
                 app:layout_constraintBaseline_toBaselineOf="@+id/etLowerBP"

@@ -22,7 +22,7 @@ public class Weight {
      * Getter for latest value in weight history.
      * @return  An int from the weight list's latest value.
      */
-    public int getLatestWeight() {
+    public double getLatestWeight() {
         if (weightHistory.size() == 0) {
             return 0;
         }
@@ -42,7 +42,7 @@ public class Weight {
      * @param weight Weight as int.
      * @param date Date of the record.
      */
-    public void addWeightRecord(int weight, Date date) {
+    public void addWeightRecord(double weight, Date date) {
         WeightValue weightValue = new WeightValue(weight, date);
 
         if (weight < 1000 && !isDateInList(date)) {
@@ -137,7 +137,7 @@ public class Weight {
      * @param date The date to check against.
      * @return The weight corresponding to the date. 0 If no record found.
      */
-    public int getWeightByDate(float date) {
+    public double getWeightByDate(float date) {
         for (int i = 0; i < weightHistory.size(); i++) {
             if (date == weightHistory.get(i).getDate().getTime()) {
                 return weightHistory.get(i).getWeight();

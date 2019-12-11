@@ -200,7 +200,11 @@ public class MainActivity extends AppCompatActivity {
         tvMoodNowDescription.setText(R.string.activity_main_lastMood);
 
         //Sets the weight and blood pressure TextViews
-        tvWeightNumber.setText(String.format(Locale.getDefault(), "%d", mUser.weight.getLatestWeight()));
+        if (mUser.weight.getLatestWeight() >= 99.95) {
+            tvWeightNumber.setText(String.format(Locale.getDefault(), "%.0f", mUser.weight.getLatestWeight()));
+        } else {
+            tvWeightNumber.setText(String.format(Locale.getDefault(), "%.1f", mUser.weight.getLatestWeight()));
+        }
         tvLowerBPNumber.setText(String.format(Locale.getDefault(), "%d", mUser.bloodPressure.getLatestLowerBP()));
         tvUpperBPNumber.setText(String.format(Locale.getDefault(), "%d", mUser.bloodPressure.getLatestUpperBP()));
 

@@ -213,11 +213,11 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         mUser.weight.sortListByDate();
         mUser.bloodPressure.sortListsByDate();
 
-        int weight = mUser.weight.getWeightByDate(mDate.getTime());
+        double weight = mUser.weight.getWeightByDate(mDate.getTime());
         int upperBP = mUser.bloodPressure.getUpperBPByDate(mDate.getTime());
         int lowerBP = mUser.bloodPressure.getLowerBPByDate(mDate.getTime());
 
-        weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", weight));
+        weightText.setText(String.format(Locale.getDefault(), "Paino\n%.1f", weight));
         lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", lowerBP));
         upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", upperBP));
 
@@ -292,13 +292,6 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         weightDataSet.setLineWidth(3f);
         weightDataSet.setCircleRadius(4);
 
-        weightDataSet.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return "" + (int) value;
-            }
-        });
-
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(final Entry e, Highlight h) {
@@ -313,6 +306,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                                 chart.invalidate();
 
                                 mUser.weight.removeWeightByDate(e.getX());
+                                updateText();
                             }
                         });
 
@@ -366,7 +360,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mUser.weight.removeWeightByDate(mDate.getTime());
-                                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                                mUser.weight.addWeightRecord(Double.parseDouble(weight), mDate);
 
                                 mUser.bloodPressure.removeBPByDate(mDate.getTime());
                                 mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
@@ -392,7 +386,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mUser.weight.removeWeightByDate(mDate.getTime());
-                                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                                mUser.weight.addWeightRecord(Double.parseDouble(weight), mDate);
                                 updateUI();
                             }
                         });
@@ -401,7 +395,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
             } else if (mUser.bloodPressure.isDateInBothLists(mDate)) {
                 //List contains bp but not weight, so weight is added
                 mUser.weight.removeWeightByDate(mDate.getTime());
-                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                mUser.weight.addWeightRecord(Double.parseDouble(weight), mDate);
 
                 //dialog to change bp
                 AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
@@ -421,7 +415,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 dialog.show();
             } else {
                 //add both
-                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                mUser.weight.addWeightRecord(Double.parseDouble(weight), mDate);
                 mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
                 mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
             }
@@ -436,7 +430,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mUser.weight.removeWeightByDate(mDate.getTime());
-                                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                                mUser.weight.addWeightRecord(Double.parseDouble(weight), mDate);
                                 updateUI();
                             }
                         });
@@ -444,7 +438,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 dialog.show();
             } else {
                 //add weight
-                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                mUser.weight.addWeightRecord(Double.parseDouble(weight), mDate);
             }
         } else if (!lowerBP.isEmpty() && !upperBP.isEmpty()) {
             if (mUser.bloodPressure.isDateInBothLists(mDate)) {
@@ -482,7 +476,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         EditText ylaPaine = findViewById(R.id.etUpperBP);
 
         //Set the input filters
-        paino.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
+        paino.setFilters(new InputFilter[] { new InputFilterMinMax(0f, 999f)});
         alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
         ylaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
 

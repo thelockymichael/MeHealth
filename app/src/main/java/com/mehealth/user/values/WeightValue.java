@@ -7,7 +7,7 @@ import java.util.Date;
  * @author Amin Karaoui
  */
 public class WeightValue {
-    private int weight;
+    private double weight;
     private Date date;
 
     /**
@@ -15,7 +15,7 @@ public class WeightValue {
      * @param weight Value of the weight.
      * @param date Date added.
      */
-    public WeightValue(int weight, Date date) {
+    public WeightValue(double weight, Date date) {
         this.weight = weight;
         this.date = date;
     }
@@ -24,7 +24,7 @@ public class WeightValue {
      *
      * @return Weight of the object.
      */
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
