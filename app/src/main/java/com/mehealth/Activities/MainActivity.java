@@ -14,10 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mehealth.R;
 import com.mehealth.SharedPref;
+import com.mehealth.User.BloodValues;
 import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -119,6 +121,29 @@ public class MainActivity extends AppCompatActivity {
         user = pref.getUser();
         user.exercisedToday.checkCalories(pref);
         user.water.checkWater(pref);
+
+        int normalDiastolic;
+        int normalSystolic;
+
+        int userAge = Integer.parseInt(pref.getString("ika"));
+
+        if (userAge >  18) {
+            normalDiastolic = BloodValues.getInstance().getBloodvalues().get(0).getNormalDiastolic();
+            normalSystolic = BloodValues.getInstance().getBloodvalues().get(0).getNormalSystolic();
+        } else {
+            normalDiastolic = BloodValues.getInstance().getBloodvalues().get(userAge).getNormalDiastolic();
+            normalSystolic = BloodValues.getInstance().getBloodvalues().get(userAge).getNormalSystolic();
+        }
+
+        if (user.bloodPressure.getLatestLowerBP() > normalDiastolic) {
+            //korkea alapaine
+            ((TextView)findViewById(R.id.warningHighDBP)).setText("Korkea verenpaine!");
+        } else ((TextView)findViewById(R.id.warningHighDBP)).setText("");
+
+        if (user.bloodPressure.getLatestUpperBP() > normalSystolic) {
+            //korkea yläpaine
+            ((TextView)findViewById(R.id.warningHighSBP)).setText("Korkea verenpaine!");
+        } else ((TextView)findViewById(R.id.warningHighSBP)).setText("");
 
         setupTextViews();
         updateArrow();

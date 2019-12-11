@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.75" />
+                    app:layout_constraintGuide_begin="154dp" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lay1GuidelineHori1"
@@ -221,7 +221,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/lay3GuidelineHori1"
                     app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/lay3GuidelineHori2" />
 
                 <TextView
                     android:id="@+id/textUpperBPDescription"
@@ -244,6 +244,36 @@
                     app:layout_constraintStart_toStartOf="@+id/lay3GuidelineVert1"
                     app:layout_constraintTop_toTopOf="@+id/lay3GuidelineHori2"
                     app:srcCompat="@color/colorDivider" />
+
+                <TextView
+                    android:id="@+id/warningHighSBP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="#FF0000"
+                    android:shadowColor="@color/colorBlack"
+                    android:shadowDx="1.2"
+                    android:shadowDy="1.3"
+                    android:shadowRadius="1.3"
+                    app:layout_constraintBottom_toTopOf="@id/textUpperBPNumber"
+                    app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/warningHighDBP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="#FF0000"
+                    android:shadowColor="@color/colorBlack"
+                    android:shadowDx="1.2"
+                    android:shadowDy="1.3"
+                    android:shadowRadius="1.3"
+                    app:layout_constraintBottom_toBottomOf="@+id/textUpperBPDescription"
+                    app:layout_constraintEnd_toStartOf="@+id/lay3GuidelineVert1"
+                    app:layout_constraintStart_toStartOf="@+id/textUpperBPDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -295,10 +325,12 @@
                 android:id="@+id/constraintLayoutLowerBP"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/guideline2"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/guidelineMiddle">
+                app:layout_constraintRight_toLeftOf="@id/guidelineMiddle"
+                app:layout_constraintTop_toBottomOf="@id/guideline2"
+                app:layout_constraintVertical_bias="0.0">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/lay5GuidelineVert1"
@@ -349,6 +381,13 @@
                     app:layout_constraintStart_toStartOf="@+id/lay5GuidelineVert1"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@color/colorDivider" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="40dp" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
