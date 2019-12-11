@@ -89,12 +89,12 @@ public class Mood {
         return 11;
     }
 
-    public boolean listDoesNotContainsDate(Date date) {
+    public boolean isDateInList(Date date) {
         for (int i = 0; i < moodHistory.size(); i++) {
             if (moodHistory.get(i).containsDate(date)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }

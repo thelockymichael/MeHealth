@@ -344,10 +344,10 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         final String lowerBP = editTextLowerBP.getText().toString();
         final String upperBP = editTextUpperBP.getText().toString();
 
-        /*if (!weight.isEmpty() && mUser.weight.listDoesNotContainsDate(mDate)) {
+        /*if (!weight.isEmpty() && mUser.weight.isDateInList(mDate)) {
             mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
         }
-        if (!lowerBP.isEmpty() && !upperBP.isEmpty() && mUser.bloodPressure.listsDoNotContainDate(mDate)) {
+        if (!lowerBP.isEmpty() && !upperBP.isEmpty() && mUser.bloodPressure.isDateInBothLists(mDate)) {
             mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
             mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
         }*/
@@ -356,7 +356,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         Very sorry to anyone reading this
          */
         if (!weight.isEmpty() && !lowerBP.isEmpty() && !upperBP.isEmpty()) {
-            if (!mUser.weight.listDoesNotContainsDate(mDate) && !mUser.bloodPressure.listsDoNotContainDate(mDate)) {
+            if (mUser.weight.isDateInList(mDate) && mUser.bloodPressure.isDateInBothLists(mDate)) {
                 //dialog to change both
                 AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
                 builder.setTitle("Tämän päivän paino ja verenpaine ovat asetettu.")
@@ -377,7 +377,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-            } else if (!mUser.weight.listDoesNotContainsDate(mDate)) {
+            } else if (mUser.weight.isDateInList(mDate)) {
                 //List contains weight but not bp, so bp is added
                 mUser.bloodPressure.removeBPByDate(mDate.getTime());
                 mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
@@ -398,7 +398,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                         });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            } else if (!mUser.bloodPressure.listsDoNotContainDate(mDate)) {
+            } else if (mUser.bloodPressure.isDateInBothLists(mDate)) {
                 //List contains bp but not weight, so weight is added
                 mUser.weight.removeWeightByDate(mDate.getTime());
                 mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
@@ -426,7 +426,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
             }
         } else if (!weight.isEmpty()) {
-            if (!mUser.weight.listDoesNotContainsDate(mDate)) {
+            if (mUser.weight.isDateInList(mDate)) {
                 //dialog to change weight
                 AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
                 builder.setTitle("Tämän päivän paino on asetettu.")
@@ -447,7 +447,7 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
             }
         } else if (!lowerBP.isEmpty() && !upperBP.isEmpty()) {
-            if (!mUser.bloodPressure.listsDoNotContainDate(mDate)) {
+            if (mUser.bloodPressure.isDateInBothLists(mDate)) {
                 //dialog to change bp
                 AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
                 builder.setTitle("Tämän päivän verenpaine on asetettu.")

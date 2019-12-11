@@ -231,12 +231,12 @@ public class MainActivity extends AppCompatActivity {
     protected void updateArrow() {
         //Arrow for weight
         ImageView imgArrowWeight = findViewById(R.id.imgArrowWeight);
-        if (mUser.weight.latestWeightLower()) {
+        if (mUser.weight.isLatestWeightLower()) {
             imgArrowWeight.setImageResource(R.drawable.ic_arrow_downward_grey);
         } else {
             imgArrowWeight.setImageResource(R.drawable.ic_arrow_upward_gray);
         }
-        if (mUser.weight.weightNotChanged()) {
+        if (mUser.weight.isWeightNotChanged()) {
             imgArrowWeight.setVisibility(View.INVISIBLE);
         } else {
             imgArrowWeight.setVisibility(View.VISIBLE);

@@ -27,7 +27,7 @@
         app:defaultValue="mies"
         app:entries="@array/sukupuoli_entries"
         app:entryValues="@array/sukupuoli_values"
-        app:key="sukupuoli"
+        app:key="gender"
         app:title="@string/sukupuoli_title"
         app:useSimpleSummaryProvider="true" />
 
@@ -35,7 +35,7 @@
         android:inputType="number"
         app:defaultValue="20"
         app:dialogTitle="Ikä"
-        app:key="ika"
+        app:key="age"
         app:useSimpleSummaryProvider="true"
         app:title="Ikä"/>
 
@@ -44,7 +44,7 @@
         android:digits="0123456789"
         app:defaultValue="180"
         app:dialogTitle="Pituus"
-        app:key="pituus"
+        app:key="height"
         app:useSimpleSummaryProvider="true"
         app:title="Pituus"/>
 

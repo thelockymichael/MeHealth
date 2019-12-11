@@ -70,7 +70,7 @@ public class BloodPressure {
     public void addLowerBPRecord(int lowerBloodPressure, Date date) {
         BloodPressureValue bloodPressureValue = new BloodPressureValue(lowerBloodPressure, date);
 
-        if (lowerBloodPressure < 1000 && listDoesNotContainDate(date, lowerBPHistory) && listDoesNotContainDate(date, upperBPHistory)) {
+        if (lowerBloodPressure < 1000 && !isDateInList(date, lowerBPHistory)) {
             this.lowerBPHistory.add(bloodPressureValue);
         }
     }
@@ -83,7 +83,7 @@ public class BloodPressure {
     public void addUpperBPRecord(int upperBloodPressure, Date date) {
         BloodPressureValue bloodPressureValue = new BloodPressureValue(upperBloodPressure, date);
 
-        if (upperBloodPressure < 1000 && listDoesNotContainDate(date, upperBPHistory)) {
+        if (upperBloodPressure < 1000 && !isDateInList(date, upperBPHistory)) {
             this.upperBPHistory.add(bloodPressureValue);
         }
     }
@@ -148,22 +148,22 @@ public class BloodPressure {
      * @param list List the check on.
      * @return True if the list contains a value with the given date.
      */
-    public boolean listDoesNotContainDate(Date date, ArrayList<BloodPressureValue> list) {
+    public boolean isDateInList(Date date, ArrayList<BloodPressureValue> list) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).containsDate(date)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
-    public boolean listsDoNotContainDate(Date date) {
+    public boolean isDateInBothLists(Date date) {
         for (int i = 0; i < lowerBPHistory.size(); i++) {
             if (lowerBPHistory.get(i).containsDate(date)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**

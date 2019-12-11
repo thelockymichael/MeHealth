@@ -386,10 +386,10 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
             public void onClick(View v) {
                 //Depending on the seekbar's progress, saves a mood state from 0-10 to the user objects mood history
                 final int progress = ((SeekBar)findViewById(R.id.seekbarMood)).getProgress();
-                if (!mUser.mood.listDoesNotContainsDate(mDate)) {
+                if (mUser.mood.isDateInList(mDate)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MoodActivity.this);
-                    builder.setTitle("Tämän päivän paino ja verenpaine ovat asetettu.")
-                            .setMessage("Korvaa arvot?")
+                    builder.setTitle("Tämän päivän mieliala on asetettu.")
+                            .setMessage("Korvaa arvo?")
                             .setNegativeButton("Peruuta", null)
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
