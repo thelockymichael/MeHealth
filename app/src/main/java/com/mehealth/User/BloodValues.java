@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BloodValues {
     private static final BloodValues ourInstance = new BloodValues();
-    private List<HighBloodPressure>bloodvalues;
+    private List<HighBloodPressure> bloodvalues;
 
     public static BloodValues getInstance() {
 

@@ -70,28 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         updateTextViews();
         updateArrow();
-        int normalDiastolic;
-        int normalSystolic;
 
-        int userAge = Integer.parseInt(mPref.getString("ika", "0"));
-
-        if (userAge >  18) {
-            normalDiastolic = BloodValues.getInstance().getBloodvalues().get(0).getNormalDiastolic();
-            normalSystolic = BloodValues.getInstance().getBloodvalues().get(0).getNormalSystolic();
-        } else {
-            normalDiastolic = BloodValues.getInstance().getBloodvalues().get(userAge).getNormalDiastolic();
-            normalSystolic = BloodValues.getInstance().getBloodvalues().get(userAge).getNormalSystolic();
-        }
-
-        if (mUser.bloodPressure.getLatestLowerBP() > normalDiastolic) {
-            //korkea alapaine
-            ((TextView)findViewById(R.id.warningHighDBP)).setText("Korkea verenpaine!");
-        } else ((TextView)findViewById(R.id.warningHighDBP)).setText("");
-
-        if (mUser.bloodPressure.getLatestUpperBP() > normalSystolic) {
-            //korkea yläpaine
-            ((TextView)findViewById(R.id.warningHighSBP)).setText("Korkea verenpaine!");
-        } else ((TextView)findViewById(R.id.warningHighSBP)).setText("");
+        checkBPWarning();
     }
 
     @Override
@@ -328,6 +308,31 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void checkBPWarning() {
+        int normalDiastolic;
+        int normalSystolic;
+
+        int userAge = Integer.parseInt(mPref.getString("ika", "0"));
+
+        if (userAge >  18) {
+            normalDiastolic = BloodValues.getInstance().getBloodvalues().get(0).getNormalDiastolic();
+            normalSystolic = BloodValues.getInstance().getBloodvalues().get(0).getNormalSystolic();
+        } else {
+            normalDiastolic = BloodValues.getInstance().getBloodvalues().get(userAge).getNormalDiastolic();
+            normalSystolic = BloodValues.getInstance().getBloodvalues().get(userAge).getNormalSystolic();
+        }
+
+        if (mUser.bloodPressure.getLatestLowerBP() > normalDiastolic) {
+            //korkea alapaine
+            ((TextView)findViewById(R.id.warningHighDBP)).setText("Korkea verenpaine!");
+        } else ((TextView)findViewById(R.id.warningHighDBP)).setText("");
+
+        if (mUser.bloodPressure.getLatestUpperBP() > normalSystolic) {
+            //korkea yläpaine
+            ((TextView)findViewById(R.id.warningHighSBP)).setText("Korkea verenpaine!");
+        } else ((TextView)findViewById(R.id.warningHighSBP)).setText("");
     }
 
     private void setupLayoutClicks() {
