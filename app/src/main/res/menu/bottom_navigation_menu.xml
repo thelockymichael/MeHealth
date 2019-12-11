@@ -4,22 +4,22 @@
     <item
         android:id="@+id/ic_home"
         android:icon="@drawable/ic_home"
-        android:title="Home"/>
+        android:title="@string/bottomnavigation_home"/>
     <item
         android:id="@+id/ic_weight_scale"
         android:icon="@drawable/ic_weight_scale"
-        android:title="Paino"/>
+        android:title="@string/bottomnavigation_weight"/>
     <item
         android:id="@+id/ic_local_drink"
         android:icon="@drawable/ic_local_drink"
-        android:title="Vesi"/>
+        android:title="@string/bottomnavigation_water"/>
     <item
         android:id="@+id/ic_directions_run"
         android:icon="@drawable/ic_directions_run"
-        android:title="Liikunta"/>
+        android:title="@string/bottomnavigation_exercise"/>
     <item
         android:id="@+id/ic_insert_emoticon"
         android:icon="@drawable/ic_insert_emoticon"
-        android:title="Mieliala"/>
+        android:title="@string/bottomnavigation_mood"/>
 
 </menu>

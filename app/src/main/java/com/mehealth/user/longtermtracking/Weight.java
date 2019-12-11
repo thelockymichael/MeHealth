@@ -57,21 +57,6 @@ public class Weight {
         weightHistory.clear();
     }
 
-    /*public double getBMI(double height) {
-        double weight = 1.0 * weightHistory.get(weightHistory.size() - 1);
-        return (weight / height / height) * 10000;
-    }*/
-
-    /**
-     * Delete a specific record from the weight history list.
-     * @param record Index of the record.
-     */
-    public void deleteRecord(int record) {
-        if (weightHistory.size() > 0) {
-            weightHistory.remove(record);
-        }
-    }
-
     /**
      * Check if the latest added record is lower than the previous one.
      * @return True if newest weight is lower.
@@ -145,4 +130,11 @@ public class Weight {
         }
         return 0;
     }
+
+
+    //BMI Method if need one day
+    /*public double getBMI(double height) {
+        double weight = 1.0 * weightHistory.get(weightHistory.size() - 1);
+        return (weight / height / height) * 10000;
+    }*/
 }

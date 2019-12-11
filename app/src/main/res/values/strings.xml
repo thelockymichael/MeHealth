@@ -34,7 +34,7 @@
     <string name="layout_water_2dl">2dl</string>
     <string name="layout_water_5dl">5dl</string>
     <string name="layout_water_1l">1l</string>
-    <string name="layout_water_drankToday">Tänään juotu</string>
+    <string name="layout_water_drankToday">Olet juonut tänään</string>
     <string name="layout_water_description_1l">1l Water bottle</string>
     <string name="layout_water_description_1dl">1dl Water bottle</string>
     <string name="layout_water_description_5dl">5dl Water bottle</string>
@@ -47,6 +47,11 @@
     <string name="layout_mood_imgDescription">Smiley that changes color</string>
     <string name="layout_mood_chooseDate">VALITSE PÄIVÄ</string>
     <string name="layout_mood_addMood">Lisää mieliala</string>
+    <string name="bottomnavigation_home">Koti</string>
+    <string name="bottomnavigation_weight">Paino</string>
+    <string name="bottomnavigation_water">Vesi</string>
+    <string name="bottomnavigation_exercise">Liikunta</string>
+    <string name="bottomnavigation_mood">Mieliala</string>
 
     <!-- Sync Preferences -->
 </resources>
