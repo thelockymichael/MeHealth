@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Singleton to keep track of the exercises available.
+ * @author Otso Säävälä
  */
 public class Exercises {
     private static final Exercises ourInstance = new Exercises();

@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  *
  * For storing a single blood pressure value. Contains date added and the actual blood pressure value.
+ * @author Amin Karaoui
  */
 public class BloodPressureValue {
     private int bloodPressure;

@@ -40,7 +40,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- *
+ * @author Amin Karaoui
  */
 public class BPChartActivity extends AppCompatActivity {
 

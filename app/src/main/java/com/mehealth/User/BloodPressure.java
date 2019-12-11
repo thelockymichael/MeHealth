@@ -6,6 +6,7 @@ import java.util.Date;
 /**
  *
  * Keeps track of the user's blood pressure history.
+ * @author Amin Karaoui
  */
 public class BloodPressure {
     private ArrayList<BloodPressureValue> lowerBPHistory;

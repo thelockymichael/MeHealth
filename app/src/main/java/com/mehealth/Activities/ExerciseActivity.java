@@ -26,8 +26,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 /**
- *
  * Contains list of exercises the user can click to open the detail window.
+ * @author Amin Karaoui
  */
 public class ExerciseActivity extends AppCompatActivity {
     private static final String TAG = "ExerciseActivity";

@@ -5,6 +5,7 @@ import com.mehealth.SharedPref;
 
 /**
  * Keeps track of the water drank by the user.
+ * @author Amin Karaoui
  */
 public class WaterDrankToday {
     private int waterDrankToday;

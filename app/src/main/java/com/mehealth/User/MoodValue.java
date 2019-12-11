@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * For storing a single mood value.
+ * @author Amin Karaoui
  */
 public class MoodValue {
     private int mood;

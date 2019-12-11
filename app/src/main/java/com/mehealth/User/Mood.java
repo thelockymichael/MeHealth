@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * Keeps track of the user's mood history
+ * @author Amin Karaoui
  */
 public class Mood {
     private ArrayList<MoodValue> moodHistory;

@@ -6,6 +6,7 @@ import com.mehealth.User.User;
 
 /**
  * Class for defining an exercise.
+ * @author Otso Säävälä
  */
 public class Exercise {
     private String nimi;

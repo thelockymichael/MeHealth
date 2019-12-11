@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * For storing a single weight value.
+ * @author Amin Karaoui
  */
 public class WeightValue {
     private int weight;

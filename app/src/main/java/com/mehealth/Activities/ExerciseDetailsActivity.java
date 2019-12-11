@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- *
+ * @author Amin Karaoui
  */
 public class ExerciseDetailsActivity extends AppCompatActivity {
     private User mUser;

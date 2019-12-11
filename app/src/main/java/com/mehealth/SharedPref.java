@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 /**
  * Class to manage the shared preferences.
  * Makes transferring the user class around activities easy.
+ * @author Amin Karaoui
  */
 public class SharedPref {
     private SharedPreferences sharedPref;

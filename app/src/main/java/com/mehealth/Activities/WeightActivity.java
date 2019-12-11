@@ -51,7 +51,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- *
+ * @author Amin Karaoui
  */
 public class WeightActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     private static final String TAG = "WeightActivity";

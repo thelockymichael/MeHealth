@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * Keeps track of the user's weight history.
+ * @author Amin Karaoui
  */
 public class Weight {
     private ArrayList<WeightValue> weightHistory;

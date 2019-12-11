@@ -1,7 +1,8 @@
 package com.mehealth.User;
 
-/**for storing systolic and diastolic blood pressure values
- *
+/**
+ * For storing systolic and diastolic blood pressure values
+ * @author Hannu Rytöniemi
  */
 public class HighBloodPressure {
     private int ika;
@@ -20,14 +21,18 @@ public class HighBloodPressure {
         this.diastolic = diastolic;
     }
 
-    /** return object
-     *
-     * @return bloodpresurre values.
+    /**
+     * @return The normal systolic value based on user age.
      */
     public int getNormalSystolic() {
         return systolic;
     }
 
+
+    /**
+     *
+     * @return The normal diastolic value based on user age.
+     */
     public int getNormalDiastolic() {
         return diastolic;
     }

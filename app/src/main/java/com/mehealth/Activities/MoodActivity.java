@@ -49,7 +49,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- *
+ * @author Amin Karaoui
  */
 public class MoodActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     private static final String TAG = "MoodActivity";

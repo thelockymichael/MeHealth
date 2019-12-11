@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mehealth.R;
@@ -30,10 +29,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- *
  * Home screen of the app.
  * Welcomes the user and contains recent information about the user.
  * Always has one task of the activity open so every backclick redirects to the main activity
+ * @author Amin Karaoui
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -70,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         updateTextViews();
         updateArrow();
-
-        checkBPWarning();
+        updateBPWarning();
     }
 
     @Override
@@ -313,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Checks users age and latest bloodpressure values. If bloodpressure is too high, a warning appears on main page.
      */
-    private void checkBPWarning() {
+    private void updateBPWarning() {
         int normalDiastolic;
         int normalSystolic;
 
@@ -328,12 +326,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (mUser.bloodPressure.getLatestLowerBP() > normalDiastolic) {
-            //korkea alapaine
+            //High lower BP
             ((TextView)findViewById(R.id.warningHighDBP)).setText("Korkea verenpaine!");
         } else ((TextView)findViewById(R.id.warningHighDBP)).setText("");
 
         if (mUser.bloodPressure.getLatestUpperBP() > normalSystolic) {
-            //korkea yläpaine
+            //High upper BP
             ((TextView)findViewById(R.id.warningHighSBP)).setText("Korkea verenpaine!");
         } else ((TextView)findViewById(R.id.warningHighSBP)).setText("");
     }

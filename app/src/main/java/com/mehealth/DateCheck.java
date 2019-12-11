@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * Class to check whether the day has changed.
+ * @author Amin Karaoui
  */
 public class DateCheck {
 

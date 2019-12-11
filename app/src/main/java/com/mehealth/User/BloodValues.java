@@ -3,6 +3,10 @@ package com.mehealth.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Singleton to keep track of blood pressure limits.
+ * @author Hannu Rytöniemi
+ */
 public class BloodValues {
     private static final BloodValues ourInstance = new BloodValues();
     private List<HighBloodPressure> bloodvalues;
@@ -16,7 +20,7 @@ public class BloodValues {
      * Sets arraylist and limits for systolic and diastolic blood pressures.
      */
     private BloodValues() {
-        bloodvalues = new ArrayList<HighBloodPressure>();
+        bloodvalues = new ArrayList<>();
         bloodvalues.add(new HighBloodPressure(0,120,80));
         bloodvalues.add(new HighBloodPressure(1,98,54));
         bloodvalues.add(new HighBloodPressure(2,101,58));
@@ -41,7 +45,7 @@ public class BloodValues {
 
     /**
      *
-      * @return bloodvalues arraylist.
+      * @return Bloodvalues arraylist.
      */
     public List<HighBloodPressure> getBloodvalues() {
         return bloodvalues;

@@ -25,6 +25,7 @@ import java.util.Objects;
  *
  * Settings activity containing the preferences fragment.
  * User can set basic values such as their name and reset the values collected by the app thus far.
+ * @author Amin Karaoui
  */
 public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";
