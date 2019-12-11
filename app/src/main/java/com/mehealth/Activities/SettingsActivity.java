@@ -28,7 +28,6 @@ import java.util.Objects;
  * @author Amin Karaoui
  */
 public class SettingsActivity extends AppCompatActivity {
-    private static final String TAG = "SettingsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

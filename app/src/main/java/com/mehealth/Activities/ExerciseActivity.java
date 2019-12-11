@@ -21,8 +21,6 @@ import com.mehealth.SharedPref;
 import com.mehealth.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -30,7 +28,6 @@ import java.util.Objects;
  * @author Amin Karaoui
  */
 public class ExerciseActivity extends AppCompatActivity {
-    private static final String TAG = "ExerciseActivity";
     public static final String EXTRA_MESSAGE = "com.mehealth.MESSAGE";
     private User mUser;
     private SharedPref mPref;

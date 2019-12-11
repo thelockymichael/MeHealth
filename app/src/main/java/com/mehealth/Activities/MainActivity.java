@@ -36,7 +36,6 @@ import java.util.Objects;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     private User mUser;
     private SharedPref mPref;
 

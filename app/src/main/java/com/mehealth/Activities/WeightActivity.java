@@ -42,8 +42,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -54,7 +52,6 @@ import java.util.Objects;
  * @author Amin Karaoui
  */
 public class WeightActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
-    private static final String TAG = "WeightActivity";
     private User mUser;
     private SharedPref mPref;
     private Boolean mSettingsOrBPChartOpened;
@@ -65,7 +62,14 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight);
         mPref = new SharedPref(getApplicationContext());
-        mDate = Calendar.getInstance().getTime();
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.set(year, month, day, 0,0,0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        mDate = calendar.getTime();
 
         //Sets up the top toolbar
         Toolbar toolbar = findViewById(R.id.toolbarTop);
@@ -154,10 +158,15 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month + 1, dayOfMonth);
-        mDate = new GregorianCalendar(year, month, dayOfMonth).getTime();
+        //Get date from date picker
+        Calendar calendar = new GregorianCalendar();
+        //calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(year, month, dayOfMonth, 0, 0, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        //Set the milliseconds to 0 because java.util.Date is not accurate on milliseconds
+        mDate = calendar.getTime();
         updateDateText();
+        updateText();
     }
 
     private void showDatePickerDialog() {
@@ -168,12 +177,14 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
+        //Get the current year, month and date from mDate into a calendar
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(mDate);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        //Set the max date and current date picked based on just created calendar
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
         datePickerDialog.getDatePicker().setFirstDayOfWeek(Calendar.MONDAY);
         datePickerDialog.getDatePicker().init(year, month, day, datePickerDialog);
@@ -184,6 +195,8 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
      * Updates the text and chart with the latest values.
      */
     private void updateUI() {
+        mUser.weight.sortListByDate();
+        mUser.bloodPressure.sortListsByDate();
         updateText();
         updateChart();
     }
@@ -198,9 +211,16 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         TextView lowerBPText = findViewById(R.id.tvLowerBP);
         TextView upperBPText = findViewById(R.id.tvUpperBP);
 
-        weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", mUser.weight.getLatestWeight()));
-        lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", mUser.bloodPressure.getLatestLowerBP()));
-        upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", mUser.bloodPressure.getLatestUpperBP()));
+        mUser.weight.sortListByDate();
+        mUser.bloodPressure.sortListsByDate();
+
+        int weight = mUser.weight.getWeightByDate(mDate.getTime());
+        int upperBP = mUser.bloodPressure.getUpperBPByDate(mDate.getTime());
+        int lowerBP = mUser.bloodPressure.getLowerBPByDate(mDate.getTime());
+
+        weightText.setText(String.format(Locale.getDefault(), "Paino\n%d", weight));
+        lowerBPText.setText(String.format(Locale.getDefault(), "AlaP\n%d", lowerBP));
+        upperBPText.setText(String.format(Locale.getDefault(), "YläP\n%d", upperBP));
 
         ((EditText)findViewById(R.id.etWeight)).setText("");
         ((EditText)findViewById(R.id.etLowerBP)).setText("");
@@ -226,17 +246,8 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
         final LineChart chart = findViewById(R.id.chartWeight);
         List<Entry> weightEntries = new ArrayList<>();
+        mUser.weight.sortListByDate();
         ArrayList<WeightValue> weightHistory = mUser.weight.getWeightHistory();
-
-
-        //Sort the weight list by date
-        Collections.sort(weightHistory, new Comparator<WeightValue>() {
-            @Override
-            public int compare(WeightValue o1, WeightValue o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        });
-
 
         //Set entries to entry list from weight history list
         for (int i = 0; i < weightHistory.size(); i++) {
@@ -330,29 +341,154 @@ public class WeightActivity extends AppCompatActivity implements DatePickerDialo
         EditText editTextLowerBP = findViewById(R.id.etLowerBP);
         EditText editTextUpperBP = findViewById(R.id.etUpperBP);
 
-        String weight = editTextWeight.getText().toString();
-        String lowerBP = editTextLowerBP.getText().toString();
-        String upperBP = editTextUpperBP.getText().toString();
+        final String weight = editTextWeight.getText().toString();
+        final String lowerBP = editTextLowerBP.getText().toString();
+        final String upperBP = editTextUpperBP.getText().toString();
 
-        if (!weight.isEmpty()) mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
-        if (!lowerBP.isEmpty() && !upperBP.isEmpty()) {
+        /*if (!weight.isEmpty() && mUser.weight.listDoesNotContainsDate(mDate)) {
+            mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+        }
+        if (!lowerBP.isEmpty() && !upperBP.isEmpty() && mUser.bloodPressure.listsDoNotContainDate(mDate)) {
             mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
             mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+        }*/
+
+        /*
+        Very sorry to anyone reading this
+         */
+        if (!weight.isEmpty() && !lowerBP.isEmpty() && !upperBP.isEmpty()) {
+            if (!mUser.weight.listDoesNotContainsDate(mDate) && !mUser.bloodPressure.listsDoNotContainDate(mDate)) {
+                //dialog to change both
+                AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
+                builder.setTitle("Tämän päivän paino ja verenpaine ovat asetettu.")
+                        .setMessage("Korvaa arvot?")
+                        .setNegativeButton("Peruuta", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mUser.weight.removeWeightByDate(mDate.getTime());
+                                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+
+                                mUser.bloodPressure.removeBPByDate(mDate.getTime());
+                                mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
+                                mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+                                updateUI();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            } else if (!mUser.weight.listDoesNotContainsDate(mDate)) {
+                //List contains weight but not bp, so bp is added
+                mUser.bloodPressure.removeBPByDate(mDate.getTime());
+                mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
+                mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+
+                //dialog to change weight
+                AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
+                builder.setTitle("Tämän päivän paino on asetettu.")
+                        .setMessage("Korvaa arvo?")
+                        .setNegativeButton("Peruuta", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mUser.weight.removeWeightByDate(mDate.getTime());
+                                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                                updateUI();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else if (!mUser.bloodPressure.listsDoNotContainDate(mDate)) {
+                //List contains bp but not weight, so weight is added
+                mUser.weight.removeWeightByDate(mDate.getTime());
+                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+
+                //dialog to change bp
+                AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
+                builder.setTitle("Tämän päivän verenpaine on asetettu.")
+                        .setMessage("Korvaa arvo?")
+                        .setNegativeButton("Peruuta", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mUser.bloodPressure.removeBPByDate(mDate.getTime());
+                                mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
+                                mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+                                updateUI();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else {
+                //add both
+                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
+                mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+            }
+        } else if (!weight.isEmpty()) {
+            if (!mUser.weight.listDoesNotContainsDate(mDate)) {
+                //dialog to change weight
+                AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
+                builder.setTitle("Tämän päivän paino on asetettu.")
+                        .setMessage("Korvaa arvo?")
+                        .setNegativeButton("Peruuta", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mUser.weight.removeWeightByDate(mDate.getTime());
+                                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+                                updateUI();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else {
+                //add weight
+                mUser.weight.addWeightRecord(Integer.parseInt(weight), mDate);
+            }
+        } else if (!lowerBP.isEmpty() && !upperBP.isEmpty()) {
+            if (!mUser.bloodPressure.listsDoNotContainDate(mDate)) {
+                //dialog to change bp
+                AlertDialog.Builder builder = new AlertDialog.Builder(WeightActivity.this);
+                builder.setTitle("Tämän päivän verenpaine on asetettu.")
+                        .setMessage("Korvaa arvo?")
+                        .setNegativeButton("Peruuta", null)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mUser.bloodPressure.removeBPByDate(mDate.getTime());
+                                mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
+                                mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+                                updateUI();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else {
+                //add bp
+                mUser.bloodPressure.addLowerBPRecord(Integer.parseInt(lowerBP), mDate);
+                mUser.bloodPressure.addUpperBPRecord(Integer.parseInt(upperBP), mDate);
+            }
         }
+        updateUI();
     }
 
     /**
-     * Set input filters for edit text input and when typing clickcing outside keyboard closes keyboard.
+     * Set input filters for edit text input and when typing, clickcing outside the keyboard closes the keyboard.
      */
     private void setupEditTexts() {
         EditText paino = findViewById(R.id.etWeight);
         EditText alaPaine = findViewById(R.id.etLowerBP);
         EditText ylaPaine = findViewById(R.id.etUpperBP);
 
+        //Set the input filters
         paino.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
         alaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
         ylaPaine.setFilters(new InputFilter[] { new InputFilterMinMax(1, 999)});
 
+        //Set listeners for the edit texts on when the user clicks something else on the screen while typing
+        //When clicked outside, the keyboard closes
         paino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

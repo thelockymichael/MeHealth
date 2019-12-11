@@ -1,6 +1,8 @@
 package com.mehealth.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -153,6 +155,15 @@ public class BloodPressure {
         return true;
     }
 
+    public boolean listsDoNotContainDate(Date date) {
+        for (int i = 0; i < lowerBPHistory.size(); i++) {
+            if (lowerBPHistory.get(i).containsDate(date)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Remove a record on the given date.
      * @param date Float value of the Date object, can be accessed with date.getTime()
@@ -164,6 +175,45 @@ public class BloodPressure {
                 upperBPHistory.remove(i);
             }
         }
+    }
+
+    /**
+     * Sorts both lists by date
+     */
+    public void sortListsByDate() {
+        //Sort the lower BP list by date
+        Collections.sort(lowerBPHistory, new Comparator<BloodPressureValue>() {
+            @Override
+            public int compare(BloodPressureValue o1, BloodPressureValue o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        } );
+
+        //Sort the upper BP list by date
+        Collections.sort(upperBPHistory, new Comparator<BloodPressureValue>() {
+            @Override
+            public int compare(BloodPressureValue o1, BloodPressureValue o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        } );
+    }
+
+    public int getLowerBPByDate(float date) {
+        for (int i = 0; i < lowerBPHistory.size(); i++) {
+            if (date == lowerBPHistory.get(i).getDate().getTime()) {
+                return lowerBPHistory.get(i).getBloodPressure();
+            }
+        }
+        return 0;
+    }
+
+    public int getUpperBPByDate(float date) {
+        for (int i = 0; i < upperBPHistory.size(); i++) {
+            if (date == upperBPHistory.get(i).getDate().getTime()) {
+                return upperBPHistory.get(i).getBloodPressure();
+            }
+        }
+        return 0;
     }
 
 }

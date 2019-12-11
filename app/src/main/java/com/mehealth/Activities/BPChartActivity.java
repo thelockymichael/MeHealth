@@ -44,7 +44,6 @@ import java.util.Objects;
  */
 public class BPChartActivity extends AppCompatActivity {
 
-    private static final String TAG = "BPChartActivity";
     private User mUser;
     private SharedPref mPref;
     private Boolean mSettingsOpenedOrOrientationChanged;
@@ -107,6 +106,9 @@ public class BPChartActivity extends AppCompatActivity {
         //Declare the date formatter
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
 
+        //Sort lists by date
+        mUser.bloodPressure.sortListsByDate();
+
         //Get the blood pressure lists from user object
         final ArrayList<BloodPressureValue> lowerBPHistory = mUser.bloodPressure.getLowerBPHistory();
         final ArrayList<BloodPressureValue> upperBPHistory = mUser.bloodPressure.getUpperBPHistory();
@@ -115,23 +117,6 @@ public class BPChartActivity extends AppCompatActivity {
         final LineChart chart = findViewById(R.id.chartBloodPressure);
         List<Entry> lowerBPEntries = new ArrayList<>();
         List<Entry> upperBPEntries = new ArrayList<>();
-
-
-        //Sort the lower BP list by date
-        Collections.sort(lowerBPHistory, new Comparator<BloodPressureValue>() {
-            @Override
-            public int compare(BloodPressureValue o1, BloodPressureValue o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        } );
-
-        //Sort the upper BP list by date
-        Collections.sort(upperBPHistory, new Comparator<BloodPressureValue>() {
-            @Override
-            public int compare(BloodPressureValue o1, BloodPressureValue o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        } );
 
         //Convert the blood pressure lists into entry lists
         for (int i = 0; i < lowerBPHistory.size(); i++) {

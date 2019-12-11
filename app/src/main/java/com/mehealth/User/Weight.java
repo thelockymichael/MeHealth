@@ -1,6 +1,8 @@
 package com.mehealth.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -114,5 +116,23 @@ public class Weight {
                 weightHistory.remove(i);
             }
         }
+    }
+
+    public void sortListByDate() {
+        Collections.sort(weightHistory, new Comparator<WeightValue>() {
+            @Override
+            public int compare(WeightValue o1, WeightValue o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+    }
+
+    public int getWeightByDate(float date) {
+        for (int i = 0; i < weightHistory.size(); i++) {
+            if (date == weightHistory.get(i).getDate().getTime()) {
+                return weightHistory.get(i).getWeight();
+            }
+        }
+        return 0;
     }
 }

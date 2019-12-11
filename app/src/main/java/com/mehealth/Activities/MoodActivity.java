@@ -52,7 +52,6 @@ import java.util.Objects;
  * @author Amin Karaoui
  */
 public class MoodActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
-    private static final String TAG = "MoodActivity";
     private User mUser;
     private SharedPref mPref;
     private Date mDate;
@@ -63,7 +62,14 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood);
         mPref = new SharedPref(getApplicationContext());
-        mDate = Calendar.getInstance().getTime();
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.set(year, month, day, 0,0,0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        mDate = calendar.getTime();
 
         //Sets up the top toolbar
         Toolbar toolbar = findViewById(R.id.toolbarTop);
@@ -153,9 +159,10 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month + 1, dayOfMonth);
-        mDate = new GregorianCalendar(year, month, dayOfMonth).getTime();
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(year, month, dayOfMonth, 0, 0, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        mDate = calendar.getTime();
         updateDateText();
     }
 
