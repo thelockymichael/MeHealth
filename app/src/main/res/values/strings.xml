@@ -13,6 +13,7 @@
     <string name="activity_main_lastMood">Viimeisin mielialasi oli</string>
     <string name="activity_main_calorieBurnedToday">Kalori poltettu tänään</string>
     <string name="activity_main_caloriesBurnedToday">Kaloria poltettu tänään</string>
+    <string name="activity_main_highBloodPressure">Korkea verenpaine!</string>
     <string name="activity_weight_chooseDate">Valitse päivä</string>
 
     <!--Layouts-->

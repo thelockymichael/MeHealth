@@ -1,7 +1,7 @@
-package com.mehealth.User;
+package com.mehealth.user.dailytracking;
 
-import com.mehealth.DateCheck;
-import com.mehealth.SharedPref;
+import com.mehealth.utilities.DateCheck;
+import com.mehealth.utilities.SharedPref;
 
 /**
  * Keeps track of the water drank by the user.

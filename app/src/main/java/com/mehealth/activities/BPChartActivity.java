@@ -1,4 +1,4 @@
-package com.mehealth.Activities;
+package com.mehealth.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,15 +25,13 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.mehealth.R;
-import com.mehealth.SharedPref;
-import com.mehealth.User.BloodPressureValue;
-import com.mehealth.User.User;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.values.BloodPressureValue;
+import com.mehealth.user.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;

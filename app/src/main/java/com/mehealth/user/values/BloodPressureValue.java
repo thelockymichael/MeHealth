@@ -1,4 +1,4 @@
-package com.mehealth.User;
+package com.mehealth.user.values;
 
 import java.util.Date;
 

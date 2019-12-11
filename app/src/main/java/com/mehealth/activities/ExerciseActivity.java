@@ -1,4 +1,4 @@
-package com.mehealth.Activities;
+package com.mehealth.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.mehealth.Exercise;
-import com.mehealth.Exercises;
+import com.mehealth.user.values.Exercise;
+import com.mehealth.user.values.Exercises;
 import com.mehealth.R;
-import com.mehealth.SharedPref;
-import com.mehealth.User.User;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;

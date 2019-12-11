@@ -1,7 +1,6 @@
-package com.mehealth.Activities;
+package com.mehealth.activities;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +15,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.mehealth.R;
-import com.mehealth.SharedPref;
-import com.mehealth.User.User;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.User;
 
 import java.util.Objects;
 

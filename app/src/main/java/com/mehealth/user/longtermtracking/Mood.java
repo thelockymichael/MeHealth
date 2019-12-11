@@ -1,4 +1,6 @@
-package com.mehealth.User;
+package com.mehealth.user.longtermtracking;
+
+import com.mehealth.user.values.MoodValue;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,5 +78,23 @@ public class Mood {
                 moodHistory.remove(i);
             }
         }
+    }
+
+    public int getMoodByDate(float date) {
+        for (int i = 0; i < moodHistory.size(); i++) {
+            if (moodHistory.get(i).getDate().getTime() == date) {
+                return moodHistory.get(i).getMood();
+            }
+        }
+        return 11;
+    }
+
+    public boolean listDoesNotContainsDate(Date date) {
+        for (int i = 0; i < moodHistory.size(); i++) {
+            if (moodHistory.get(i).containsDate(date)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

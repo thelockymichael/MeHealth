@@ -1,4 +1,4 @@
-package com.mehealth.Activities;
+package com.mehealth.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,12 +14,12 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.mehealth.Exercise;
-import com.mehealth.Exercises;
-import com.mehealth.InputFilterMinMax;
+import com.mehealth.user.values.Exercise;
+import com.mehealth.user.values.Exercises;
+import com.mehealth.utilities.InputFilterMinMax;
 import com.mehealth.R;
-import com.mehealth.SharedPref;
-import com.mehealth.User.User;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.User;
 
 import java.util.Locale;
 import java.util.Objects;

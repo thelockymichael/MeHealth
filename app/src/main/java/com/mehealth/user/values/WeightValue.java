@@ -1,31 +1,31 @@
-package com.mehealth.User;
+package com.mehealth.user.values;
 
 import java.util.Date;
 
 /**
- * For storing a single mood value.
+ * For storing a single weight value.
  * @author Amin Karaoui
  */
-public class MoodValue {
-    private int mood;
+public class WeightValue {
+    private int weight;
     private Date date;
 
     /**
-     * Add a mood value.
-     * @param mood Value of the mood.
+     * Add a weight value.
+     * @param weight Value of the weight.
      * @param date Date added.
      */
-    public MoodValue(int mood, Date date) {
-        this.mood = mood;
+    public WeightValue(int weight, Date date) {
+        this.weight = weight;
         this.date = date;
     }
 
     /**
      *
-     * @return Mood value of the object.
+     * @return Weight of the object.
      */
-    public int getMood() {
-        return mood;
+    public int getWeight() {
+        return weight;
     }
 
     /**
@@ -37,7 +37,7 @@ public class MoodValue {
     }
 
     /**
-     * Check if the date of this object is equal to given date.
+     * Check if date of this object is equal to given date.
      * @param date Given date.
      * @return True if same date.
      */

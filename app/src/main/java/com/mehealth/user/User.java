@@ -1,4 +1,10 @@
-package com.mehealth.User;
+package com.mehealth.user;
+
+import com.mehealth.user.dailytracking.ExercisedToday;
+import com.mehealth.user.dailytracking.WaterDrankToday;
+import com.mehealth.user.longtermtracking.BloodPressure;
+import com.mehealth.user.longtermtracking.Mood;
+import com.mehealth.user.longtermtracking.Weight;
 
 /**
  * Keeps track of the user's information including the water drank daily,

@@ -9,13 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.BPChartActivity"></activity>
         <activity
-            android:name=".Activities.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_asetukset"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,25 +24,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.WeightActivity"
+            android:name=".activities.WeightActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.WaterActivity"
+            android:name=".activities.WaterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ExerciseActivity"
+            android:name=".activities.ExerciseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ExerciseDetailsActivity"
+            android:name=".activities.ExerciseDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.MoodActivity"
+            android:name=".activities.MoodActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity android:name=".activities.BPChartActivity"
+            android:launchMode="singleTask"/>
+
     </application>
 
 </manifest>

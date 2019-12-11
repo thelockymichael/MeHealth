@@ -1,10 +1,10 @@
-package com.mehealth;
+package com.mehealth.utilities;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.mehealth.User.User;
+import com.mehealth.user.User;
 import com.google.gson.Gson;
 
 /**
@@ -57,8 +57,7 @@ public class SharedPref {
      * @return Returns the string corresponding to the key
      */
     public String getString(String key) {
-        String string = sharedPref.getString(key, "");
-        return string;
+        return sharedPref.getString(key, "");
     }
 
     /**

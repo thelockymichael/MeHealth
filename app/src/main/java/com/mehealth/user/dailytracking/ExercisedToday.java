@@ -1,8 +1,9 @@
-package com.mehealth.User;
+package com.mehealth.user.dailytracking;
 
-import com.mehealth.DateCheck;
-import com.mehealth.Exercise;
-import com.mehealth.SharedPref;
+import com.mehealth.utilities.DateCheck;
+import com.mehealth.user.values.Exercise;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.User;
 
 /**
  *

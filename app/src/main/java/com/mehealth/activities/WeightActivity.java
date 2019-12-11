@@ -1,8 +1,7 @@
-package com.mehealth.Activities;
+package com.mehealth.activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -31,12 +30,12 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.mehealth.InputFilterMinMax;
+import com.mehealth.utilities.InputFilterMinMax;
 import com.mehealth.R;
-import com.mehealth.SharedPref;
-import com.mehealth.User.User;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.mehealth.User.WeightValue;
+import com.mehealth.user.values.WeightValue;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

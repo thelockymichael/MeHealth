@@ -1,4 +1,6 @@
-package com.mehealth.User;
+package com.mehealth.user.values;
+
+import com.mehealth.user.dailytracking.HighBloodPressure;
 
 import java.util.ArrayList;
 import java.util.List;

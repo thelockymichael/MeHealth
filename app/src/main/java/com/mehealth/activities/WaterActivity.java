@@ -1,4 +1,4 @@
-package com.mehealth.Activities;
+package com.mehealth.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.mehealth.R;
-import com.mehealth.SharedPref;
-import com.mehealth.User.User;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Locale;

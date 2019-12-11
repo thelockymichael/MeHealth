@@ -1,8 +1,8 @@
-package com.mehealth;
+package com.mehealth.user.values;
 
 import androidx.annotation.NonNull;
 
-import com.mehealth.User.User;
+import com.mehealth.user.User;
 
 /**
  * Class for defining an exercise.
@@ -46,9 +46,8 @@ public class Exercise {
     public int getCaloriesInAnHourPerKilo(User user) {
         double weight = user.weight.getLatestWeight();
         double dCaloriesBurned = getCaloriesInAMinutePerKilo() * (1.0* 60) * weight;
-        int iCaloriesBurned = (int) Math.round(dCaloriesBurned);
 
-        return iCaloriesBurned;
+        return (int) Math.round(dCaloriesBurned);
     }
 
     @NonNull

@@ -1,4 +1,4 @@
-package com.mehealth.User;
+package com.mehealth.user.dailytracking;
 
 /**
  * For storing systolic and diastolic blood pressure values

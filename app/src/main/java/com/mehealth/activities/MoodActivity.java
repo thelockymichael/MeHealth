@@ -1,4 +1,4 @@
-package com.mehealth.Activities;
+package com.mehealth.activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -31,9 +31,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.mehealth.R;
-import com.mehealth.SharedPref;
-import com.mehealth.User.MoodValue;
-import com.mehealth.User.User;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.values.MoodValue;
+import com.mehealth.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DateFormat;
@@ -164,6 +164,11 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.set(Calendar.MILLISECOND, 0);
         mDate = calendar.getTime();
         updateDateText();
+
+        int progress = mUser.mood.getMoodByDate(mDate.getTime());
+        if (progress < 11) {
+            ((SeekBar)findViewById(R.id.seekbarMood)).setProgress(progress);
+        }
     }
 
     private void showDatePickerDialog() {
@@ -312,6 +317,7 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
 
         //Declares the seekbar and sets the listener for it
         final SeekBar seekbarMood = findViewById(R.id.seekbarMood);
+
         seekbarMood.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -379,8 +385,25 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
             @Override
             public void onClick(View v) {
                 //Depending on the seekbar's progress, saves a mood state from 0-10 to the user objects mood history
-                int progress = ((SeekBar)findViewById(R.id.seekbarMood)).getProgress();
-                mUser.mood.addMoodRecord(progress, mDate);
+                final int progress = ((SeekBar)findViewById(R.id.seekbarMood)).getProgress();
+                if (!mUser.mood.listDoesNotContainsDate(mDate)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MoodActivity.this);
+                    builder.setTitle("Tämän päivän paino ja verenpaine ovat asetettu.")
+                            .setMessage("Korvaa arvot?")
+                            .setNegativeButton("Peruuta", null)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mUser.mood.removeMoodByDate(mDate.getTime());
+                                    mUser.mood.addMoodRecord(progress, mDate);
+                                    updateChart();
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else {
+                    mUser.mood.addMoodRecord(progress, mDate);
+                }
                 updateChart();
                 updateDateText();
             }

@@ -1,4 +1,4 @@
-package com.mehealth.Activities;
+package com.mehealth.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mehealth.R;
-import com.mehealth.SharedPref;
-import com.mehealth.User.BloodValues;
-import com.mehealth.User.User;
+import com.mehealth.utilities.SharedPref;
+import com.mehealth.user.values.BloodValues;
+import com.mehealth.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
@@ -326,12 +326,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (mUser.bloodPressure.getLatestLowerBP() > normalDiastolic) {
             //High lower BP
-            ((TextView)findViewById(R.id.warningHighDBP)).setText("Korkea verenpaine!");
+            ((TextView)findViewById(R.id.warningHighDBP)).setText(R.string.activity_main_highBloodPressure);
         } else ((TextView)findViewById(R.id.warningHighDBP)).setText("");
 
         if (mUser.bloodPressure.getLatestUpperBP() > normalSystolic) {
             //High upper BP
-            ((TextView)findViewById(R.id.warningHighSBP)).setText("Korkea verenpaine!");
+            ((TextView)findViewById(R.id.warningHighSBP)).setText(R.string.activity_main_highBloodPressure);
         } else ((TextView)findViewById(R.id.warningHighSBP)).setText("");
     }
 

@@ -1,4 +1,4 @@
-package com.mehealth;
+package com.mehealth.user.values;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.mehealth;
+package com.mehealth.utilities;
 
 import android.text.InputFilter;
 import android.text.Spanned;
