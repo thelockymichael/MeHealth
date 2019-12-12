@@ -14,7 +14,6 @@ public class BloodValues {
     private List<HighBloodPressure> bloodvalues;
 
     public static BloodValues getInstance() {
-
         return ourInstance;
     }
 
@@ -42,12 +41,10 @@ public class BloodValues {
         bloodvalues.add(new HighBloodPressure(16,120,78));
         bloodvalues.add(new HighBloodPressure(17,120,78));
         bloodvalues.add(new HighBloodPressure(18,120,80));
-
     }
 
     /**
-     *
-      * @return Bloodvalues arraylist.
+     * @return Bloodvalues arraylist.
      */
     public List<HighBloodPressure> getBloodvalues() {
         return bloodvalues;

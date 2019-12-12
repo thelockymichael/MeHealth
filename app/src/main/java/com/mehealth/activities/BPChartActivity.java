@@ -39,6 +39,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
+ * Activity to display the user's blood pressure history.
  * @author Amin Karaoui
  */
 public class BPChartActivity extends AppCompatActivity {
@@ -53,7 +54,7 @@ public class BPChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bpchart);
         mPref = new SharedPref(getApplicationContext());
 
-        //Sets up the top toolbar
+        //Sets up the top toolbar with back button on the left of the title
         Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Verenpaine");
@@ -100,7 +101,7 @@ public class BPChartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Runs when orientation changes
+    //Runs when orientation changes.
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -108,6 +109,9 @@ public class BPChartActivity extends AppCompatActivity {
         mSettingsOpenedOrOrientationChanged = hasFocus;
     }
 
+    /**
+     * Updates blood pressure chart.
+     */
     private void updateChart() {
         //Declare the date formatter
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());

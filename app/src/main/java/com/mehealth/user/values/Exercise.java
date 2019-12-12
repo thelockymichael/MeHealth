@@ -9,25 +9,25 @@ import com.mehealth.user.User;
  * @author Otso Säävälä
  */
 public class Exercise {
-    private String nimi;
-    private double kaloritMinuutissaPerKilo;
+    private String name;
+    private double caloriesInAMinutePerKilo;
 
     /**
      * Define the exercise and how many calories it burns in a minute per kilo.
-     * @param nimi Name of the exercise.
-     * @param kaloritMinuutissaPerKilo How many calories the exercise burns per kilo.
+     * @param name Name of the exercise.
+     * @param caloriesInAMinutePerKilo How many calories the exercise burns per kilo.
      */
-        public Exercise(String nimi, double kaloritMinuutissaPerKilo) {
-        this.nimi = nimi;
-        this.kaloritMinuutissaPerKilo = kaloritMinuutissaPerKilo;
+    public Exercise(String name, double caloriesInAMinutePerKilo) {
+        this.name = name;
+        this.caloriesInAMinutePerKilo = caloriesInAMinutePerKilo;
     }
 
     /**
      *
      * @return The name of the exercise.
      */
-    public String getNimi() {
-        return nimi;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Exercise {
      * @return The calories the exericse burns in a minute per kilo.
      */
     public double getCaloriesInAMinutePerKilo() {
-        return kaloritMinuutissaPerKilo;
+        return caloriesInAMinutePerKilo;
     }
 
     /**
@@ -53,6 +53,6 @@ public class Exercise {
     @NonNull
     @Override
     public String toString() {
-        return this.nimi;
+        return this.name;
     }
 }

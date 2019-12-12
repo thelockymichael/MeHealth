@@ -28,18 +28,6 @@ public class Mood {
     }
 
     /**
-     * Add a mood record.
-     * @param mood Mood as int.
-     * @param date Date of the record.
-     */
-    public void addMoodRecord(int mood, Date date) {
-        MoodValue moodValue = new MoodValue(mood, date);
-        if (!listContainsDate(date)) {
-            this.moodHistory.add(moodValue);
-        }
-    }
-
-    /**
      *
      * @return Mood history arraylist.
      */
@@ -48,10 +36,29 @@ public class Mood {
     }
 
     /**
-     * Clear the mood history arraylist.
+     *
+     * @param date Float of date given, e.g. date.getTime()
+     * @return A mood value corresponding to the time of date given.
      */
-    public void clear() {
-        this.moodHistory.clear();
+    public int getMoodByDate(float date) {
+        for (int i = 0; i < moodHistory.size(); i++) {
+            if (moodHistory.get(i).getDate().getTime() == date) {
+                return moodHistory.get(i).getMood();
+            }
+        }
+        return 11;
+    }
+
+    /**
+     * Add a mood record.
+     * @param mood Mood as int.
+     * @param date Date of the record.
+     */
+    public void addMoodRecord(int mood, Date date) {
+        MoodValue moodValue = new MoodValue(mood, date);
+        if (!isDateInList(date)) {
+            this.moodHistory.add(moodValue);
+        }
     }
 
     /**
@@ -59,13 +66,20 @@ public class Mood {
      * @param date The given date.
      * @return True if the list contains a record with the given date.
      */
-    private boolean listContainsDate(Date date) {
+    public boolean isDateInList(Date date) {
         for (int i = 0; i < moodHistory.size(); i++) {
-            if (moodHistory.get(i).containsDate(date)) {
+            if (moodHistory.get(i).isDateEqual(date)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Clear the mood history arraylist.
+     */
+    public void clear() {
+        this.moodHistory.clear();
     }
 
     /**
@@ -78,23 +92,5 @@ public class Mood {
                 moodHistory.remove(i);
             }
         }
-    }
-
-    public int getMoodByDate(float date) {
-        for (int i = 0; i < moodHistory.size(); i++) {
-            if (moodHistory.get(i).getDate().getTime() == date) {
-                return moodHistory.get(i).getMood();
-            }
-        }
-        return 11;
-    }
-
-    public boolean isDateInList(Date date) {
-        for (int i = 0; i < moodHistory.size(); i++) {
-            if (moodHistory.get(i).containsDate(date)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

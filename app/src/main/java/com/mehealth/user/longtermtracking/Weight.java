@@ -30,11 +30,23 @@ public class Weight {
     }
 
     /**
-     *
      * @return Weighthistory arraylist.
      */
     public ArrayList<WeightValue> getWeightHistory() {
         return weightHistory;
+    }
+
+    /**
+     * @param date The date to check against.
+     * @return The weight corresponding to the date. 0 If no record found.
+     */
+    public double getWeightByDate(float date) {
+        for (int i = 0; i < weightHistory.size(); i++) {
+            if (date == weightHistory.get(i).getDate().getTime()) {
+                return weightHistory.get(i).getWeight();
+            }
+        }
+        return 0;
     }
 
     /**
@@ -48,13 +60,6 @@ public class Weight {
         if (weight < 1000 && !isDateInList(date)) {
             weightHistory.add(weightValue);
         }
-    }
-
-    /**
-     * Clear the weight history arraylist.
-     */
-    public void clear() {
-        weightHistory.clear();
     }
 
     /**
@@ -86,11 +91,18 @@ public class Weight {
      */
     public boolean isDateInList(Date date) {
         for (int i = 0; i < weightHistory.size(); i++) {
-            if (weightHistory.get(i).containsDate(date)) {
+            if (weightHistory.get(i).isDateEqual(date)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Clear the weight history arraylist.
+     */
+    public void clear() {
+        weightHistory.clear();
     }
 
     /**
@@ -115,20 +127,6 @@ public class Weight {
                 return o1.getDate().compareTo(o2.getDate());
             }
         });
-    }
-
-    /**
-     *
-     * @param date The date to check against.
-     * @return The weight corresponding to the date. 0 If no record found.
-     */
-    public double getWeightByDate(float date) {
-        for (int i = 0; i < weightHistory.size(); i++) {
-            if (date == weightHistory.get(i).getDate().getTime()) {
-                return weightHistory.get(i).getWeight();
-            }
-        }
-        return 0;
     }
 
 

@@ -49,6 +49,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
+ * Activity to add and keep track of user's mood history.
  * @author Amin Karaoui
  */
 public class MoodActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
@@ -120,7 +121,7 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     /**
-     * Setup bottom navigation bar
+     * Setup bottom navigation bar.
      */
     private void setupNavBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavViewBar);
@@ -171,6 +172,9 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    /**
+     * Shows the date picker and gets the current date in use from mDate.
+     */
     private void showDatePickerDialog() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
@@ -179,18 +183,23 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
+        //Sets up the calendar according to mDate
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(mDate);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        //Sets max date of the date picker to today and initializes the picker with the date currently in use
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
         datePickerDialog.getDatePicker().setFirstDayOfWeek(Calendar.MONDAY);
         datePickerDialog.getDatePicker().init(year, month, day, datePickerDialog);
         datePickerDialog.show();
     }
 
+    /**
+     * Updates the date textView that is used to open the date picker dialog
+     */
     private void updateDateText() {
         TextView tvDateMood = findViewById(R.id.tvDateMood);
         Calendar calendar = new GregorianCalendar();
@@ -202,6 +211,9 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         tvDateMood.setText(date);
     }
 
+    /**
+     * Updates the mood chart
+     */
     private void updateChart() {
         //Declare needed variables
         final DateFormat dateFormat = new SimpleDateFormat("dd-MM", Locale.getDefault());
@@ -304,6 +316,9 @@ public class MoodActivity extends AppCompatActivity implements DatePickerDialog.
         chart.invalidate();
     }
 
+    /**
+     * Sets up the mood seekbar and how the smiley image changes based on the seekbar's progress.
+     */
     private void setupMoodSetter() {
         //Declares the ImageView and sets the first image to be the neutral smiley corresponding to 5
         final ImageView imgMood = findViewById(R.id.imgMood);

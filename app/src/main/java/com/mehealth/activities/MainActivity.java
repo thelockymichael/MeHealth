@@ -31,7 +31,7 @@ import java.util.Objects;
 /**
  * Home screen of the app.
  * Welcomes the user and contains recent information about the user.
- * Always has one task of the activity open so every backclick redirects to the main activity
+ * Always has one task of the activity open so every backclick redirects to the main activity.
  * @author Amin Karaoui
  */
 public class MainActivity extends AppCompatActivity {
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Listener for the settings icon in the top toolbar. Opens the settings activity if clicked
+     * Listener for the settings icon in the top toolbar. Opens the settings activity if clicked.
      * @param item item clicked
      */
     @Override
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * A method that lights up the bottom navigation menu item depending on which activity is open.
      * Called from every activity that has the bottom navigation toolbar.
-     * @param bottomNavigationView  The bottom navigation toolbar
+     * @param bottomNavigationView  The bottom navigation toolbar.
      * @param item                  The number of the activity in the menu list.
      */
     public static void menuIconHighlight(BottomNavigationView bottomNavigationView, int item) {
@@ -115,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Hides keyboard.
-     * @param c     Context of application
-     * @param view  Current view
+     * @param c     Context of application.
+     * @param view  Current view.
      */
     public static void hideKeyboard(Context c, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager)c.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Decides the greeting based on time of day taken from the phone.
-     * @return  A greeting string
+     * @return  A greeting string.
      */
     private String greeting() {
         //Gets the date and time from android
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         tvUpperBPNumber.setText(String.format(Locale.getDefault(), "%d", mUser.bloodPressure.getLatestUpperBP()));
 
         //Sets the water left to drink today TextView
-        tvWaterLeftToDrink.setText(String.format(Locale.getDefault(), "%ddl", mUser.water.howMuchWaterToDrink()));
+        tvWaterLeftToDrink.setText(String.format(Locale.getDefault(), "%ddl", mUser.water.getHowMuchWaterToDrink()));
 
         //Sets the calories burned today number TextView
         tvCaloriesBurnedToday.setText(String.format(Locale.getDefault(), "%d", mUser.exercisedToday.getCaloriesBurnedToday()));
@@ -339,6 +339,9 @@ public class MainActivity extends AppCompatActivity {
         } else ((TextView)findViewById(R.id.warningHighSBP)).setText("");
     }
 
+    /**
+     * Sets up the the layouts in the main screen to open the corresponding activity related to them.
+     */
     private void setupLayoutClicks() {
         layoutOnClicks((ConstraintLayout)findViewById(R.id.constraintLayoutWeight), WeightActivity.class);
         layoutOnClicks((ConstraintLayout)findViewById(R.id.constraintLayoutWater), WaterActivity.class);

@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.Date;
 
 /**
- *
  * Keeps track of the user's blood pressure history.
  * @author Amin Karaoui
  */
@@ -26,7 +25,7 @@ public class BloodPressure {
 
     /**
      *
-     * @return the lower blood pressure list.
+     * @return The lower blood pressure list.
      */
     public ArrayList<BloodPressureValue> getLowerBPHistory() {
         return lowerBPHistory;
@@ -34,7 +33,7 @@ public class BloodPressure {
 
     /**
      *
-     * @return the upper blood pressure list.
+     * @return The upper blood pressure list.
      */
     public ArrayList<BloodPressureValue> getUpperBPHistory() {
         return upperBPHistory;
@@ -63,6 +62,34 @@ public class BloodPressure {
     }
 
     /**
+     *
+     * @param date Float of date given, e.g. date.getTime()
+     * @return A lower bp value corresponding to the time of date given.
+     */
+    public int getLowerBPByDate(float date) {
+        for (int i = 0; i < lowerBPHistory.size(); i++) {
+            if (date == lowerBPHistory.get(i).getDate().getTime()) {
+                return lowerBPHistory.get(i).getBloodPressure();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     *
+     * @param date Float of date given, e.g. date.getTime()
+     * @return An upper bp value corresponding to the time of date given.
+     */
+    public int getUpperBPByDate(float date) {
+        for (int i = 0; i < upperBPHistory.size(); i++) {
+            if (date == upperBPHistory.get(i).getDate().getTime()) {
+                return upperBPHistory.get(i).getBloodPressure();
+            }
+        }
+        return 0;
+    }
+
+    /**
      * Add a record to the lower blood pressure list.
      * @param lowerBloodPressure Value of the blood pressure.
      * @param date  Date of the value.
@@ -86,20 +113,6 @@ public class BloodPressure {
         if (upperBloodPressure < 1000 && upperBloodPressure >= 1 && !isDateInList(date, upperBPHistory)) {
             this.upperBPHistory.add(bloodPressureValue);
         }
-    }
-
-    /**
-     * Clear the lower blood pressure history list.
-     */
-    public void clearLowerBP() {
-        lowerBPHistory.clear();
-    }
-
-    /**
-     * Clear the upper blood pressure history list.
-     */
-    public void clearUpperBP() {
-        upperBPHistory.clear();
     }
 
     /**
@@ -167,6 +180,20 @@ public class BloodPressure {
     }
 
     /**
+     * Clear the lower blood pressure history list.
+     */
+    public void clearLowerBP() {
+        lowerBPHistory.clear();
+    }
+
+    /**
+     * Clear the upper blood pressure history list.
+     */
+    public void clearUpperBP() {
+        upperBPHistory.clear();
+    }
+
+    /**
      * Remove a record on the given date.
      * @param date Float value of the Date object, can be accessed with date.getTime()
      */
@@ -198,24 +225,6 @@ public class BloodPressure {
                 return o1.getDate().compareTo(o2.getDate());
             }
         } );
-    }
-
-    public int getLowerBPByDate(float date) {
-        for (int i = 0; i < lowerBPHistory.size(); i++) {
-            if (date == lowerBPHistory.get(i).getDate().getTime()) {
-                return lowerBPHistory.get(i).getBloodPressure();
-            }
-        }
-        return 0;
-    }
-
-    public int getUpperBPByDate(float date) {
-        for (int i = 0; i < upperBPHistory.size(); i++) {
-            if (date == upperBPHistory.get(i).getDate().getTime()) {
-                return upperBPHistory.get(i).getBloodPressure();
-            }
-        }
-        return 0;
     }
 
 }

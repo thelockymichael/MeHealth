@@ -48,6 +48,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
+ * Activity to add weight and blood pressure values.
+ * Also contains the chart for weight history.
  * @author Amin Karaoui
  */
 public class WeightActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{

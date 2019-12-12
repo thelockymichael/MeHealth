@@ -24,7 +24,6 @@ import com.mehealth.user.User;
 import java.util.Objects;
 
 /**
- *
  * Settings activity containing the preferences fragment.
  * User can set basic values such as their name and reset the values collected by the app thus far.
  * @author Amin Karaoui
@@ -47,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        //Sets the toolbar for the activity
+        //Sets the toolbar for the activity with back button on the left of the title
         Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Asetukset");
@@ -81,7 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
         /**
          * Listens for clicks on the preferences.
          * If a preference given preference based on their id is clicked, executes the code below.
-         * @param preference    Name of the preference clicked
+         * @param preference Name of the preference clicked
          */
         @Override
         public boolean onPreferenceTreeClick(Preference preference) {
@@ -97,7 +96,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 //Gets the user class from shared preferences and calls the method to reset everything.
                                 SharedPref pref = new SharedPref(Objects.requireNonNull(getContext()));
                                 User user = pref.getUser();
-                                user.resetEverything();
+                                user.clearEverything();
                                 pref.saveUser(user);
                             }
                         });
@@ -124,7 +123,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //Replaces the normal settings icon in the toolbar with a backarrow that opens the main activity
         if (item.getItemId() == android.R.id.home) {
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);

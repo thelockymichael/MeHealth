@@ -3,10 +3,18 @@ package com.mehealth.utilities;
 import android.text.InputFilter;
 import android.text.Spanned;
 
+/**
+ * Filters input for editTexts in the app.
+ * Source: https://stackoverflow.com/questions/55314321/how-to-limit-an-integer-value-entered-into-an-edittext-in-android-studio-java
+ */
 public class InputFilterMinMax implements InputFilter {
     private double minValue;
     private double maxValue;
 
+    /**
+     * @param minVal   Minimum number to be allowed.
+     * @param maxVal   Maximum number to be allowed.
+     */
     public InputFilterMinMax(double minVal, double maxVal) {
         this.minValue = minVal;
         this.maxValue = maxVal;

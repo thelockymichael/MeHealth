@@ -20,20 +20,31 @@ public class WaterDrankToday {
     }
 
     /**
-     * Adds the water drank to according to the parameter.
-     * @param dl    Amount of water to drink.
-     */
-    public void drinkWater(int dl) {
-        this.waterDrankToday += dl;
-    }
-
-    /**
      * Getter for water drank today.
      * @return  an int of how much water has been drank today.
      */
     public int getWaterDrankToday(SharedPref pref) {
         checkWater(pref);
         return this.waterDrankToday;
+    }
+
+    /**
+     *
+     * @return How much water left to drink today in an integer.
+     */
+    public int getHowMuchWaterToDrink() {
+        if (20 - this.waterDrankToday > 0) {
+            return 20 - this.waterDrankToday;
+        }
+        return 0;
+    }
+
+    /**
+     * Adds the water drank to according to the parameter.
+     * @param dl    Amount of water to drink.
+     */
+    public void addWaterDrank(int dl) {
+        this.waterDrankToday += dl;
     }
 
     /**
@@ -52,17 +63,6 @@ public class WaterDrankToday {
         if (dateCheck.newDay(pref, "oldDateWater")) {
             clear();
         }
-    }
-
-    /**
-     *
-     * @return How much water left to drink today in an integer.
-     */
-    public int howMuchWaterToDrink() {
-        if (20 - this.waterDrankToday > 0) {
-            return 20 - this.waterDrankToday;
-        }
-        return 0;
     }
 
 }

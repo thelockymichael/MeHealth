@@ -22,16 +22,14 @@ public class BloodPressureValue {
     }
 
     /**
-     *
-     * @return the object.
+     * @return The object.
      */
     public int getBloodPressure() {
         return bloodPressure;
     }
 
     /**
-     *
-     * @return the date of the object.
+     * @return The date of the object.
      */
     public Date getDate() {
         return date;
@@ -39,8 +37,8 @@ public class BloodPressureValue {
 
     /**
      * Check if date of this object is equal to given date.
-     * @param date  given date.
-     * @return  true if same date.
+     * @param date  Given date.
+     * @return  True if same date.
      */
     public boolean containsDate(Date date) {
         return date.equals(this.date);

@@ -6,7 +6,6 @@ import com.mehealth.utilities.SharedPref;
 import com.mehealth.user.User;
 
 /**
- *
  * Class to keep track of the calories burned by the user today.
  * @author Amin Karaoui
  */
@@ -20,6 +19,14 @@ public class ExercisedToday {
     public ExercisedToday() {
         caloriesBurnedToday = 0;
         dateCheck = new DateCheck();
+    }
+
+    /**
+     *
+     * @return How many calories have been burned today.
+     */
+    public int getCaloriesBurnedToday() {
+        return caloriesBurnedToday;
     }
 
     /**
@@ -53,13 +60,5 @@ public class ExercisedToday {
             clear();
         }
 
-    }
-
-    /**
-     *
-     * @return How many calories have been burned today.
-     */
-    public int getCaloriesBurnedToday() {
-        return caloriesBurnedToday;
     }
 }

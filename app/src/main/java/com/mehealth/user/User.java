@@ -12,10 +12,10 @@ import com.mehealth.user.longtermtracking.Weight;
  * @author Amin Karaoui
  */
 public class User  {
+    public Weight weight;
     public WaterDrankToday water;
     public Mood mood;
     public BloodPressure bloodPressure;
-    public Weight weight;
     public ExercisedToday exercisedToday;
 
     /**
@@ -32,12 +32,12 @@ public class User  {
     /**
      * Resets every value in the user class that is being tracked
      */
-    public void resetEverything() {
+    public void clearEverything() {
         weight.clear();
-        bloodPressure.clearLowerBP();
-        bloodPressure.clearUpperBP();
         water.clear();
         mood.clear();
+        bloodPressure.clearLowerBP();
+        bloodPressure.clearUpperBP();
         exercisedToday.clear();
     }
 

@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
+ * Activity where user add water drank throughout the day.
  * @author Amin Karaoui
  */
 public class WaterActivity extends AppCompatActivity {
@@ -134,28 +135,28 @@ public class WaterActivity extends AppCompatActivity {
         findViewById(R.id.btn1dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUser.water.drinkWater(1);
+                mUser.water.addWaterDrank(1);
                 updateWater(mUser);
             }
         });
         findViewById(R.id.btn2dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUser.water.drinkWater(2);
+                mUser.water.addWaterDrank(2);
                 updateWater(mUser);
             }
         });
         findViewById(R.id.btn5dl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUser.water.drinkWater(5);
+                mUser.water.addWaterDrank(5);
                 updateWater(mUser);
             }
         });
         findViewById(R.id.btn1l).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUser.water.drinkWater(10);
+                mUser.water.addWaterDrank(10);
                 updateWater(mUser);
             }
         });

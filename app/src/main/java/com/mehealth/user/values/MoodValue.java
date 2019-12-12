@@ -21,15 +21,13 @@ public class MoodValue {
     }
 
     /**
-     *
-     * @return Mood value of the object.
+     * @return Int value of the mood.
      */
     public int getMood() {
         return mood;
     }
 
     /**
-     *
      * @return The date of the object.
      */
     public Date getDate() {
@@ -41,7 +39,7 @@ public class MoodValue {
      * @param date Given date.
      * @return True if same date.
      */
-    public boolean containsDate(Date date) {
+    public boolean isDateEqual(Date date) {
         return date.equals(this.date);
     }
 }

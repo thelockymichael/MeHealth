@@ -24,7 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Objects;
 
 /**
- * Contains list of exercises the user can click to open the detail window.
+ * Activity that contains list of exercises the user can click to open the exercise adding window.
  * @author Amin Karaoui
  */
 public class ExerciseActivity extends AppCompatActivity {
@@ -122,6 +122,9 @@ public class ExerciseActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up the actual list view containing the exercises from "Exercises" singleton.
+     */
     private void setupExerciseListView() {
         ListView exercises = findViewById(R.id.exerciseListView);
         exercises.setAdapter(new ArrayAdapter<Exercise>(

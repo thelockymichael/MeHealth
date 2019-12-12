@@ -41,7 +41,7 @@ public class WeightValue {
      * @param date Given date.
      * @return True if same date.
      */
-    public boolean containsDate(Date date) {
+    public boolean isDateEqual(Date date) {
         return date.equals(this.date);
     }
 }
