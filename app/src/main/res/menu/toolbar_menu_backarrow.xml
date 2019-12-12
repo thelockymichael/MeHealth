@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    Empty so settings has no settings icon-->
-    <!--<item
+    <item
         android:id="@+id/backArrow"
         android:title="Back"
         android:icon="@drawable/ic_arrow_back"
-        app:showAsAction="always"/>-->
+        app:showAsAction="always"/>
+
 
 </menu>

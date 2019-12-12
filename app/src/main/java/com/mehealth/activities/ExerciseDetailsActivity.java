@@ -44,6 +44,8 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Lisää liikunta");
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle received = getIntent().getExtras();
         int position = Objects.requireNonNull(received).getInt(ExerciseActivity.EXTRA_MESSAGE, 0);
@@ -119,10 +121,15 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.settings) {
-            Intent settings = new Intent(this, SettingsActivity.class);
-            startActivity(settings);
-            mSettingsOrDetailsOpened = true;
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
+                mSettingsOrDetailsOpened = true;
+                break;
+
+            case android.R.id.home:
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }

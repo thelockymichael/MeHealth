@@ -51,6 +51,9 @@ public class SettingsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarTop);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Asetukset");
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -122,7 +125,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //Replaces the normal settings icon in the toolbar with a backarrow that opens the main activity
-        if (item.getItemId() == R.id.backArrow) {
+        if (item.getItemId() == android.R.id.home) {
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
         }
