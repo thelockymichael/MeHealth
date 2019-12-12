@@ -328,12 +328,12 @@ public class MainActivity extends AppCompatActivity {
             normalSystolic = BloodValues.getInstance().getBloodvalues().get(userAge).getNormalSystolic();
         }
 
-        if (mUser.bloodPressure.getLatestLowerBP() > normalDiastolic) {
+        if (mUser.bloodPressure.getLatestLowerBP() >= normalDiastolic) {
             //High lower BP
             ((TextView)findViewById(R.id.warningHighDBP)).setText(R.string.activity_main_highBloodPressure);
         } else ((TextView)findViewById(R.id.warningHighDBP)).setText("");
 
-        if (mUser.bloodPressure.getLatestUpperBP() > normalSystolic) {
+        if (mUser.bloodPressure.getLatestUpperBP() >= normalSystolic) {
             //High upper BP
             ((TextView)findViewById(R.id.warningHighSBP)).setText(R.string.activity_main_highBloodPressure);
         } else ((TextView)findViewById(R.id.warningHighSBP)).setText("");
